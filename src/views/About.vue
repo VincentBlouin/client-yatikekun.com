@@ -58,12 +58,14 @@
           </v-card-text>
         </v-card>
         <v-card>
-          <v-tabs fixed-tabs v-model="aboutMembershipTabs">
+          <v-tabs fixed-tabs v-model="aboutMembershipTabs"    icons-and-text>
             <v-tab>
               {{ $t('about:member1') }}
+              <v-icon>how_to_reg</v-icon>
             </v-tab>
             <v-tab>
               {{ $t('about:plus1') }}
+              <v-icon>star</v-icon>
             </v-tab>
           </v-tabs>
           <v-tabs-items v-model="aboutMembershipTabs">
@@ -75,7 +77,7 @@
                       <template v-slot:badge>
                         1
                       </template>
-                      <v-icon>people</v-icon>
+                      <v-icon>supervisor_account</v-icon>
                     </v-badge>
                   </v-list-item-icon>
                   <v-list-item-content class="text-left">
