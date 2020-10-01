@@ -41,8 +41,14 @@
           <v-card-text class="text-subtitle-1">
             <p>
               {{ $t('about:general3') }}
-              <!--              Consultez la charte pour mieux comprendre quelle est l'intention-->
-              <!--              du site internet, la vision du SEL de mer, ainsi que les principes qui guident le tout.-->
+              <a href="https://www.facebook.com/seldemer.gratis">
+                <v-badge color="transparent">
+                  <template v-slot:badge>
+                    <img :src="require('@/assets/f_logo_RGB-Blue_58.png')" height="20">
+                  </template>
+                  {{ $t('about:general3A') }}
+                </v-badge>
+              </a>
             </p>
             <p>
               {{ $t('about:general4') }}
@@ -176,7 +182,8 @@ export default {
       vision3: "Avec une monnaie locale pour offrir et reçevoir des services avec le principe 1 heure vaut 1 heure",
       general1: "Le SEL de mer est un",
       general2: "système d'échange de services",
-      general3: "Ce site permet d'afficher des offres de services ainsi que d'enregistrer des transactions d'heures. Les demandes se réalisent sur le groupe facebook privé.",
+      general3: "Ce site permet d'afficher des offres de services ainsi que d'enregistrer des transactions d'heures. Les demandes se réalisent sur le",
+      general3A: "groupe facebook privé",
       general4: "C'est un projet porté par un groupe de citoyennes et de citoyens et",
       general5: "Horizons Gaspésiens",
       general6: "avec l'objectif de réduire la pauvreté et d'augmenter l'entraide.",
