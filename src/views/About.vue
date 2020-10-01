@@ -52,79 +52,99 @@
           </v-card-text>
         </v-card>
         <v-card>
-          <v-card-title>
-            <!--            <v-icon class="mr-2">how_to_reg</v-icon>-->
-            {{ $t('about:member1') }}
-          </v-card-title>
-          <v-list>
-            <v-list-item>
-              <v-list-item-icon>
-                <v-icon>people</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content class="text-left">
-                <v-list-item-title>
-                  {{ $t('about:member2') }}
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-icon>
-                <v-icon>assignment</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content class="text-left">
-                <v-list-item-title>
-                  {{ $t('about:member3') }}
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-icon>
-                <v-icon>card_membership</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content class="text-left">
-                <v-list-item-title>
-                  {{ $t('about:member4') }}
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-card>
-        <v-card class="mt-8">
-          <v-card-title>
-            {{ $t('about:plus1') }}
-          </v-card-title>
-          <v-list>
-            <v-list-item>
-              <v-list-item-icon>
-                <v-icon>people</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content class="text-left">
-                <v-list-item-title>
-                  {{ $t('about:member2') }}
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-icon>
-                <v-icon>assignment</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content class="text-left">
-                <v-list-item-title>
-                  {{ $t('about:member3') }}
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-icon>
-                <v-icon>card_membership</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content class="text-left">
-                <v-list-item-title>
-                  {{ $t('about:member4') }}
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
+          <v-tabs fixed-tabs v-model="aboutMembershipTabs">
+            <v-tab>
+              {{ $t('about:member1') }}
+            </v-tab>
+            <v-tab>
+              {{ $t('about:plus1') }}
+            </v-tab>
+          </v-tabs>
+          <v-tabs-items v-model="aboutMembershipTabs">
+            <v-tab-item>
+              <v-list>
+                <v-list-item>
+                  <v-list-item-icon>
+                    <v-badge>
+                      <template v-slot:badge>
+                        1
+                      </template>
+                      <v-icon>people</v-icon>
+                    </v-badge>
+                  </v-list-item-icon>
+                  <v-list-item-content class="text-left">
+                    <v-list-item-title>
+                      {{ $t('about:member2') }}
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item>
+                  <v-list-item-icon>
+                    <v-badge>
+                      <template v-slot:badge>
+                        2
+                      </template>
+                      <v-icon>assignment</v-icon>
+                    </v-badge>
+                  </v-list-item-icon>
+                  <v-list-item-content class="text-left">
+                    <v-list-item-title>
+                      {{ $t('about:member3') }}
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item>
+                  <v-list-item-icon>
+                    <v-badge>
+                      <template v-slot:badge>
+                        3
+                      </template>
+                      <v-icon>card_membership</v-icon>
+                    </v-badge>
+                  </v-list-item-icon>
+                  <v-list-item-content class="text-left">
+                    <v-list-item-title>
+                      {{ $t('about:member4') }}
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+            </v-tab-item>
+            <v-tab-item>
+              <v-list>
+                <v-list-item>
+                  <v-list-item-icon>
+                    <v-icon>people</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content class="text-left">
+                    <v-list-item-title>
+                      {{ $t('about:member2') }}
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item>
+                  <v-list-item-icon>
+                    <v-icon>assignment</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content class="text-left">
+                    <v-list-item-title>
+                      {{ $t('about:member3') }}
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item>
+                  <v-list-item-icon>
+                    <v-icon>card_membership</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content class="text-left">
+                    <v-list-item-title>
+                      {{ $t('about:member4') }}
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+            </v-tab-item>
+          </v-tabs-items>
         </v-card>
       </v-col>
     </v-row>
@@ -161,7 +181,7 @@ export default {
       general5: "Horizons Gaspésiens",
       general6: "avec l'objectif de réduire la pauvreté et d'augmenter l'entraide.",
       member1: "Comment devenir membre",
-      member2: "Rencontrer un administrateur",
+      member2: "Prendre rendez-vous avec un administrateur",
       member3: "Lire et accepter la charte",
       member4: "Devenir membre de la coopérative de solidarité Horizons Gaspésiens",
       plus1: "Avantage d'être membre"
@@ -183,7 +203,8 @@ export default {
       plus1: "Avantage d'être membre"
     });
     return {
-      whatIsTimeBank: false
+      whatIsTimeBank: false,
+      aboutMembershipTabs: null
     }
   }
 }

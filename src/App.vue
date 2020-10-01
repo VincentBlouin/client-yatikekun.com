@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-app>
-      <v-app-bar>
+      <v-app-bar app>
         <v-toolbar-title class="pr-4">
                       <img
                           height="55"
@@ -10,12 +10,6 @@
         </v-toolbar-title>
         <v-toolbar-title>
           <router-link to="/about">
-<!--            <v-img-->
-<!--                contain-->
-<!--                height="40"-->
-<!--                :src="require('@/assets/logo_sel_de_mer_gros.png')"-->
-<!--                class="pr-8"-->
-<!--            ></v-img>-->
             yatukekun.com
           </router-link>
         </v-toolbar-title>
