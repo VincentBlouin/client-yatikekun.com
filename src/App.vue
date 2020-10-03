@@ -10,7 +10,7 @@
         </v-toolbar-title>
         <v-toolbar-title>
           <router-link to="/about">
-            yatukekun.com
+            seldemer.org
           </router-link>
         </v-toolbar-title>
       </v-app-bar>

@@ -33,15 +33,19 @@
     <v-row align="center" class="vh-center">
       <v-col class="text-center" cols="12">
         <v-card-text class="text-h6 font-weight-regular vh-center">
-          <v-list>
+          <v-list three-line>
             <v-list-item v-if="$vuetify.breakpoint.mdAndUp">
               <v-list-item-icon>
-                <v-icon large>list</v-icon>
+                <v-icon large>support</v-icon>
               </v-list-item-icon>
               <v-list-item-content class="text-left">
                 <v-list-item-title class="text-md-h6 font-weight-regular">
-                  {{ $t('about:plusOffers') }}
+                  {{ $t('about:plusHelp') }}
                 </v-list-item-title>
+                <v-list-item-subtitle>
+                  Ayez accès à une liste d'offres de services dans la Baie des Chaleurs.<br>
+                  Faites des demandes de service sur le groupe Facebook privé.
+                </v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
             <v-list-item v-if="$vuetify.breakpoint.smAndDown">
@@ -59,27 +63,29 @@
             </v-list-item>
             <v-list-item>
               <v-list-item-icon>
-                <v-icon large>hourglass_bottom</v-icon>
+                <v-icon large>emoji_emotions</v-icon>
               </v-list-item-icon>
               <v-list-item-content class="text-left">
                 <v-list-item-title class="text-md-h6 text-sm-body-1 font-weight-regular">
-                  {{ $t('about:plusTransactions') }}
+                  Sentez vous utile
                 </v-list-item-title>
+                <v-list-item-subtitle>
+                  Aidez des gens dans la Baie des Chaleurs.<br>
+                  Faites aussi valoir vos compétences.
+                </v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
             <v-list-item>
               <v-list-item-icon>
-                <v-badge overlap>
-                  <template slot="badge">
-                    5
-                  </template>
-                  <v-icon large>money</v-icon>
-                </v-badge>
+                <v-icon large>money</v-icon>
               </v-list-item-icon>
               <v-list-item-content class="text-left">
                 <v-list-item-title class="text-md-h6 text-sm-body-1 font-weight-regular">
-                  {{ $t('about:plus5Hours') }}
+                  Créez de la richesse
                 </v-list-item-title>
+                <v-list-item-subtitle>
+                  Obtenez 5 SEL à l'enregistrement
+                </v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
             <v-list-item v-if="$vuetify.breakpoint.mdAndUp">
@@ -232,6 +238,7 @@ export default {
       generalSubtitle: "Échanges de services avec le principe une heure vaut une heure",
       general2: "système d'échange de services",
       // general3: "Ce site permet d'afficher des offres de services ainsi que d'enregistrer des transactions d'heures. Les demandes se réalisent sur le",
+      plusHelp: "Obtenez de l'aide",
       plusOffers: "Consultez les offres de la Baie des Chaleurs et ajouter la votre",
       plusOffersMobile: "Consultez les offres de la BDC",
       plusOffersSubtitleMobile: "Et ajouter la votre",
