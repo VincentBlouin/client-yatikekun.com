@@ -9,7 +9,7 @@
           class="vh-center"
       >
         <v-col class="text-center" cols="12">
-          <h1 class="text-h1">{{ $t('about:vision') }}</h1>
+          <h1 class="text-h2 text-md-h1">{{ $t('about:vision') }}</h1>
           <h4 class="text-h5 subheading">{{ $t('about:vision2') }}</h4>
         </v-col>
       </v-row>
@@ -44,7 +44,7 @@
                 <v-icon large>support</v-icon>
               </v-list-item-icon>
               <v-list-item-content class="text-left">
-                <v-list-item-title class="text-md-h6 font-weight-regular">
+                <v-list-item-title class="text-h6 font-weight-regular">
                   {{ $t('about:plusHelp') }}
                 </v-list-item-title>
                 <v-list-item-subtitle class="text-subtitle-1">
@@ -66,7 +66,7 @@
                 <v-icon large>emoji_emotions</v-icon>
               </v-list-item-icon>
               <v-list-item-content class="text-left">
-                <v-list-item-title class="text-md-h6 text-sm-body-1 font-weight-regular">
+                <v-list-item-title class="text-h6 font-weight-regular">
                   {{ $t('about:plusUseful') }}
                 </v-list-item-title>
                 <v-list-item-subtitle class="text-subtitle-1">
@@ -84,7 +84,7 @@
                 <v-icon large>money</v-icon>
               </v-list-item-icon>
               <v-list-item-content class="text-left">
-                <v-list-item-title class="text-md-h6 text-sm-body-1 font-weight-regular">
+                <v-list-item-title class="text-h6 font-weight-regular">
                   {{ $t('about:plusMoney') }}
                 </v-list-item-title>
                 <v-list-item-subtitle class="text-subtitle-1">
@@ -116,7 +116,7 @@
       </v-col>
     </v-row>
     <v-row align="center" class="vh-center">
-      <v-col class="text-center" cols="6">
+      <v-col cols="12" class="col-md-6 text-center">
         <v-card :flat="!isShowHowToBecomeMember">
           <v-card-actions class="vh-center">
             <v-btn
@@ -186,7 +186,7 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row align="center" class="vh-center">
+    <v-row align="center" class="vh-center pb-16">
       <v-col class="text-center" cols="12" md="8">
         <v-img
             :src="require('@/assets/banner.png')"
