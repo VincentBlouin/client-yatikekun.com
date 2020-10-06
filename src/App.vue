@@ -3,10 +3,10 @@
     <v-app>
       <v-app-bar app>
         <v-toolbar-title class="pr-4">
-                      <img
-                          height="55"
-                          :src="require('@/assets/logo_sel_de_mer_gros.png')"
-                      >
+          <img
+              height="55"
+              :src="require('@/assets/logo_sel_de_mer_gros.png')"
+          >
         </v-toolbar-title>
         <v-toolbar-title>
           <router-link to="/about">
@@ -16,6 +16,23 @@
       </v-app-bar>
       <router-view/>
     </v-app>
+    <v-footer
+        fixed
+        class="font-weight-medium"
+        dark
+    >
+      <v-col
+          class="text-center"
+          cols="12"
+      >
+        {{ new Date().getFullYear() }} —
+        <strong>
+          <a href="https://horizonsgaspesiens.net" style="color:white; text-decoration: none;">
+            Horizons Gaspésiens
+          </a>
+        </strong>
+      </v-col>
+    </v-footer>
   </div>
 </template>
 
