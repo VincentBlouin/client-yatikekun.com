@@ -41,16 +41,16 @@
             'pl-0 pr-0': $vuetify.breakpoint.smAndDown
           }">
               <v-list-item-icon>
-                <v-icon large>support</v-icon>
+                <v-icon :large="$vuetify.breakpoint.smAndDown" :x-large="$vuetify.breakpoint.mdAndUp">support</v-icon>
               </v-list-item-icon>
               <v-list-item-content class="text-left">
-                <v-list-item-title class="text-h6 font-weight-regular">
+                <v-list-item-title class="text-h6 text-md-h5 font-weight-regular">
                   {{ $t('about:plusHelp') }}
                 </v-list-item-title>
-                <v-list-item-subtitle class="text-subtitle-1">
+                <v-list-item-subtitle class="text-subtitle-1 text-md-h6 font-weight-regular">
                   {{ $t('about:plusHelpOffer') }}<br>
                 </v-list-item-subtitle>
-                <v-list-item-subtitle class="text-subtitle-1">
+                <v-list-item-subtitle class="text-subtitle-1 text-md-h6 font-weight-regular">
                   {{ $t('about:plusHelpRequest') }}
                   <a href="https://www.facebook.com/seldemer.gratis">
                     <span class="mr-2">{{ $t('about:plusHelpRequestFacebook') }}</span>
@@ -63,16 +63,16 @@
             'pl-0 pr-0': $vuetify.breakpoint.smAndDown
           }">
               <v-list-item-icon>
-                <v-icon large>emoji_emotions</v-icon>
+                <v-icon :large="$vuetify.breakpoint.smAndDown" :x-large="$vuetify.breakpoint.mdAndUp">emoji_emotions</v-icon>
               </v-list-item-icon>
               <v-list-item-content class="text-left">
-                <v-list-item-title class="text-h6 font-weight-regular">
+                <v-list-item-title class="text-h6 text-md-h5 font-weight-regular">
                   {{ $t('about:plusUseful') }}
                 </v-list-item-title>
-                <v-list-item-subtitle class="text-subtitle-1">
+                <v-list-item-subtitle class="text-subtitle-1 text-md-h6 font-weight-regular">
                   {{ $t('about:plusUsefulHelp') }}
                 </v-list-item-subtitle>
-                <v-list-item-subtitle class="text-subtitle-1">
+                <v-list-item-subtitle class="text-subtitle-1 text-md-h6 font-weight-regular">
                   {{ $t('about:plusUsefulSkills') }}
                 </v-list-item-subtitle>
               </v-list-item-content>
@@ -81,16 +81,16 @@
             'pl-0 pr-0': $vuetify.breakpoint.smAndDown
           }">
               <v-list-item-icon>
-                <v-icon large>money</v-icon>
+                <v-icon :large="$vuetify.breakpoint.smAndDown" :x-large="$vuetify.breakpoint.mdAndUp">money</v-icon>
               </v-list-item-icon>
               <v-list-item-content class="text-left">
-                <v-list-item-title class="text-h6 font-weight-regular">
+                <v-list-item-title class="text-h6 text-md-h5 font-weight-regular">
                   {{ $t('about:plusMoney') }}
                 </v-list-item-title>
-                <v-list-item-subtitle class="text-subtitle-1">
+                <v-list-item-subtitle class="text-subtitle-1 text-md-h6 font-weight-regular">
                   {{ $t('about:plusLocalCurrency') }}
                 </v-list-item-subtitle>
-                <v-list-item-subtitle class="text-subtitle-1">
+                <v-list-item-subtitle class="text-subtitle-1 text-md-h6 font-weight-regular">
                   {{ $t('about:plus5SEL') }}
                 </v-list-item-subtitle>
               </v-list-item-content>
@@ -122,7 +122,7 @@
             <v-btn
                 color="primary"
                 x-large
-                class="pa-8 font-weight-bold pr-16 pl-16"
+                class="pa-8 font-weight-bold pr-16 pl-16 text-h6 font-weight-regular text-md-h6"
                 @click="isShowHowToBecomeMember = !isShowHowToBecomeMember"
             >
               <v-icon class="mr-4" x-large>how_to_reg</v-icon>
@@ -133,55 +133,127 @@
             </v-btn>
           </v-card-actions>
           <v-expand-transition>
-            <v-card-text class="vh-center" v-if="isShowHowToBecomeMember">
-              <v-list>
-                <v-list-item>
-                  <v-list-item-icon>
+            <v-row align="center" v-if="isShowHowToBecomeMember">
+              <v-col cols="2" v-if="$vuetify.breakpoint.mdAndUp"></v-col>
+              <v-col cols="12" class="col-md-8">
+                <v-list class="text-left" subheader>
+                  <v-subheader class="text-h6 text-md-h5 font-weight-regular black--text">
                     <v-badge>
                       <template v-slot:badge>
                         1
                       </template>
-                      <v-icon>supervisor_account</v-icon>
+                      <v-icon large>supervisor_account</v-icon>
                     </v-badge>
-                  </v-list-item-icon>
-                  <v-list-item-content class="text-left">
-                    <v-list-item-title class="text-md-h6 text-sm-body-1 font-weight-regular">
+                    <span class="ml-4">
                       {{ $t('about:member2') }}
-                    </v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-                <v-list-item>
-                  <v-list-item-icon>
-                    <v-badge>
-                      <template v-slot:badge>
-                        2
-                      </template>
-                      <v-icon>assignment</v-icon>
-                    </v-badge>
-                  </v-list-item-icon>
-                  <v-list-item-content class="text-left">
-                    <v-list-item-title class="text-md-h6 text-sm-body-1 font-weight-regular">
-                      {{ $t('about:member3') }}
-                    </v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-                <v-list-item>
-                  <v-list-item-icon>
-                    <v-badge>
-                      <template v-slot:badge>
-                        3
-                      </template>
-                      <v-icon>card_membership</v-icon>
-                    </v-badge>
-                  </v-list-item-icon>
-                  <v-list-item-content class="text-left">
-                    <v-list-item-title class="text-md-h6 text-sm-body-1 font-weight-regular">
-                      {{ $t('about:member4') }}
-                    </v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
-            </v-card-text>
+                    </span>
+                  </v-subheader>
+                  <v-list-item class="ml-8" href="tel:418-751-3103">
+                    <v-list-item-avatar>
+                      <v-avatar>
+                        <img
+                            :src="require('@/assets/gaby-petit-carre.jpg')"
+                            alt="Gabrielle Margineanu"
+                        >
+                      </v-avatar>
+                    </v-list-item-avatar>
+                    <v-list-item-content>
+                      <v-list-item-title class="text-subtitle-1 text-md-h6 font-weight-regular">
+                        Gabrielle Margineanu
+                      </v-list-item-title>
+                      <v-list-item-subtitle class="text-subtitle-1 text-md-h6 font-weight-regular">
+                        418-751-3103
+                      </v-list-item-subtitle>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item class="ml-8" href="tel:581-233-9481">
+                    <v-list-item-avatar>
+                      <v-avatar>
+                        <img
+                            :src="require('@/assets/chenzo2-petit-carre.jpg')"
+                            alt="Vincent Blouin"
+                        >
+                      </v-avatar>
+                    </v-list-item-avatar>
+                    <v-list-item-content>
+                      <v-list-item-title class="text-h6 font-weight-regular">
+                        Vincent Blouin
+                      </v-list-item-title>
+                      <v-list-item-subtitle class="text-subtitle-1">
+                        581-233-9481
+                      </v-list-item-subtitle>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item class="ml-8" href="tel:418-392-9867">
+                    <v-list-item-avatar>
+                      <v-avatar>
+                        <img
+                            :src="require('@/assets/hug_petit_carre.jpg')"
+                            alt="Hug Arsenault"
+                        >
+                      </v-avatar>
+                    </v-list-item-avatar>
+                    <v-list-item-content>
+                      <v-list-item-title class="text-h6 font-weight-regular">
+                        Hug Arsenault
+                      </v-list-item-title>
+                      <v-list-item-subtitle class="text-subtitle-1">
+                        418-392-9867
+                      </v-list-item-subtitle>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item class="ml-8" href="tel:555-555-5555">
+                    <v-list-item-avatar>
+                      <v-avatar color="primary" dark>
+                        <span class="white--text headline">DO</span>
+                      </v-avatar>
+                    </v-list-item-avatar>
+                    <v-list-item-content>
+                      <v-list-item-title class="text-h6 font-weight-regular">
+                        Donna Lévesque
+                      </v-list-item-title>
+                      <v-list-item-subtitle class="text-subtitle-1">
+                        418-392-9867
+                      </v-list-item-subtitle>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item :class="{
+            'pl-0 pr-0': $vuetify.breakpoint.smAndDown
+          }" @click="charterDialog=true">
+                    <v-list-item-icon>
+                      <v-badge>
+                        <template v-slot:badge>
+                          2
+                        </template>
+                        <v-icon large>assignment</v-icon>
+                      </v-badge>
+                    </v-list-item-icon>
+                    <v-list-item-content class="text-left">
+                      <v-list-item-title class="text-h6 text-md-h5 font-weight-regular">
+                        {{ $t('about:member3') }}
+                      </v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item :class="{
+            'pl-0 pr-0': $vuetify.breakpoint.smAndDown
+          }" href="https://docs.google.com/forms/d/e/1FAIpQLSdQu47n0_bPKPO2kDAlWLdvg4JoJC-pasQWeBVQWVP2OI5tdw/viewform">
+                    <v-list-item-icon>
+                      <v-badge>
+                        <template v-slot:badge>
+                          3
+                        </template>
+                        <v-icon large>card_membership</v-icon>
+                      </v-badge>
+                    </v-list-item-icon>
+                    <v-list-item-content class="text-left">
+                      <v-list-item-title class="text-h6 text-md-h5 font-weight-regular">
+                        {{ $t('about:member4') }}
+                      </v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list>
+              </v-col>
+            </v-row>
           </v-expand-transition>
         </v-card>
       </v-col>
@@ -206,6 +278,78 @@
         <v-card-text>
           {{ $t('') }}
         </v-card-text>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="charterDialog" fullscreen hide-overlay
+              transition="dialog-bottom-transition">
+      <v-card>
+        <v-toolbar
+            dark
+            color="primary"
+        >
+          <v-btn
+              icon
+              dark
+              @click="charterDialog = false"
+          >
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+          <v-toolbar-title>{{ $t('charter:title') }}</v-toolbar-title>
+        </v-toolbar>
+        <v-list
+            three-line
+            subheader
+        >
+          <v-subheader>User Controls</v-subheader>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>Content filtering</v-list-item-title>
+              <v-list-item-subtitle>Set the content filtering level to restrict apps that can be downloaded
+              </v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>Password</v-list-item-title>
+              <v-list-item-subtitle>Require password for purchase or use password to restrict purchase
+              </v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+        <v-divider></v-divider>
+        <v-list
+            three-line
+            subheader
+        >
+          <v-subheader>General</v-subheader>
+          <v-list-item>
+            <v-list-item-action>
+              <v-checkbox v-model="notifications"></v-checkbox>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Notifications</v-list-item-title>
+              <v-list-item-subtitle>Notify me about updates to apps or games that I downloaded</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-action>
+              <v-checkbox v-model="sound"></v-checkbox>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Sound</v-list-item-title>
+              <v-list-item-subtitle>Auto-update apps at any time. Data charges may apply</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-action>
+              <v-checkbox v-model="widgets"></v-checkbox>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Auto-add widgets</v-list-item-title>
+              <v-list-item-subtitle>Automatically add home screen widgets</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
       </v-card>
     </v-dialog>
     <!--    <v-list-item v-if="$vuetify.breakpoint.mdAndUp">-->
@@ -248,7 +392,7 @@ export default {
       plusHelpRequest: "Faites des demandes de service sur le",
       plusHelpRequestFacebook: "groupe Facebook privé",
       plusOffers: "Consultez les offres de la Baie des Chaleurs et ajouter la votre",
-      plusUseful: "Sentez vous utile",
+      plusUseful: "Sentez-vous utile",
       plusUsefulHelp: "Aidez des gens dans la Baie des Chaleurs.",
       plusUsefulSkills: "Faites aussi valoir vos compétences.",
       plusMoney: "Créez de la richesse",
@@ -263,9 +407,9 @@ export default {
       // general4: "C'est un projet porté par un groupe de citoyennes et de citoyens et",
       // general6: "avec l'objectif de réduire la pauvreté et d'augmenter l'entraide.",
       member1: "Pour devenir membre",
-      member2: "Prendre rendez-vous avec un administrateur",
+      member2: "Prendre rdv avec un administrateur",
       member3: "Lire et accepter la charte",
-      member4: "Devenir membre de la coopérative de solidarité Horizons Gaspésiens",
+      member4: "Devenir membre de Horizons Gaspésiens",
       plus1: "Le SEL de mer vous permet de"
     });
     I18n.i18next.addResources("en", "about", {
@@ -284,10 +428,17 @@ export default {
       member4: "Devenir membre de la coopérative de solidarité Horizons Gaspésiens",
       plus1: "Avantage d'être membre"
     });
+    I18n.i18next.addResources("fr", "charter", {
+      title: "Charte du systeme d'échange local seldemer.org"
+    });
+    I18n.i18next.addResources("en", "charter", {
+      title: "Charte de seldemer.org"
+    });
     return {
       whatIsTimeBank: false,
       aboutMembershipTabs: null,
-      isShowHowToBecomeMember: false
+      isShowHowToBecomeMember: false,
+      charterDialog: false
     }
   }
 }
