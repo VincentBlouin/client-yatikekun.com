@@ -11,8 +11,8 @@ export default new Vuetify({
         dark:false,
         themes:{
             light:{
-                primary: colors.green.darken3,
-                secondary: "#3a783e",
+                primary: "#177C72",
+                secondary: "#7c2e17",
                 secondaryLight: colors.indigo.lighten2,
                 third: colors.teal.darken1,
                 thirdLight: colors.teal.lighten1,

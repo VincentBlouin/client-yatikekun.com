@@ -1,20 +1,21 @@
 <template>
   <div id="app">
     <v-app>
-      <v-app-bar app>
-        <v-toolbar-title class="pr-4">
-          <router-link to="/about">
-            <img
-                height="55"
-                :src="require('@/assets/logo_sel_de_mer_gros.png')"
-            >
-          </router-link>
-        </v-toolbar-title>
-        <v-toolbar-title>
+      <v-app-bar>
+<!--        <v-toolbar-title class="pr-4">-->
+<!--          <router-link to="/about">-->
+<!--            <img-->
+<!--                height="55"-->
+<!--                :src="require('@/assets/logo_sel_de_mer_gros.png')"-->
+<!--            >-->
+<!--          </router-link>-->
+<!--        </v-toolbar-title>-->
+        <v-toolbar-title class="text-h5">
           <router-link to="/about">
             seldemer.org
           </router-link>
         </v-toolbar-title>
+        <v-spacer></v-spacer>
       </v-app-bar>
       <router-view/>
     </v-app>
