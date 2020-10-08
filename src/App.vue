@@ -3,10 +3,12 @@
     <v-app>
       <v-app-bar app>
         <v-toolbar-title class="pr-4">
-          <img
-              height="55"
-              :src="require('@/assets/logo_sel_de_mer_gros.png')"
-          >
+          <router-link to="/about">
+            <img
+                height="55"
+                :src="require('@/assets/logo_sel_de_mer_gros.png')"
+            >
+          </router-link>
         </v-toolbar-title>
         <v-toolbar-title>
           <router-link to="/about">
@@ -70,5 +72,9 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.primary-color {
+  color: #2e7d32
 }
 </style>

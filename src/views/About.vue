@@ -63,7 +63,8 @@
             'pl-0 pr-0': $vuetify.breakpoint.smAndDown
           }">
               <v-list-item-icon>
-                <v-icon :large="$vuetify.breakpoint.smAndDown" :x-large="$vuetify.breakpoint.mdAndUp">emoji_emotions</v-icon>
+                <v-icon :large="$vuetify.breakpoint.smAndDown" :x-large="$vuetify.breakpoint.mdAndUp">emoji_emotions
+                </v-icon>
               </v-list-item-icon>
               <v-list-item-content class="text-left">
                 <v-list-item-title class="text-h6 text-md-h5 font-weight-regular">
@@ -148,6 +149,36 @@
                       {{ $t('about:member2') }}
                     </span>
                   </v-subheader>
+                  <v-list-item class="ml-8" href="tel:555-555-5555">
+                    <v-list-item-avatar>
+                      <v-avatar color="primary" dark>
+                        <span class="white--text headline">DO</span>
+                      </v-avatar>
+                    </v-list-item-avatar>
+                    <v-list-item-content>
+                      <v-list-item-title class="text-h6 font-weight-regular">
+                        Donna Lévesque
+                      </v-list-item-title>
+                      <v-list-item-subtitle class="text-subtitle-1">
+                        555-555-5555
+                      </v-list-item-subtitle>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item class="ml-8" href="tel:581-886-4000">
+                    <v-list-item-avatar>
+                      <v-avatar color="primary" dark>
+                        <span class="white--text headline">FA</span>
+                      </v-avatar>
+                    </v-list-item-avatar>
+                    <v-list-item-content>
+                      <v-list-item-title class="text-h6 font-weight-regular">
+                        Fatou Minot
+                      </v-list-item-title>
+                      <v-list-item-subtitle class="text-subtitle-1">
+                        581-886-4000
+                      </v-list-item-subtitle>
+                    </v-list-item-content>
+                  </v-list-item>
                   <v-list-item class="ml-8" href="tel:418-751-3103">
                     <v-list-item-avatar>
                       <v-avatar>
@@ -202,24 +233,9 @@
                       </v-list-item-subtitle>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list-item class="ml-8" href="tel:555-555-5555">
-                    <v-list-item-avatar>
-                      <v-avatar color="primary" dark>
-                        <span class="white--text headline">DO</span>
-                      </v-avatar>
-                    </v-list-item-avatar>
-                    <v-list-item-content>
-                      <v-list-item-title class="text-h6 font-weight-regular">
-                        Donna Lévesque
-                      </v-list-item-title>
-                      <v-list-item-subtitle class="text-subtitle-1">
-                        418-392-9867
-                      </v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item>
                   <v-list-item :class="{
             'pl-0 pr-0': $vuetify.breakpoint.smAndDown
-          }" @click="charterDialog=true">
+          }" to="/charte">
                     <v-list-item-icon>
                       <v-badge>
                         <template v-slot:badge>
@@ -278,78 +294,6 @@
         <v-card-text>
           {{ $t('') }}
         </v-card-text>
-      </v-card>
-    </v-dialog>
-    <v-dialog v-model="charterDialog" fullscreen hide-overlay
-              transition="dialog-bottom-transition">
-      <v-card>
-        <v-toolbar
-            dark
-            color="primary"
-        >
-          <v-btn
-              icon
-              dark
-              @click="charterDialog = false"
-          >
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-          <v-toolbar-title>{{ $t('charter:title') }}</v-toolbar-title>
-        </v-toolbar>
-        <v-list
-            three-line
-            subheader
-        >
-          <v-subheader>User Controls</v-subheader>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Content filtering</v-list-item-title>
-              <v-list-item-subtitle>Set the content filtering level to restrict apps that can be downloaded
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Password</v-list-item-title>
-              <v-list-item-subtitle>Require password for purchase or use password to restrict purchase
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-        <v-divider></v-divider>
-        <v-list
-            three-line
-            subheader
-        >
-          <v-subheader>General</v-subheader>
-          <v-list-item>
-            <v-list-item-action>
-              <v-checkbox v-model="notifications"></v-checkbox>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Notifications</v-list-item-title>
-              <v-list-item-subtitle>Notify me about updates to apps or games that I downloaded</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-action>
-              <v-checkbox v-model="sound"></v-checkbox>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Sound</v-list-item-title>
-              <v-list-item-subtitle>Auto-update apps at any time. Data charges may apply</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-action>
-              <v-checkbox v-model="widgets"></v-checkbox>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Auto-add widgets</v-list-item-title>
-              <v-list-item-subtitle>Automatically add home screen widgets</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
       </v-card>
     </v-dialog>
     <!--    <v-list-item v-if="$vuetify.breakpoint.mdAndUp">-->
@@ -428,17 +372,10 @@ export default {
       member4: "Devenir membre de la coopérative de solidarité Horizons Gaspésiens",
       plus1: "Avantage d'être membre"
     });
-    I18n.i18next.addResources("fr", "charter", {
-      title: "Charte du systeme d'échange local seldemer.org"
-    });
-    I18n.i18next.addResources("en", "charter", {
-      title: "Charte de seldemer.org"
-    });
     return {
       whatIsTimeBank: false,
       aboutMembershipTabs: null,
-      isShowHowToBecomeMember: false,
-      charterDialog: false
+      isShowHowToBecomeMember: false
     }
   }
 }
