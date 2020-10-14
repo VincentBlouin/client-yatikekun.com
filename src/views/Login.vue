@@ -1,18 +1,41 @@
 <template>
-  <v-container>
-
-  </v-container>
+  <v-row
+         align="center"
+         justify="center"
+         class="pt-8 pb-8"
+  >
+    <v-col cols="12" class="col-md-6 text-center">
+      <v-form ref="loginForm">
+        <v-alert
+            :value="wrongLogin"
+            type="error"
+        >
+          {{ $t('login:wrongLogin') }}
+        </v-alert>
+        <v-text-field
+            v-model="user.email"
+            :label="$t('login:email')"
+            :rules="[Rules.required]"
+            required
+        ></v-text-field>
+        <v-text-field
+            v-model="user.password"
+            :rules="[Rules.required]"
+            required
+            :label="$t('login:password')"
+            type="password"
+        ></v-text-field>
+      </v-form>
+      <RecaptchaInfo></RecaptchaInfo>
+    </v-col>
+  </v-row>
 </template>
-
 <script>
-import I18n from '@/i18n'
+import I18n from "@/i18n";
 import AuthenticateService from '@/service/AuthenticateService'
 import Rules from '@/Rules'
 import LoadingFlow from '@/LoadingFlow'
 import Vue from 'vue'
-import {VueReCaptcha} from "vue-recaptcha-v3";
-
-Vue.use(VueReCaptcha, {siteKey: process.env.VUE_APP_RECAPTCHA_KEY});
 
 export default {
   name: "LoginForm",
@@ -60,17 +83,9 @@ export default {
         LoadingFlow.leave();
       });
     },
-    enter: function () {
-      this.wrongLogin = false;
-      this.user = {
-        email: "",
-        password: ""
-      };
-      this.$refs.loginForm.reset();
-    },
     hideRecaptchaBadge: function () {
       let interval = setInterval(() => {
-        if(this.$recaptchaInstance){
+        if (this.$recaptchaInstance) {
           this.$recaptchaInstance.hideBadge();
           clearInterval(interval);
         }
@@ -107,7 +122,8 @@ export default {
     };
   },
   mounted: function () {
-      this.hideRecaptchaBadge();
+    window.scrollTo(0, 0);
+    this.hideRecaptchaBadge();
   }
 }
 </script>
