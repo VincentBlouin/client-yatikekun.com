@@ -4,7 +4,7 @@
          justify="center"
          class="pt-8 pb-8"
   >
-    <v-col cols="12" class="col-md-6 text-center">
+    <v-col cols="12" class="col-md-6 text-left">
       <v-form ref="loginForm">
         <v-alert
             :value="wrongLogin"
@@ -25,6 +25,14 @@
             :label="$t('login:password')"
             type="password"
         ></v-text-field>
+        <v-btn
+            disabled
+            color="success"
+            class="mr-4 pull-left"
+            @click="login"
+        >
+          {{$t('login:loginBtn')}}
+        </v-btn>
       </v-form>
       <RecaptchaInfo></RecaptchaInfo>
     </v-col>

@@ -116,7 +116,7 @@
         </v-card-text>
       </v-col>
     </v-row>
-    <v-row align="center" class="vh-center">
+    <v-row align="center" class="vh-center" id="becomeMember">
       <v-col cols="12" class="col-md-6 text-center">
         <v-card :flat="!isShowHowToBecomeMember">
           <v-card-actions class="vh-center">
@@ -124,7 +124,7 @@
                 color="primary"
                 x-large
                 class="pa-8 font-weight-bold pr-16 pl-16 text-h6 font-weight-regular text-md-h6"
-                @click="isShowHowToBecomeMember = !isShowHowToBecomeMember"
+                @click="toggleEnterBecomeMemberFlow()"
             >
               <v-icon class="mr-4" x-large>how_to_reg</v-icon>
               {{ $t('about:becomeMember') }}
@@ -282,20 +282,6 @@
         </v-img>
       </v-col>
     </v-row>
-    <v-dialog
-        v-model="whatIsTimeBank"
-        width="900"
-    >
-      <v-card>
-        <v-card-title>
-          <v-icon class="mr-2">mdi-help_emoji_people</v-icon>
-          {{ $t('about:member1') }}
-        </v-card-title>
-        <v-card-text>
-          {{ $t('') }}
-        </v-card-text>
-      </v-card>
-    </v-dialog>
     <!--    <v-list-item v-if="$vuetify.breakpoint.mdAndUp">-->
     <!--      <v-list-item-icon>-->
     <!--        <v-icon large>emoji_people</v-icon>-->
@@ -318,6 +304,7 @@
 </template>
 <script>
 import I18n from "@/i18n";
+import VueScrollTo from 'vue-scrollto'
 
 export default {
   components: {},
@@ -373,9 +360,37 @@ export default {
       plus1: "Avantage d'être membre"
     });
     return {
-      whatIsTimeBank: false,
       aboutMembershipTabs: null,
       isShowHowToBecomeMember: false
+    }
+  },
+  methods: {
+    toggleEnterBecomeMemberFlow: function () {
+      if (this.isShowHowToBecomeMember) {
+        this.isShowHowToBecomeMember = false;
+        return;
+      }
+      this.$store.dispatch("setIsBecomeMember", true);
+    }
+  },
+  computed: {
+    isBecomeMemberFlow: function () {
+      return this.$store.state.isBecomeMember;
+    }
+  },
+  watch: {
+    isBecomeMemberFlow: function () {
+      if (!this.$store.state.isBecomeMember) {
+        return;
+      }
+      VueScrollTo.scrollTo(
+          document.getElementById("becomeMember"), 500, {
+            easing: 'linear',
+            offset: -60
+          }
+      );
+      this.isShowHowToBecomeMember = true;
+      this.$store.dispatch("setIsBecomeMember", false);
     }
   }
 }

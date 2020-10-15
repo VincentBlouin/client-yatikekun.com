@@ -108,8 +108,12 @@ export default {
     this.$store.dispatch('setLocale', "fr");
   },
   methods: {
-    becomeMember: function () {
-
+    becomeMember: async function () {
+      const isOnAboutPage = ["About", "Welcome"].indexOf(this.$router.currentRoute.name) > -1;
+      if (!isOnAboutPage) {
+        await this.$router.push('/about')
+      }
+      this.$store.dispatch("setIsBecomeMember", true);
     }
   },
   data: function () {
