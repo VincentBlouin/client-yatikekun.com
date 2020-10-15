@@ -102,7 +102,6 @@ export default {
   },
   data: function () {
     I18n.i18next.addResources("en", "login", {
-      title: "Mindrespect.com",
       email: 'Email',
       password: 'Password',
       loginBtn: "Login",
@@ -110,7 +109,6 @@ export default {
       forgotPassword: "Forgot password"
     });
     I18n.i18next.addResources("fr", "login", {
-      title: "Mindrespect.com",
       email: 'Courriel',
       password: 'Mot de passe',
       loginBtn: "Connecter",
