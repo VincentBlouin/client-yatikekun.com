@@ -7,14 +7,9 @@ import Store from '@/store'
 import RequestErrors from '@/requestError'
 
 const Service = {
-    baseUrl: function (isForGraphElement) {
-        let url = location.protocol + '//' + location.hostname + ':' + location.port;
-        if (!isForGraphElement) {
-            return url + '/service'
-        }
-    },
-    geApi: function () {
-        return Service.api(true);
+    baseUrl: function () {
+        const apiPort = process.env.VUE_APP_API_PORT || '443';
+        return location.protocol + '//' + location.hostname + ':' + apiPort + '/api';
     },
     api: function (isForGraphElement) {
         const loginPages = [
@@ -23,10 +18,8 @@ const Service = {
         ];
         const axiosInstance = axios.create({
             baseURL: Service.baseUrl(isForGraphElement),
-            credentials: true,
-            withCredentials: true,
             headers: {
-                'X-XSRF-TOKEN': Store.state.xsrfToken,
+                Authorization: 'Bearer ' + Store.state.token
             }
         });
         axiosInstance.interceptors.response.use(null, async function (error) {

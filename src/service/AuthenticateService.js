@@ -11,7 +11,7 @@ export default {
     login: function (user, recaptchaToken) {
         user.staySignedIn = true;
         user.recaptchaToken = recaptchaToken;
-        return Service.api().post("/users/session", user);
+        return Service.api().post("/login", user);
     },
     logout: async function () {
         await Service.api().delete("/users/session");

@@ -16,13 +16,17 @@
           </router-link>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn text v-if="$vuetify.breakpoint.mdAndUp" @click="becomeMember">
+        <v-btn text v-if="$vuetify.breakpoint.mdAndUp && $store.state.user === null" @click="becomeMember">
           <v-icon class="mr-2">how_to_reg</v-icon>
           {{ $t('app:becomeMember') }}
         </v-btn>
-        <v-btn text v-if="$vuetify.breakpoint.mdAndUp" to="/login">
+        <v-btn text v-if="$vuetify.breakpoint.mdAndUp && $store.state.user === null" to="/login">
           <v-icon class="mr-2">login</v-icon>
           {{ $t('app:login') }}
+        </v-btn>
+        <v-btn text v-if="$vuetify.breakpoint.mdAndUp && $store.state.user !== null" @click="logout">
+          <v-icon class="mr-2">exit_to_app</v-icon>
+          {{ $t('app:logout') }}
         </v-btn>
         <v-btn text to="/charte" v-if="$vuetify.breakpoint.mdAndUp">
           <v-icon class="mr-2">assignment</v-icon>
@@ -41,7 +45,7 @@
             light
         >
           <v-list>
-            <v-list-item>
+            <v-list-item v-if="$store.state.user === null">
               <v-list-item-action>
                 <v-icon>how_to_reg</v-icon>
               </v-list-item-action>
@@ -51,7 +55,7 @@
                 </v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item>
+            <v-list-item v-if="$store.state.user === null">
               <v-list-item-action>
                 <v-icon>login</v-icon>
               </v-list-item-action>
@@ -59,6 +63,18 @@
                 <v-list-item-title>
                   <v-btn to="/login" text class="black--text">
                     {{ $t('app:login') }}
+                  </v-btn>
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item v-if="$store.state.user !== null">
+              <v-list-item-action>
+                <v-icon>exit_to_app</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>
+                  <v-btn @click="logout" text class="black--text">
+                    {{ $t('app:logout') }}
                   </v-btn>
                 </v-list-item-title>
               </v-list-item-content>
@@ -108,6 +124,11 @@ export default {
     this.$store.dispatch('setLocale', "fr");
   },
   methods: {
+    logout: function () {
+      this.$store.dispatch('setToken', null);
+      this.$store.dispatch('setUser', null);
+      this.$router.push('/login');
+    },
     becomeMember: async function () {
       const isOnAboutPage = ["About", "Welcome"].indexOf(this.$router.currentRoute.name) > -1;
       if (!isOnAboutPage) {
@@ -120,11 +141,13 @@ export default {
     I18n.i18next.addResources("fr", "app", {
       becomeMember: "Devenez membre",
       login: "Connexion",
+      logout: "Déconnecter",
       charter: "Charte"
     });
     I18n.i18next.addResources("en", "app", {
       becomeMember: "Devenez membre",
       login: "Connexion",
+      logout: "Déconnecter",
       charter: "Charte"
     });
     return {

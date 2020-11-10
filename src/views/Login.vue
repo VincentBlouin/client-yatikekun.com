@@ -1,8 +1,8 @@
 <template>
   <v-row
-         align="center"
-         justify="center"
-         class="pt-8 pb-8"
+      align="center"
+      justify="center"
+      class="pt-8 pb-8"
   >
     <v-col cols="12" class="col-md-6 text-left">
       <v-form ref="loginForm">
@@ -26,12 +26,11 @@
             type="password"
         ></v-text-field>
         <v-btn
-            disabled
-            color="success"
+            color="primary"
             class="mr-4 pull-left"
             @click="login"
         >
-          {{$t('login:loginBtn')}}
+          {{ $t('login:loginBtn') }}
         </v-btn>
       </v-form>
       <RecaptchaInfo></RecaptchaInfo>
@@ -44,6 +43,9 @@ import AuthenticateService from '@/service/AuthenticateService'
 import Rules from '@/Rules'
 import LoadingFlow from '@/LoadingFlow'
 import Vue from 'vue'
+import {VueReCaptcha} from "vue-recaptcha-v3"
+
+Vue.use(VueReCaptcha, {siteKey: process.env.VUE_APP_RECAPTCHA_KEY});
 
 export default {
   name: "LoginForm",
@@ -74,7 +76,7 @@ export default {
         this.$emit('flow-is-done');
         Vue.nextTick(() => {
           this.$router.push({
-            name: 'UserHome',
+            name: 'Offers',
             params: {
               username: response.data.user_name
             }
