@@ -10,7 +10,7 @@ const routes = [
         component: () => import('../views/About.vue')
     },
     {
-        path: '/about',
+        path: '/à-propos',
         name: 'Welcome',
         component: () => import( '../views/About.vue')
     },
@@ -20,15 +20,25 @@ const routes = [
         component: () => import('../views/Charter.vue')
     },
     {
-        path: '/login',
+        path: '/connexion',
         name: 'Login',
         component: () => import('../views/Login.vue')
     },
     {
-        path: '/offers',
+        path: '/offres',
         name: 'Offers',
         component: () => import('../views/Offers.vue')
-    }
+    },
+    {
+        path: '/offre',
+        name: 'OfferNew',
+        component: () => import('../views/Offer.vue')
+    },
+    {
+        path: '/offre/:offerId',
+        name: 'OfferModify',
+        component: () => import('../views/Offer.vue')
+    },
 ]
 
 const router = new VueRouter({
