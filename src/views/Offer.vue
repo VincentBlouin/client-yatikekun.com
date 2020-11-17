@@ -131,7 +131,6 @@ export default {
     images.unshift({
       name: "uploadImage"
     });
-    console.log(this.$store.state.user.id);
     return {
       offer: {
         UserId: this.$store.state.user.id

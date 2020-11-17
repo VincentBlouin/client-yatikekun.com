@@ -22,22 +22,19 @@
         <v-card-title>
           {{ $t('offers:title') }}
         </v-card-title>
-        <v-list>
-          <v-list-item v-for="offer in offers" :key="offer.id">
-            <v-list-item-avatar>
-              <v-avatar>
-                <img
-                    :src="require('@/assets/categories/' + offer.image)"
-                >
-              </v-avatar>
-            </v-list-item-avatar>
-            <v-list-item-content class="text-left">
-              <v-list-item-title>
+        <v-row>
+          <v-col cols="12" class="col-md-6 col-lg-4 text-center" v-for="offer in offers" :key="offer.id">
+            <v-card flat class="text-center">
+              <img
+                  width="150"
+                  :src="require('@/assets/categories/' + offer.image)"
+              >
+              <v-card-text class="subtitle-1 text-center">
                 {{ offer.title_fr }}
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
         <!--        <v-row >-->
         <!--          <v-col cols="12">-->
 
