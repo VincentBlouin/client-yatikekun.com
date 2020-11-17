@@ -6,7 +6,7 @@ export default {
             "offer"
         );
     },
-    uploadImage: function(formData){
+    uploadImage: function (formData) {
         return Service.api().post('/offer/image', formData)
     },
     getImageUrl: function (offer) {
@@ -14,5 +14,8 @@ export default {
             return ''
         }
         return Service.baseUrl() + '/offer/image/' + offer.customImage.fileName
+    },
+    create: function (offer) {
+        return Service.api().post('/offer', offer)
     }
 }

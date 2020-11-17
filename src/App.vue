@@ -11,7 +11,7 @@
         <!--          </router-link>-->
         <!--        </v-toolbar-title>-->
         <v-toolbar-title class="text-h5">
-          <router-link to="/about">
+          <router-link to="/à-propos">
             seldemer.org
           </router-link>
         </v-toolbar-title>
@@ -20,7 +20,7 @@
           <v-icon class="mr-2">how_to_reg</v-icon>
           {{ $t('app:becomeMember') }}
         </v-btn>
-        <v-btn text v-if="$vuetify.breakpoint.mdAndUp && $store.state.user === null" to="/login">
+        <v-btn text v-if="$vuetify.breakpoint.mdAndUp && $store.state.user === null" to="/connexion">
           <v-icon class="mr-2">login</v-icon>
           {{ $t('app:login') }}
         </v-btn>
@@ -61,7 +61,7 @@
               </v-list-item-action>
               <v-list-item-content>
                 <v-list-item-title>
-                  <v-btn to="/login" text class="black--text">
+                  <v-btn to="/connexion" text class="black--text">
                     {{ $t('app:login') }}
                   </v-btn>
                 </v-list-item-title>
@@ -132,7 +132,7 @@ export default {
     becomeMember: async function () {
       const isOnAboutPage = ["About", "Welcome"].indexOf(this.$router.currentRoute.name) > -1;
       if (!isOnAboutPage) {
-        await this.$router.push('/about')
+        await this.$router.push('/à-propos')
       }
       this.$store.dispatch("setIsBecomeMember", true);
     }

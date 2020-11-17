@@ -74,6 +74,11 @@
             {{ $t('offer:changeImage') }}
           </v-btn>
         </v-card-actions>
+        <v-card-actions class="text-center pt-8">
+          <v-btn color="primary" @click="addOffer" :loading="submitLoading" :disabled="submitLoading">
+            {{ $t('offer:addOffer') }}
+          </v-btn>
+        </v-card-actions>
       </v-card>
       <input type="file" name="images" ref="uploadOfferImage"
              @change="filesChange($event.target.name, $event.target.files)"
@@ -106,7 +111,8 @@ export default {
       uploadImage: "Téléverser une image",
       modify: "Modifier",
       upload: "Téléverser",
-      changeImage: "Changer l'image"
+      changeImage: "Changer l'image",
+      addOffer: "Ajouter votre offre"
     });
     I18n.i18next.addResources("en", "offer", {
       title: "Nouvelle offre",
@@ -115,14 +121,21 @@ export default {
       uploadImage: "Téléverser une image",
       modify: "Modifier",
       upload: "Téléverser",
-      changeImage: "Changer l'image"
+      changeImage: "Changer l'image",
+      addOffer: "Ajouter votre offre"
     });
-    const images = Images.get();
+    /*
+      concat is to avoid re-adding uploadImage
+    */
+    const images = [].concat(Images.get());
     images.unshift({
       name: "uploadImage"
     });
+    console.log(this.$store.state.user.id);
     return {
-      offer: {},
+      offer: {
+        UserId: this.$store.state.user.id
+      },
       isNewOffer: false,
       imageCarousel: 0,
       descriptionId: Math.random(),
@@ -133,10 +146,17 @@ export default {
       images: images,
       OfferService: OfferService,
       changeImageFlow: false,
-      currentUploadStatus: STATUS_INITIAL_UPLOAD
+      currentUploadStatus: STATUS_INITIAL_UPLOAD,
+      submitLoading: false
     }
   },
   methods: {
+    addOffer: async function () {
+      this.submitLoading = true;
+      await OfferService.create(this.offer);
+      this.submitLoading = false;
+      await this.$router.push("/offres");
+    },
     getImageUrl() {
       if (this.offer.image) {
         return require('@/assets/categories/' + this.offer.image.file);

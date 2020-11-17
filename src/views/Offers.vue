@@ -11,7 +11,7 @@
               color="primary"
               fab
               dark
-              absolute
+              fixed
               bottom
               right
               to="offre"

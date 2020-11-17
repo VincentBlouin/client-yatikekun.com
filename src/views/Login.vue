@@ -72,7 +72,7 @@ export default {
       let recaptchaToken = await this.$recaptcha("login");
       AuthenticateService.login(this.user, recaptchaToken).then((response) => {
         this.$store.dispatch('setToken', response.data.token)
-        this.$store.dispatch('setUser', response.data);
+        this.$store.dispatch('setUser', response.data.user);
         this.$emit('flow-is-done');
         Vue.nextTick(() => {
           this.$router.push({
