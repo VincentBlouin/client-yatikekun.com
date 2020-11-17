@@ -22,7 +22,7 @@
                 height="150"
                 v-if="isSaving"
             ></v-skeleton-loader>
-            <img :src="getImageUrl()" v-if="!changeImageFlow" width="175px"/>
+            <img :src="getImageUrl()" v-if="!changeImageFlow && !isSaving" width="175px"/>
             <v-slide-group
                 show-arrows
                 v-model="selectedImage"
@@ -160,7 +160,7 @@ export default {
       if (this.offer.image) {
         return require('@/assets/categories/' + this.offer.image.file);
       } else if (this.offer.customImage) {
-        return OfferService.getImageUrl(this.offer);
+        return Images.getCustomBase64Url(this.offer.customImage);
       } else {
         return "";
       }
@@ -206,19 +206,19 @@ export default {
       this.currentUploadStatus = STATUS_SAVING_UPLOAD
       this.changeImageFlow = false;
       this.offer.image = undefined;
-      const image = await OfferService.uploadImage(formData).catch((err) => {
+      const response = await OfferService.uploadImage(formData).catch((err) => {
         this.uploadError = err.response
         this.currentStcurrentUploadStatusatus = STATUS_FAILED_UPLOAD
       });
       setTimeout(() => {
-        this.$set(this.offer, 'customImage', image.data)
+        this.$set(this.offer, 'customImage', response.data)
         this.currentUploadStatus = STATUS_SUCCESS_UPLOAD
       }, 1000);
     }
   },
   computed: {
     hasImage() {
-      return this.offer.image || this.offer.imageCustom;
+      return this.offer.image || this.offer.customImage;
     },
     isInitial() {
       return this.currentUploadStatus === STATUS_INITIAL_UPLOAD

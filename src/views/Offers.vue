@@ -27,7 +27,14 @@
             <v-card flat class="text-center">
               <img
                   width="150"
-                  :src="require('@/assets/categories/' + offer.image)"
+                  v-if="offer.image"
+                  :src="getCustomImageUrl(offer.image)"
+                  :alt="offer.image.name"
+              >
+              <img
+                  width="150"
+                  v-if="offer.customImage"
+                  :src="getCustomImageUrl(offer.customImage)"
               >
               <v-card-text class="subtitle-1 text-center">
                 {{ offer.title_fr }}
@@ -56,6 +63,7 @@
 <script>
 import I18n from "@/i18n";
 import OfferService from "@/service/OfferService";
+import Images from "@/Images";
 
 export default {
   components: {},
@@ -64,6 +72,9 @@ export default {
     let response = await OfferService.list();
     this.offers = response.data.map((offer) => {
       offer.userFullname = offer.User.firstname + " " + offer.User.lastname;
+      if (offer.image) {
+        offer.image = Images.getImageWithName(offer.image);
+      }
       return offer;
     });
   },
@@ -79,21 +90,12 @@ export default {
       member: "Membre"
     });
     return {
-      offers: null,
-      headers: [
-        {
-          text: this.$t('offers:offer'),
-          align: 'start',
-          sortable: false,
-          value: 'title_fr',
-        },
-        {
-          text: this.$t('offers:member'),
-          align: 'start',
-          sortable: false,
-          value: 'userFullname'
-        }
-      ],
+      offers: null
+    }
+  },
+  methods: {
+    getCustomImageUrl: function (customImage) {
+      return Images.getCustomBase64Url(customImage);
     }
   }
 }
