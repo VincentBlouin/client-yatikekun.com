@@ -36,22 +36,24 @@
               </v-card-text>
             </v-card>
           </v-col>
-          <v-fab-transition>
-            <v-btn
-                color="primary"
-                fab
-                dark
-                fixed
-                bottom
-                right
-                to="offre"
-            >
-              <v-icon>add</v-icon>
-            </v-btn>
-          </v-fab-transition>
         </v-row>
       </v-card>
     </v-col>
+    <v-fab-transition>
+      <v-btn
+          color="primary"
+          fab
+          dark
+          fixed
+          bottom
+          right
+          to="offre"
+          style="left:72%;"
+          x-large
+      >
+        <v-icon>add</v-icon>
+      </v-btn>
+    </v-fab-transition>
   </v-row>
 </template>
 <script>

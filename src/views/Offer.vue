@@ -6,7 +6,7 @@
   >
     <v-col cols="12" class="col-md-6 text-center">
       <v-card flat class="">
-        <v-card-text class="text-left pb-0">
+        <v-card-text class="text-center pb-0">
           <v-form ref="offerForm">
             <v-textarea
                 v-model="offer.description"
@@ -68,13 +68,13 @@
             </v-slide-group>
           </v-form>
         </v-card-text>
-        <v-card-actions class="text-left pt-0" v-if="!changeImageFlow">
+        <v-card-actions class="text-center vh-center pt-0" v-if="!changeImageFlow">
           <v-btn text @click="changeImageFlow=true" class="">
             <v-icon class="mr-2">edit</v-icon>
             {{ $t('offer:changeImage') }}
           </v-btn>
         </v-card-actions>
-        <v-card-actions class="text-center pt-8">
+        <v-card-actions class="text-center vh-center pt-8">
           <v-btn color="primary" @click="addOffer" :loading="submitLoading" :disabled="submitLoading">
             {{ $t('offer:addOffer') }}
           </v-btn>
