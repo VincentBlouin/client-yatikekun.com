@@ -18,8 +18,8 @@
             <h4 class="font-weight-regular text-left mb-4">Image</h4>
             <v-skeleton-loader
                 type="card-avatar"
-                width="150"
-                height="150"
+                width="175"
+                height="175"
                 v-if="isSaving"
             ></v-skeleton-loader>
             <img :src="getCurrentImageUrl()" v-if="!changeImageFlow && !isSaving" width="200px"/>

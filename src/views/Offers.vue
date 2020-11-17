@@ -6,22 +6,17 @@
   >
     <v-col cols="12" class="col-md-6 text-center">
       <v-card flat class="pt-8">
-        <v-fab-transition>
-          <v-btn
-              color="primary"
-              fab
-              dark
-              fixed
-              bottom
-              right
-              to="offre"
-          >
-            <v-icon>add</v-icon>
-          </v-btn>
-        </v-fab-transition>
         <v-card-title>
           {{ $t('offers:title') }}
         </v-card-title>
+        <v-row v-if="isLoading">
+          <v-col cols="12" class="col-md-6 col-lg-4 text-center" v-for="n in 20" :key="n">
+            <v-skeleton-loader
+                width="250"
+                type="image, list-item-two-line"
+            ></v-skeleton-loader>
+          </v-col>
+        </v-row>
         <v-row>
           <v-col cols="12" class="col-md-6 col-lg-4 text-center" v-for="offer in offers" :key="offer.id">
             <v-card flat class="text-center pl-8 pr-8">
@@ -41,6 +36,19 @@
               </v-card-text>
             </v-card>
           </v-col>
+          <v-fab-transition>
+            <v-btn
+                color="primary"
+                fab
+                dark
+                fixed
+                bottom
+                right
+                to="offre"
+            >
+              <v-icon>add</v-icon>
+            </v-btn>
+          </v-fab-transition>
         </v-row>
       </v-card>
     </v-col>
@@ -55,6 +63,7 @@ export default {
   components: {},
   async mounted() {
     window.scrollTo(0, 0)
+    this.isLoading = true;
     let response = await OfferService.list();
     this.offers = response.data.map((offer) => {
       offer.userFullname = offer.User.firstname + " " + offer.User.lastname;
@@ -64,6 +73,7 @@ export default {
       offer.title_fr = offer.title_fr[0].toUpperCase() + offer.title_fr.substr(1);
       return offer;
     });
+    this.isLoading = false;
   },
   data: function () {
     I18n.i18next.addResources("fr", "offers", {
@@ -77,7 +87,8 @@ export default {
       member: "Membre"
     });
     return {
-      offers: null
+      offers: null,
+      isLoading: false
     }
   },
   methods: {
