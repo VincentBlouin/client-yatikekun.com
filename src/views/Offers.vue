@@ -10,7 +10,7 @@
           {{ $t('offers:title') }}
         </v-card-title>
         <v-row v-if="isLoading">
-          <v-col cols="12" class="col-md-6 col-lg-4 text-center" v-for="n in 20" :key="n">
+          <v-col cols="12" class="col-md-6 col-lg-4 text-center vh-center" v-for="n in 20" :key="n">
             <v-skeleton-loader
                 width="250"
                 type="image, list-item-two-line"
