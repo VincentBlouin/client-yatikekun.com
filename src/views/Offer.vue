@@ -16,12 +16,16 @@
                 :placeholder="$t('offer:description')"
             ></v-textarea>
             <h4 class="font-weight-regular text-left mb-4">Image</h4>
-            <v-skeleton-loader
-                type="card-avatar"
-                width="175"
-                height="175"
-                v-if="isSaving"
-            ></v-skeleton-loader>
+            <v-row class="vh-center">
+              <v-col cols="12" class="vh-center">
+                <v-skeleton-loader
+                    type="card-avatar"
+                    width="175"
+                    height="175"
+                    v-if="isSaving"
+                ></v-skeleton-loader>
+              </v-col>
+            </v-row>
             <img :src="getCurrentImageUrl()" v-if="!changeImageFlow && !isSaving" width="200px"/>
             <v-slide-group
                 show-arrows
@@ -34,10 +38,16 @@
                   v-slot="{ active}"
               >
                 <v-badge icon="check" class="mt-4" overlap offset-x="40" offset-y="13" x-large right :value="active">
-                  <v-card color="transparent" class="vh-center mr-4 mr-4"
-                          width="200px" flat active-class="" style="height:100%;">
+                  <v-card color="transparent" class="vh-center"
+                          flat active-class="" style="height:100%;"
+                          :class="{
+                            'mr-4': $vuetify.breakpoint.mdAndUp,
+                            'pr-0 mr-0': $vuetify.breakpoint.smAndDown
+                          }"
+                  >
 
-                    <v-card-text class="black--text vh-center subtitle-1" style="height:100%;cursor: pointer;"
+                    <v-card-text class="black--text vh-center subtitle-1 pa-0"
+                                 style="height:100%;cursor: pointer;width:150px"
                                  v-if="image.name === 'uploadImage' && !offer.customImage"
                                  @click="uploadImage(imageIndex)">
                       <v-icon>attach_file</v-icon>
@@ -46,7 +56,7 @@
                     <img
                         class="white--text"
                         v-if="image.name === 'uploadImage' && offer.customImage"
-                        :src="OfferService.getCurrentImageUrl(offer)"
+                        :src="getCurrentImageUrl(offer)"
                         width="175px"
                         @click="chooseCustomImage(imageIndex)"
                         style="cursor: pointer;"
@@ -75,7 +85,7 @@
           </v-btn>
         </v-card-actions>
         <v-card-actions class="text-center vh-center pt-8">
-          <v-btn color="primary" @click="addOffer" :loading="submitLoading" :disabled="submitLoading">
+          <v-btn color="primary" @click="addOffer" :loading="submitLoading" :disabled="submitLoading || !canAddOffer">
             {{ $t('offer:addOffer') }}
           </v-btn>
         </v-card-actions>
@@ -133,7 +143,8 @@ export default {
     });
     return {
       offer: {
-        UserId: this.$store.state.user.id
+        UserId: this.$store.state.user.id,
+        description: ""
       },
       isNewOffer: false,
       imageCarousel: 0,
@@ -220,6 +231,9 @@ export default {
     }
   },
   computed: {
+    canAddOffer: function () {
+      return this.offer.description && (this.offer.image || this.offer.customImage);
+    },
     hasImage() {
       return this.offer.image || this.offer.customImage;
     },
