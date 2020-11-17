@@ -85,7 +85,7 @@
           </v-btn>
         </v-card-actions>
         <v-card-actions class="text-center vh-center pt-8">
-          <v-btn color="primary" @click="addOffer" :loading="submitLoading" :disabled="submitLoading || !canAddOffer">
+          <v-btn color="primary" @click="addOffer" :loading="submitLoading" :disabled="submitLoading || !canAddOffer()">
             {{ $t('offer:addOffer') }}
           </v-btn>
         </v-card-actions>
@@ -161,6 +161,9 @@ export default {
     }
   },
   methods: {
+    canAddOffer: function () {
+      return !this.isSaving && this.offer.description && (this.offer.image || this.offer.customImage);
+    },
     addOffer: async function () {
       this.submitLoading = true;
       await OfferService.create(this.offer);
@@ -231,9 +234,6 @@ export default {
     }
   },
   computed: {
-    canAddOffer: function () {
-      return this.offer.description && (this.offer.image || this.offer.customImage);
-    },
     hasImage() {
       return this.offer.image || this.offer.customImage;
     },
