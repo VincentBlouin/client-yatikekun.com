@@ -24,38 +24,24 @@
         </v-card-title>
         <v-row>
           <v-col cols="12" class="col-md-6 col-lg-4 text-center" v-for="offer in offers" :key="offer.id">
-            <v-card flat class="text-center">
-              <img
-                  width="150"
+            <v-card flat class="text-center pl-8 pr-8">
+              <v-img
+                  height="175"
                   v-if="offer.image"
                   :src="getCustomImageUrl(offer.image)"
                   :alt="offer.image.name"
-              >
-              <img
-                  width="150"
+              ></v-img>
+              <v-img
+                  height="175"
                   v-if="offer.customImage"
                   :src="getCustomImageUrl(offer.customImage)"
-              >
-              <v-card-text class="subtitle-1 text-center">
+              ></v-img>
+              <v-card-text class="subtitle-1 text-left pl-0 pr-0">
                 {{ offer.title_fr }}
               </v-card-text>
             </v-card>
           </v-col>
         </v-row>
-        <!--        <v-row >-->
-        <!--          <v-col cols="12">-->
-
-        <!--          </v-col>-->
-        <!--        </v-row>-->
-        <!--        <v-card-text v-if="offers !== null">-->
-        <!--&lt;!&ndash;          {{ offers }}&ndash;&gt;-->
-        <!--                    <v-data-table-->
-        <!--                        :headers="headers"-->
-        <!--                        :items="offers"-->
-        <!--                        :items-per-page="10"-->
-        <!--                        class="elevation-1"-->
-        <!--                    ></v-data-table>-->
-        <!--        </v-card-text>-->
       </v-card>
     </v-col>
   </v-row>
@@ -75,6 +61,7 @@ export default {
       if (offer.image) {
         offer.image = Images.getImageWithName(offer.image);
       }
+      offer.title_fr = offer.title_fr[0].toUpperCase() + offer.title_fr.substr(1);
       return offer;
     });
   },

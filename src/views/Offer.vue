@@ -22,7 +22,7 @@
                 height="150"
                 v-if="isSaving"
             ></v-skeleton-loader>
-            <img :src="getImageUrl()" v-if="!changeImageFlow && !isSaving" width="175px"/>
+            <img :src="getCurrentImageUrl()" v-if="!changeImageFlow && !isSaving" width="200px"/>
             <v-slide-group
                 show-arrows
                 v-model="selectedImage"
@@ -35,7 +35,7 @@
               >
                 <v-badge icon="check" class="mt-4" overlap offset-x="40" offset-y="13" x-large right :value="active">
                   <v-card color="transparent" class="vh-center mr-4 mr-4"
-                          width="175px" flat active-class="" style="height:100%;">
+                          width="200px" flat active-class="" style="height:100%;">
 
                     <v-card-text class="black--text vh-center subtitle-1" style="height:100%;cursor: pointer;"
                                  v-if="image.name === 'uploadImage' && !offer.customImage"
@@ -46,7 +46,7 @@
                     <img
                         class="white--text"
                         v-if="image.name === 'uploadImage' && offer.customImage"
-                        :src="OfferService.getImageUrl(offer)"
+                        :src="OfferService.getCurrentImageUrl(offer)"
                         width="175px"
                         @click="chooseCustomImage(imageIndex)"
                         style="cursor: pointer;"
@@ -58,7 +58,7 @@
                       </v-btn>
                     </v-card-actions>
                     <img v-if="image.name !== 'uploadImage'" :input-value="active"
-                         :src="require('@/assets/categories/' + image.file)" width="175px"
+                         :src="getImageUrl(image)" width="175px"
                          class="pl-4 pr-4" :color="active ? undefined : 'grey lighten-1'"
                          @click="chooseImage(image, imageIndex)"
                          style="cursor: pointer;">
@@ -156,14 +156,17 @@ export default {
       this.submitLoading = false;
       await this.$router.push("/offres");
     },
-    getImageUrl() {
+    getCurrentImageUrl() {
       if (this.offer.image) {
-        return require('@/assets/categories/' + this.offer.image.file);
+        return this.getImageUrl(this.offer.image);
       } else if (this.offer.customImage) {
-        return Images.getCustomBase64Url(this.offer.customImage);
+        return this.getImageUrl(this.offer.customImage);
       } else {
         return "";
       }
+    },
+    getImageUrl(image) {
+      return Images.getCustomBase64Url(image);
     },
     chooseImage: function (image, imageIndex) {
       this.offer.image = image;
