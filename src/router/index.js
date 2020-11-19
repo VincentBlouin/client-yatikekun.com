@@ -39,6 +39,11 @@ const routes = [
         name: 'OfferModify',
         component: () => import('../views/Offer.vue')
     },
+    {
+        path: '/membres',
+        name: 'Members',
+        component: () => import('../views/Members.vue')
+    },
 ]
 
 const router = new VueRouter({
