@@ -19,7 +19,7 @@
           {{ $t('members:title') }}
         </v-card-title>
         <v-list class="pt-0">
-          <v-list-item v-for="member in members" :key="member.id" class="text-left">
+          <v-list-item v-for="member in members" :key="member.uuid" class="text-left" :to="'/membre/'+member.uuid">
             <v-list-item-avatar>
               <v-avatar color="primary" class="white--text">
                 {{ member.initials }}

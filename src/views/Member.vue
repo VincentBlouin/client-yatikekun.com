@@ -100,7 +100,12 @@ import Rules from "@/Rules";
 export default {
   components: {},
   async mounted() {
-    this.descriptionId = Math.random();
+    this.member.uuid = this.$route.params.memberId;
+    if (!this.member.uuid) {
+      return
+    }
+    const response = await MemberService.get(this.member);
+    this.member = response.data
   },
   data: function () {
     I18n.i18next.addResources("fr", "member", {
