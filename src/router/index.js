@@ -44,6 +44,11 @@ const routes = [
         name: 'Members',
         component: () => import('../views/Members.vue')
     },
+    {
+        path: '/membre',
+        name: 'MemberNew',
+        component: () => import('../views/Member.vue')
+    },
 ]
 
 const router = new VueRouter({

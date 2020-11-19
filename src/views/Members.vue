@@ -29,6 +29,9 @@
               <v-list-item-title>
                 {{ member.fullname }}
               </v-list-item-title>
+              <v-list-item-subtitle>
+                {{ $t(member.subRegion) }}
+              </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list>

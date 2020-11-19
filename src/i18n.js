@@ -36,25 +36,24 @@ export default {
                         min8Char: "Minimum of 8 characters",
                         send: "Send",
                         change: "Change",
-                        centers: "Centers",
-                        confirm: "Confirm",
-                        save: "Save",
-                        cancel: "Cancel",
-                        copy: "copy",
-                        copied: "copied",
-                        close: "Close",
-                        areYouSure: "Are you sure ?",
-                        use: "Use",
-                        bubble: "Bubble",
-                        bubbles: "Bubbles",
-                        moreResults: "More results",
-                        selectAll: "Add all",
-                        deselectAll: "Remove all",
-                        robotDoubt: "There is a doubt that you are a robot. If you are human, Im sorry and contact me at vincent.blouin@gmail.com",
-                        and: "and",
-                        to: "to",
-                        toTheBubble: "to the bubble",
-                        selectedBubble: "Selected bubble"
+                        nonBinary: "Non binaire",
+                        male: "Homme",
+                        female: "Femme",
+                        pointeALaCroix: "Pointe-à-la-croix",
+                        pointeALaGarde: "Pointe-à-la-Garde",
+                        escuminac: "Escuminac",
+                        nouvelle: "Nouvelle",
+                        carletonSurMer: "Carleton-sur-mer",
+                        maria: "Maria",
+                        gesgapegiag: "Gesgapegiag",
+                        newRichmond: "New Richmond",
+                        caplan: "Caplan",
+                        saintSimeon: "Saint-Siméon",
+                        bonaventure: "Bonaventure",
+                        newCarlisle: "New Carlisle",
+                        paspebiac: "Paspébiac",
+                        hope: "Hope/Hope Town",
+                        saintGod: "Saint-Godefroi/Shigawake"
                     }
                 },
                 fr: {
@@ -71,67 +70,28 @@ export default {
                         min8Char: "Minimum de 8 charactères",
                         send: "Envoyer",
                         change: "Modifier",
-                        centers: "Centres",
-                        confirm: "Confirmer",
-                        save: "Sauvegarder",
-                        cancel: "Annuler",
-                        copy: "copier",
-                        copied: "copié",
-                        close: "Fermer",
-                        areYouSure: "Êtes-vous certain?",
-                        use: "Utiliser",
-                        bubble: "Bulle",
-                        bubbles: "Bulles",
-                        moreResults: "Plus de résultats",
-                        selectAll: "Ajouter tout",
-                        deselectAll: "Enlever tout",
-                        robotDoubt: "Il y a un doute que vous soyez un robot. Si vous êtes humain, je suis désolé et contactez moi à vincent.blouin@gmail.com",
-                        and: "et",
-                        to: "à",
-                        toTheBubble: "à la bulle",
-                        selectedBubble: "Bulle sélectionnée"
+                        nonBinary: "Non binaire",
+                        male: "Homme",
+                        female: "Femme",
+                        pointeALaCroix: "Pointe-à-la-croix",
+                        pointeALaGarde: "Pointe-à-la-Garde",
+                        escuminac: "Escuminac",
+                        nouvelle: "Nouvelle",
+                        carletonSurMer: "Carleton-sur-mer",
+                        maria: "Maria",
+                        gesgapegiag: "Gesgapegiag",
+                        newRichmond: "New Richmond",
+                        caplan: "Caplan",
+                        saintSimeon: "Saint-Siméon",
+                        bonaventure: "Bonaventure",
+                        newCarlisle: "New Carlisle",
+                        paspebiac: "Paspébiac",
+                        hope: "Hope/Hope Town",
+                        saintGod: "Saint-Godefroi/Shigawake"
                     }
                 }
             }
         });
-        i18next.addResources("en", "vertex", {
-            "default": "write it",
-            "openLink": "Open link"
-        });
-        i18next.addResources("fr", "vertex", {
-            "default": "écris le",
-            "openLink": "Ouvrir le lien"
-        });
-        i18next.addResources("en", "edge", {
-            "default": "write"
-        });
-        i18next.addResources("fr", "edge", {
-            "default": "écris"
-        });
-        i18next.addResources("en", "tag", {
-            "default": "Tag"
-        });
-        i18next.addResources("fr", "tag", {
-            "default": "Étiquette"
-        });
-        i18next.addResources("en", "groupRelation", {
-            "default": "relate"
-        });
-        i18next.addResources("fr", "groupRelation", {
-            "default": "relie"
-        });
-        i18next.addResources("fr", "childNotice", {
-            tooltip: "Expandre (ctrl+E)",
-            tooltipForMac: "Expandre (⌘+E)",
-            tooltipCannotExpand: "Duplicat parent déjà ouvert"
-        });
-
-        i18next.addResources("en", "childNotice", {
-            "tooltip": "Expand (ctrl+E)",
-            "tooltipForMac": "Expand (⌘+E)",
-            tooltipCannotExpand: "Duplicate parent already open"
-        });
-
         return new VueI18Next(i18next);
     },
     i18next: i18next,

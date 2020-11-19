@@ -154,7 +154,6 @@ export default {
       editorToolbar: [["bold", "italic", "underline", "link", {'color': []}, {'background': []}]],
       formatting: [],
       images: images,
-      OfferService: OfferService,
       changeImageFlow: false,
       currentUploadStatus: STATUS_INITIAL_UPLOAD,
       submitLoading: false
