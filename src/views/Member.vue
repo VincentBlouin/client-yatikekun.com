@@ -82,8 +82,12 @@
         </v-card-text>
         <v-card-actions class="text-center vh-center pt-8">
           <v-btn color="primary" @click="addMember" :loading="submitLoading"
-                 :disabled="submitLoading">
+                 :disabled="submitLoading" v-if="isCreate">
             {{ $t('member:addMember') }}
+          </v-btn>
+          <v-btn color="primary" @click="modifyMember" :loading="submitLoading"
+                 :disabled="submitLoading" v-if="!isCreate">
+            {{ $t('change') }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -157,9 +161,16 @@ export default {
       await MemberService.create(this.member);
       this.submitLoading = false;
       await this.$router.push("/membres");
+    },
+    modifyMember: async function(){
+
     }
   },
-  computed: {}
+  computed: {
+    isCreate: function () {
+      return this.member.id === undefined
+    }
+  }
 }
 </script>
 <style>

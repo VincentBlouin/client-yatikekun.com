@@ -7,6 +7,9 @@ const genders = [
     },
     {
         value: "female"
+    },
+    {
+        value: "genderPreferNotAnswer"
     }
 ];
 export default {
