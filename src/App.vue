@@ -16,6 +16,9 @@
           </router-link>
         </v-toolbar-title>
         <v-spacer></v-spacer>
+        <v-btn text v-if="$vuetify.breakpoint.mdAndUp && $store.state.user !== null" to="/offres">
+          {{ $t('app:offers') }}
+        </v-btn>
         <v-btn text v-if="$vuetify.breakpoint.mdAndUp && $store.state.user === null" @click="becomeMember">
           <v-icon class="mr-2">how_to_reg</v-icon>
           {{ $t('app:becomeMember') }}
@@ -45,6 +48,17 @@
             light
         >
           <v-list>
+            <v-list-item v-if="$store.state.user === null">
+              <v-list-item-action>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>
+                  <v-btn text v-if="$vuetify.breakpoint.mdAndUp && $store.state.user !== null" to="/offres">
+                    {{ $t('app:offers') }}
+                  </v-btn>
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
             <v-list-item v-if="$store.state.user === null">
               <v-list-item-action>
                 <v-icon>how_to_reg</v-icon>
@@ -142,13 +156,15 @@ export default {
       becomeMember: "Devenez membre",
       login: "Connexion",
       logout: "Déconnecter",
-      charter: "Charte"
+      charter: "Charte",
+      offers: "Offres"
     });
     I18n.i18next.addResources("en", "app", {
       becomeMember: "Devenez membre",
       login: "Connexion",
       logout: "Déconnecter",
-      charter: "Charte"
+      charter: "Charte",
+      offers: "Offres"
     });
     return {
       drawer: false
