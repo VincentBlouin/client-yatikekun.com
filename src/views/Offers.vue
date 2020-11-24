@@ -31,7 +31,10 @@
                   v-if="offer.customImage"
                   :src="getCustomImageUrl(offer.customImage)"
               ></v-img>
-              <v-card-text class="subtitle-1 text-left pl-0 pr-0">
+              <v-card-text class="subtitle-1 text-right pl-0 pr-0 pb-0 pt-0 font-italic">
+                {{ $t(offer.User.subRegion) }}
+              </v-card-text>
+              <v-card-text class="subtitle-1 text-left pl-0 pr-0 pt-0">
                 {{ offer.title_fr }}
               </v-card-text>
             </v-card>
@@ -68,7 +71,7 @@ export default {
     this.isLoading = true;
     let response = await OfferService.list();
     this.offers = response.data.map((offer) => {
-      offer.userFullname = offer.User.firstname + " " + offer.User.lastname;
+      // offer.userFullname = offer.User.firstname + " " + offer.User.lastname;
       if (offer.image) {
         offer.image = Images.getImageWithName(offer.image);
       }
