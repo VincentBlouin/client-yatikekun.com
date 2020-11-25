@@ -24,6 +24,7 @@ export default {
             resources: {
                 en: {
                     translation: {
+                        close: 'Fermer',
                         login: 'Login',
                         register: 'Register',
                         search: 'Search',
@@ -59,6 +60,7 @@ export default {
                 },
                 fr: {
                     translation: {
+                        close: 'Fermer',
                         login: 'Connexion',
                         register: "S'inscrire",
                         search: 'Chercher',

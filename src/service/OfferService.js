@@ -17,5 +17,11 @@ export default {
     },
     create: function (offer) {
         return Service.api().post('/offer', offer)
-    }
+    },
+    get: function (offer) {
+        return Service.api().get('/offer/' + offer.id)
+    },
+    update: function (offer) {
+        return Service.api().put('/offer/' + offer.id, offer)
+    },
 }

@@ -8,12 +8,25 @@
       <v-card flat class="">
         <v-card-text class="text-center pb-0">
           <v-form ref="offerForm">
+            <v-row>
+              <v-col cols="12" class="right">
+                <v-switch
+                    v-model="offer.isAvailable"
+                    :label="isAvailableLabel"
+                    color="primary"
+                    right
+                    class="float-right"
+                    :disabled="!isOwner"
+                ></v-switch>
+              </v-col>
+            </v-row>
             <v-textarea
                 v-model="offer.description"
                 auto-grow
                 full-width
                 rows="2"
                 :placeholder="$t('offer:description')"
+                :disabled="!isOwner"
             ></v-textarea>
             <h4 class="font-weight-regular text-left mb-4">Image</h4>
             <v-row class="vh-center">
@@ -79,14 +92,19 @@
           </v-form>
         </v-card-text>
         <v-card-actions class="text-center vh-center pt-0" v-if="!changeImageFlow">
-          <v-btn text @click="changeImageFlow=true" class="">
+          <v-btn text @click="changeImageFlow=true" class="" :disabled="!isOwner">
             <v-icon class="mr-2">edit</v-icon>
             {{ $t('offer:changeImage') }}
           </v-btn>
         </v-card-actions>
         <v-card-actions class="text-center vh-center pt-8">
-          <v-btn color="primary" @click="addOffer" :loading="submitLoading" :disabled="submitLoading || !canAddOffer()">
+          <v-btn color="primary" v-if="isCreate" @click="addOffer" :loading="submitLoading"
+                 :disabled="submitLoading || !canAddOffer()">
             {{ $t('offer:addOffer') }}
+          </v-btn>
+          <v-btn color="primary" v-if="!isCreate" @click="modifyOffer" :loading="submitLoading"
+                 :disabled="submitLoading || !isOwner || !canAddOffer()">
+            {{ $t('offer:modifyOffer') }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -94,6 +112,27 @@
              @change="filesChange($event.target.name, $event.target.files)"
              style="display: none;"/>
     </v-col>
+    <v-snackbar
+        v-model="modifiedMessage"
+        color="primary"
+        top
+        :timeout="6000"
+    >
+      <span class="subtitle-1">
+        {{ $t('offer:offerModified') }}
+      </span>
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+            dark
+            text
+            v-bind="attrs"
+            @click="modifiedMessage = false"
+        >
+          {{$t('close')}}
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-row>
 </template>
 <script>
@@ -108,10 +147,18 @@ const STATUS_FAILED_UPLOAD = 3
 export default {
   components: {},
   async mounted() {
-    this.descriptionId = Math.random();
+    this.offer.id = this.$route.params.offerId;
     if (!this.offer.id) {
       this.changeImageFlow = true;
+      return
     }
+    const response = await OfferService.get(this.offer);
+    this.offer = response.data;
+    if (this.offer.image) {
+      this.offer.image = Images.getImageWithName(this.offer.image);
+    }
+    this.offer.title_fr = this.offer.title_fr[0].toUpperCase() + this.offer.title_fr.substr(1);
+    this.offer.description = this.offer.title_fr;
   },
   data: function () {
     I18n.i18next.addResources("fr", "offer", {
@@ -122,7 +169,11 @@ export default {
       modify: "Modifier",
       upload: "Téléverser",
       changeImage: "Changer l'image",
-      addOffer: "Ajouter votre offre"
+      addOffer: "Ajouter votre offre",
+      modifyOffer: "Modifier votre offre",
+      isAvailable: "Est disponible",
+      isNotAvailable: "N'est pas disponible",
+      offerModified: "Votre offre a été modifiée"
     });
     I18n.i18next.addResources("en", "offer", {
       title: "Nouvelle offre",
@@ -132,7 +183,11 @@ export default {
       modify: "Modifier",
       upload: "Téléverser",
       changeImage: "Changer l'image",
-      addOffer: "Ajouter votre offre"
+      addOffer: "Ajouter votre offre",
+      modifyOffer: "Modifier votre offer",
+      isAvailable: "Est disponible",
+      isNotAvailable: "N'est pas disponible",
+      offerModified: "Votre offre a été modifiée"
     });
     /*
       concat is to avoid re-adding uploadImage
@@ -144,11 +199,11 @@ export default {
     return {
       offer: {
         UserId: this.$store.state.user.id,
-        description: ""
+        description: "",
+        isAvailable: true
       },
       isNewOffer: false,
       imageCarousel: 0,
-      descriptionId: Math.random(),
       selectedImage: null,
       editorOptions: {},
       editorToolbar: [["bold", "italic", "underline", "link", {'color': []}, {'background': []}]],
@@ -156,7 +211,8 @@ export default {
       images: images,
       changeImageFlow: false,
       currentUploadStatus: STATUS_INITIAL_UPLOAD,
-      submitLoading: false
+      submitLoading: false,
+      modifiedMessage: false
     }
   },
   methods: {
@@ -168,6 +224,12 @@ export default {
       await OfferService.create(this.offer);
       this.submitLoading = false;
       await this.$router.push("/offres");
+    },
+    modifyOffer: async function () {
+      this.submitLoading = true;
+      await OfferService.update(this.offer);
+      this.modifiedMessage = true;
+      this.submitLoading = false;
     },
     getCurrentImageUrl() {
       if (this.offer.image) {
@@ -233,6 +295,16 @@ export default {
     }
   },
   computed: {
+    isAvailableLabel: function () {
+      return this.offer.isAvailable ?
+          this.$t('offer:isAvailable') : this.$t('offer:isNotAvailable');
+    },
+    isOwner: function () {
+      return this.offer.UserId === this.$store.state.user.id;
+    },
+    isCreate: function () {
+      return this.offer.id === undefined
+    },
     hasImage() {
       return this.offer.image || this.offer.customImage;
     },
