@@ -117,8 +117,8 @@ export default {
   computed: {
     offersFiltered: function () {
       return this.offers.filter((offer) => {
-        const descriptionSearch = offer.title_fr.toLowerCase().indexOf(this.filterInput.toLowerCase()) > -1;
-        const subRegionSearch = offer.User.subRegion.toLowerCase().indexOf(this.filterInput.toLowerCase()) > -1;
+        const descriptionSearch = offer.title_fr.noAccents().toLowerCase().indexOf(this.filterInput.noAccents().toLowerCase()) > -1;
+        const subRegionSearch = offer.User.subRegion.noAccents().toLowerCase().indexOf(this.filterInput.noAccents().toLowerCase()) > -1;
         return descriptionSearch || subRegionSearch;
       });
     }
