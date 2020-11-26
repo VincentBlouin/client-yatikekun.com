@@ -9,6 +9,9 @@
         <v-card-title>
           {{ $t('offers:title') }}
         </v-card-title>
+        <v-card-actions>
+          <v-text-field v-model="filterInput" :label="$t('offers:search')" prepend-icon="search"></v-text-field>
+        </v-card-actions>
         <v-row v-if="isLoading">
           <v-col cols="12" class="col-md-6 col-lg-4 text-center vh-center" v-for="n in 20" :key="n">
             <v-skeleton-loader
@@ -18,7 +21,12 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col cols="12" class="col-md-6 col-lg-4 text-center" v-for="offer in offers" :key="offer.id">
+          <v-col v-if="offersFiltered.length === 0" cols="12" class="text-h6">
+            <v-sheet height="400" class="grey--text">
+              {{$t('offers:noResults')}}
+            </v-sheet>
+          </v-col>
+          <v-col v-else cols="12" class="col-md-6 col-lg-4 text-center" v-for="offer in offersFiltered" :key="offer.id">
             <v-card flat class="text-center pl-8 pr-8" :to="'/offre/' + offer.id">
               <v-img
                   height="175"
@@ -84,21 +92,35 @@ export default {
     I18n.i18next.addResources("fr", "offers", {
       title: "Offres",
       offer: "Offre",
-      member: "Membre"
+      member: "Membre",
+      search: "Chercher",
+      noResults: "Pas de résultats"
     });
     I18n.i18next.addResources("en", "offers", {
       title: "Offers",
       offer: "Offre",
-      member: "Membre"
+      member: "Membre",
+      search: "Chercher",
+      noResults: "Pas de résultats"
     });
     return {
-      offers: null,
-      isLoading: false
+      offers: [],
+      isLoading: false,
+      filterInput: ""
     }
   },
   methods: {
     getCustomImageUrl: function (customImage) {
       return Images.getCustomBase64Url(customImage);
+    }
+  },
+  computed: {
+    offersFiltered: function () {
+      return this.offers.filter((offer) => {
+        const descriptionSearch = offer.title_fr.toLowerCase().indexOf(this.filterInput.toLowerCase()) > -1;
+        const subRegionSearch = offer.User.subRegion.toLowerCase().indexOf(this.filterInput.toLowerCase()) > -1;
+        return descriptionSearch || subRegionSearch;
+      });
     }
   }
 }
