@@ -16,7 +16,6 @@
                     color="primary"
                     right
                     class="float-right"
-                    :disabled="!isOwner"
                 ></v-switch>
               </v-col>
             </v-row>
@@ -26,7 +25,7 @@
                 full-width
                 rows="2"
                 :placeholder="$t('offer:description')"
-                :disabled="!isOwner"
+                :rules="[rules.max255Char]"
             ></v-textarea>
             <h4 class="font-weight-regular text-left mb-4">Image</h4>
             <v-row class="vh-center">
@@ -89,10 +88,26 @@
                 </v-badge>
               </v-slide-item>
             </v-slide-group>
+            <v-textarea
+                v-model="offer.experience"
+                auto-grow
+                full-width
+                rows="2"
+                :placeholder="$t('offer:experience')"
+                :rules="[rules.max255Char]"
+            ></v-textarea>
+            <v-textarea
+                v-model="offer.additionalFees"
+                auto-grow
+                full-width
+                rows="2"
+                :placeholder="$t('offer:additionalFees')"
+                :rules="[rules.max255Char]"
+            ></v-textarea>
           </v-form>
         </v-card-text>
         <v-card-actions class="text-center vh-center pt-0" v-if="!changeImageFlow">
-          <v-btn text @click="changeImageFlow=true" class="" :disabled="!isOwner">
+          <v-btn text @click="changeImageFlow=true" class="">
             <v-icon class="mr-2">edit</v-icon>
             {{ $t('offer:changeImage') }}
           </v-btn>
@@ -103,7 +118,7 @@
             {{ $t('offer:addOffer') }}
           </v-btn>
           <v-btn color="primary" v-if="!isCreate" @click="modifyOffer" :loading="submitLoading"
-                 :disabled="submitLoading || !isOwner || !canAddOffer()">
+                 :disabled="submitLoading || !canAddOffer()">
             {{ $t('offer:modifyOffer') }}
           </v-btn>
         </v-card-actions>
@@ -129,7 +144,7 @@
             v-bind="attrs"
             @click="modifiedMessage = false"
         >
-          {{$t('close')}}
+          {{ $t('close') }}
         </v-btn>
       </template>
     </v-snackbar>
@@ -138,7 +153,9 @@
 <script>
 import I18n from "@/i18n";
 import Images from '@/Images'
-import OfferService from "@/service/OfferService";
+import OfferService from "@/offer/OfferService";
+import Rules from "@/Rules";
+import Offer from '@/offer/Offer'
 
 const STATUS_INITIAL_UPLOAD = 0
 const STATUS_SAVING_UPLOAD = 1
@@ -153,12 +170,7 @@ export default {
       return
     }
     const response = await OfferService.get(this.offer);
-    this.offer = response.data;
-    if (this.offer.image) {
-      this.offer.image = Images.getImageWithName(this.offer.image);
-    }
-    this.offer.title_fr = this.offer.title_fr[0].toUpperCase() + this.offer.title_fr.substr(1);
-    this.offer.description = this.offer.title_fr;
+    this.offer = Offer.format(response.data);
   },
   data: function () {
     I18n.i18next.addResources("fr", "offer", {
@@ -173,7 +185,9 @@ export default {
       modifyOffer: "Modifier votre offre",
       isAvailable: "Est disponible",
       isNotAvailable: "N'est pas disponible",
-      offerModified: "Votre offre a été modifiée"
+      offerModified: "Votre offre a été modifiée",
+      experience: "Expérience",
+      additionalFees: "Frais additionels"
     });
     I18n.i18next.addResources("en", "offer", {
       title: "Nouvelle offre",
@@ -187,7 +201,9 @@ export default {
       modifyOffer: "Modifier votre offer",
       isAvailable: "Est disponible",
       isNotAvailable: "N'est pas disponible",
-      offerModified: "Votre offre a été modifiée"
+      offerModified: "Votre offre a été modifiée",
+      experience: "Expérience",
+      additionalFees: "Frais additionels"
     });
     /*
       concat is to avoid re-adding uploadImage
@@ -212,7 +228,8 @@ export default {
       changeImageFlow: false,
       currentUploadStatus: STATUS_INITIAL_UPLOAD,
       submitLoading: false,
-      modifiedMessage: false
+      modifiedMessage: false,
+      rules: Rules
     }
   },
   methods: {
@@ -220,6 +237,9 @@ export default {
       return !this.isSaving && this.offer.description && (this.offer.image || this.offer.customImage);
     },
     addOffer: async function () {
+      if (!this.$refs.offerForm.validate()) {
+        return;
+      }
       this.submitLoading = true;
       await OfferService.create(this.offer);
       this.submitLoading = false;

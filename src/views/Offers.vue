@@ -23,7 +23,7 @@
         <v-row>
           <v-col v-if="offersFiltered.length === 0" cols="12" class="text-h6">
             <v-sheet height="400" class="grey--text">
-              {{$t('offers:noResults')}}
+              {{ $t('offers:noResults') }}
             </v-sheet>
           </v-col>
           <v-col v-else cols="12" class="col-md-6 col-lg-4 text-center" v-for="offer in offersFiltered" :key="offer.id">
@@ -43,7 +43,7 @@
                 {{ $t(offer.User.subRegion) }}
               </v-card-text>
               <v-card-text class="subtitle-1 text-left pl-0 pr-0 pt-0">
-                {{ offer.title_fr }}
+                {{ offer.description }}
               </v-card-text>
             </v-card>
           </v-col>
@@ -69,8 +69,9 @@
 </template>
 <script>
 import I18n from "@/i18n";
-import OfferService from "@/service/OfferService";
+import OfferService from "@/offer/OfferService";
 import Images from "@/Images";
+import Offer from '@/offer/Offer'
 
 export default {
   components: {},
@@ -79,12 +80,7 @@ export default {
     this.isLoading = true;
     let response = await OfferService.list();
     this.offers = response.data.map((offer) => {
-      // offer.userFullname = offer.User.firstname + " " + offer.User.lastname;
-      if (offer.image) {
-        offer.image = Images.getImageWithName(offer.image);
-      }
-      offer.title_fr = offer.title_fr[0].toUpperCase() + offer.title_fr.substr(1);
-      return offer;
+      return Offer.format(offer);
     });
     this.isLoading = false;
   },
@@ -117,7 +113,7 @@ export default {
   computed: {
     offersFiltered: function () {
       return this.offers.filter((offer) => {
-        const descriptionSearch = offer.title_fr.noAccents().toLowerCase().indexOf(this.filterInput.noAccents().toLowerCase()) > -1;
+        const descriptionSearch = offer.description.noAccents().toLowerCase().indexOf(this.filterInput.noAccents().toLowerCase()) > -1;
         const subRegionSearch = offer.User.subRegion.noAccents().toLowerCase().indexOf(this.filterInput.noAccents().toLowerCase()) > -1;
         return descriptionSearch || subRegionSearch;
       });

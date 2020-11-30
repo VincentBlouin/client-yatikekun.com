@@ -17,5 +17,11 @@ export default {
             return true;
         }
         return value.length >= 8 || I18n.i18next.t('min8Char');
+    },
+    max255Char: function (value) {
+        if (!value) {
+            return true;
+        }
+        return value.length <= 255 || I18n.i18next.t('max255Char');
     }
 }

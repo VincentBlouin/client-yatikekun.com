@@ -35,10 +35,33 @@
           <v-icon class="mr-2">assignment</v-icon>
           {{ $t('app:charter') }}
         </v-btn>
-        <v-btn text v-if="$vuetify.breakpoint.mdAndUp && $store.state.user !== null" @click="logout">
-          <v-icon class="mr-2">exit_to_app</v-icon>
-          {{ $t('app:logout') }}
-        </v-btn>
+        <v-menu
+            bottom
+            left
+            nudge-bottom="50"
+            v-if="$vuetify.breakpoint.mdAndUp && $store.state.user !== null"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+                icon
+                v-bind="attrs"
+                v-on="on"
+            >
+              <v-icon>account_circle</v-icon>
+            </v-btn>
+          </template>
+
+          <v-list>
+            <v-list-item @click="logout">
+              <v-list-item-action>
+                <v-icon>exit_to_app</v-icon>
+              </v-list-item-action>
+              <v-list-item-title>
+                {{ $t('app:logout') }}
+              </v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="black--text"
                             v-if="$vuetify.breakpoint.smAndDown"></v-app-bar-nav-icon>
         <v-navigation-drawer
@@ -52,7 +75,7 @@
             light
         >
           <v-list>
-            <v-list-item v-if="$vuetify.breakpoint.mdAndUp && $store.state.user !== null && $store.state.user.status === 'admin'">
+            <v-list-item v-if="$store.state.user !== null && $store.state.user.status === 'admin'">
               <v-list-item-action>
                 <v-icon>people</v-icon>
               </v-list-item-action>
@@ -64,7 +87,7 @@
                 </v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item v-if="$vuetify.breakpoint.mdAndUp && $store.state.user !== null">
+            <v-list-item v-if="$store.state.user !== null">
               <v-list-item-action>
               </v-list-item-action>
               <v-list-item-content>
