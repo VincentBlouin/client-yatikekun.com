@@ -54,6 +54,11 @@ const routes = [
         name: 'MemberModify',
         component: () => import('../views/Member.vue')
     },
+    {
+        path: '/consulter-offre/:offerId',
+        name: 'ConsultOffer',
+        component: () => import('../views/ConsultOffer.vue')
+    },
 ]
 
 const router = new VueRouter({
