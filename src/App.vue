@@ -242,6 +242,11 @@ export default {
   justify-content: center;
 }
 
+.h-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .primary-color {
   color: #2e7d32
 }
