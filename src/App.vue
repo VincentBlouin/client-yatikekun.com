@@ -242,6 +242,7 @@ export default {
   justify-content: center;
 }
 
+
 .h-right {
   display: flex;
   justify-content: flex-end;

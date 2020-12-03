@@ -221,8 +221,6 @@ export default {
       isNewOffer: false,
       imageCarousel: 0,
       selectedImage: null,
-      editorOptions: {},
-      editorToolbar: [["bold", "italic", "underline", "link", {'color': []}, {'background': []}]],
       formatting: [],
       images: images,
       changeImageFlow: false,
@@ -344,7 +342,4 @@ export default {
 }
 </script>
 <style>
-.ql-editor {
-  color: black;
-}
 </style>

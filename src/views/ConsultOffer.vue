@@ -1,6 +1,9 @@
 <template>
-  <v-card flat class="mt-16">
-    <v-card-actions class="vh-center pt-8">
+  <v-card flat class="mt-16 vh-center">
+    <v-card-actions class="vh-center" :class="{
+      'pt-8': $vuetify.breakpoint.smAndDown,
+      'pt-16': $vuetify.breakpoint.mdAndUp
+    }">
       <v-btn
           color="primary"
           large
@@ -8,6 +11,7 @@
           :class="{
             'pb-7 pt-7': $vuetify.breakpoint.smAndDown
           }"
+          @click="contactDialog=true;"
       >
         <v-row v-if="$vuetify.breakpoint.smAndDown">
           <v-col cols="12" class="pa-0 pb-0">
@@ -20,7 +24,10 @@
         <v-icon class="mr-2" v-if="$vuetify.breakpoint.mdAndUp">person</v-icon>
         <span v-if="$vuetify.breakpoint.mdAndUp">{{ $t('consult:contact') }}</span>
       </v-btn>
-      <v-divider vertical class="ml-4 mr-4"></v-divider>
+      <v-divider vertical class="" :class="{
+        'ml-5 mr-5' : $vuetify.breakpoint.smAndDown,
+        'ml-4 mr-4': $vuetify.breakpoint.mdAndUp
+      }"></v-divider>
       <v-btn
           color="primary"
           large
@@ -110,6 +117,61 @@
         </v-col>
       </v-row>
     </v-card-text>
+    <v-dialog v-model="contactDialog" v-if="contactDialog" width="400">
+      <v-card>
+        <v-card-title>
+          <v-spacer></v-spacer>
+          <v-btn icon @click="contactDialog=false;">
+            <v-icon>close</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-card-text class="text-body-1 vh-center">
+          <v-list class="text-left">
+            <v-list-item class="font-weight-bold text-h5">
+              <v-list-item-action>
+                <v-icon>account_circle</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>
+                  {{ offer.User.firstname }}
+                  {{ offer.User.lastname }}
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item :href="'https://m.me/' + offer.User.facebookId" target="_blank">
+              <v-list-item-action>
+                <v-icon>messenger</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>
+                  Messenger
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item :href="'mailto:'+offer.User.email">
+              <v-list-item-action>
+                <v-icon>email</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>
+                  {{ offer.User.email }}
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item :href="'phone:'+offer.User.phone1">
+              <v-list-item-action>
+                <v-icon>phone</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>
+                  {{ offer.User.phone1 }}
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 <script>
@@ -159,7 +221,8 @@ export default {
       imageCarousel: 0,
       images: images,
       rules: Rules,
-      isLoading: true
+      isLoading: true,
+      contactDialog: false
     }
   },
   methods: {
