@@ -54,7 +54,7 @@
           ></v-skeleton-loader>
         </v-col>
         <v-col cols="12" class="col-md-6 col-lg-3" v-if="!isLoading" :class="{
-          'h-right offer-margin-top': $vuetify.breakpoint.mdAndUp,
+          'h-right': $vuetify.breakpoint.mdAndUp,
           'vh-center' : $vuetify.breakpoint.smAndDown
         }">
           <v-card flat class="text-center pt-0" max-width="300" :class="{
@@ -82,19 +82,27 @@
             </v-card-text>
           </v-card>
         </v-col>
-        <v-col cols="12" class="col-md-6 col-lg-3 text-center">
-          <v-card flat class="">
+        <v-col cols="12" class="col-md-6 col-lg-3">
+          <v-card flat class="" min-height="150">
             <v-card-title class="">
               {{ $t('consult:fees') }}
             </v-card-title>
-            <v-card-text class="text-left subtitle-1">
+            <v-card-text class="text-left subtitle-1"
+                         v-if="!offer.additionalFees_fr || offer.additionalFees_fr.trim() === ''">
+              {{ $t('consult:notMentioned') }}
+            </v-card-text>
+            <v-card-text class="text-left subtitle-1" v-else>
               {{ offer.additionalFees_fr }}
             </v-card-text>
           </v-card>
-          <v-card flat>
+          <v-card flat min-height="150">
             <v-card-title>
               {{ $t('consult:experience') }}
             </v-card-title>
+            <v-card-text class="text-left subtitle-1"
+                         v-if="!offer.experience_fr || offer.experience_fr.trim() === ''">
+              {{ $t('consult:notMentioned') }}
+            </v-card-text>
             <v-card-text class="text-left subtitle-1">
               {{ offer.experience_fr }}
             </v-card-text>
@@ -125,13 +133,15 @@ export default {
       contact: "Contacter",
       transaction: "Transaction",
       experience: "Expérience",
-      fees: "Frais additionels"
+      fees: "Frais additionels",
+      notMentioned: "Pas mentionné"
     });
     I18n.i18next.addResources("en", "offer", {
       contact: "Contacter",
       transaction: "Transaction",
       experience: "Expérience",
-      fees: "Frais additionels"
+      fees: "Frais additionels",
+      notMentioned: "Pas mentionné"
     });
     /*
       concat is to avoid re-adding uploadImage
