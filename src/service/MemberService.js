@@ -12,4 +12,7 @@ export default {
     get: function (member) {
         return Service.api().get('/member/' + member.uuid)
     },
+    update: function (member) {
+        return Service.api().put('/member/' + member.uuid, member)
+    }
 }

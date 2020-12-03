@@ -5,7 +5,7 @@
       class="vh-center"
   >
     <v-col cols="12" class="col-md-6 text-center">
-      <v-card flat class="">
+      <v-card flat class="mt-16 mb-16 pt-16">
         <v-card-text class="text-center pb-0">
           <v-form ref="memberForm" v-model="isFormValid">
             <v-text-field
@@ -26,6 +26,13 @@
                 prepend-icon="email"
                 required
                 :rules="[rules.required, rules.email]"
+            ></v-text-field>
+            <v-text-field
+                v-model="member.facebookId"
+                :label="$t('member:facebookId')"
+                prepend-icon="facebook"
+                required
+                :rules="[]"
             ></v-text-field>
             <v-text-field
                 v-model="member.region"
@@ -92,6 +99,20 @@
         </v-card-actions>
       </v-card>
     </v-col>
+    <v-snackbar v-model="modifySuccess" top color="primary" dark :timeout="7000">
+      {{ $t('member:modified') }}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+            color="white"
+            text
+            icon
+            v-bind="attrs"
+            @click="modifySuccess = false"
+        >
+          <v-icon>close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-row>
 </template>
 <script>
@@ -118,12 +139,14 @@ export default {
       firstname: "Prénom",
       lastname: "Nom",
       email: "Courriel",
+      facebookId: "Identifiant Facebook",
       region: "Région",
       subRegion: "Sous région",
       phone1: "Téléphone 1",
       phone2: "Téléphone 2",
       gender: "Genre",
-      address: "Adresse"
+      address: "Adresse",
+      modified: "Les informations ont été enregistrées"
     });
     I18n.i18next.addResources("en", "member", {
       title: "Nouveau membre",
@@ -131,12 +154,14 @@ export default {
       firstname: "Prénom",
       lastname: "Nom",
       email: "Courriel",
+      facebookId: "Identifiant Facebook",
       region: "Région",
       subRegion: "Sous région",
       phone1: "Téléphone 1",
       phone2: "Téléphone 2",
       gender: "Genre",
-      address: "Adresse"
+      address: "Adresse",
+      modified: "Les informations ont été enregistrées"
     });
     return {
       submitLoading: false,
@@ -146,7 +171,8 @@ export default {
       subRegions: Regions.get(),
       genders: Genders.get(),
       isFormValid: false,
-      rules: Rules
+      rules: Rules,
+      modifySuccess: true
     }
   },
   methods: {
@@ -162,8 +188,11 @@ export default {
       this.submitLoading = false;
       await this.$router.push("/membres");
     },
-    modifyMember: async function(){
-
+    modifyMember: async function () {
+      this.submitLoading = true;
+      await MemberService.update(this.member);
+      this.submitLoading = false;
+      this.modifySuccess = true;
     }
   },
   computed: {
