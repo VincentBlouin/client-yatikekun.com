@@ -48,6 +48,12 @@
         <span v-if="$vuetify.breakpoint.mdAndUp">{{ $t('consult:transaction') }}</span>
       </v-btn>
     </v-card-actions>
+    <v-card-actions class="vh-center" v-if="isOwner">
+      <v-btn color="primary" :to="'/offre/' + offer.id">
+        <v-icon class="mr-2">edit</v-icon>
+        {{ $t('modify') }}
+      </v-btn>
+    </v-card-actions>
     <v-card-text class="">
       <v-row
           align="center"
@@ -189,6 +195,7 @@ export default {
     const response = await OfferService.get(this.offer);
     this.offer = Offer.format(response.data);
     this.isLoading = false;
+    this.isOwner = this.offer.UserId === this.$store.state.user.id;
   },
   data: function () {
     I18n.i18next.addResources("fr", "consult", {
@@ -222,7 +229,8 @@ export default {
       images: images,
       rules: Rules,
       isLoading: true,
-      contactDialog: false
+      contactDialog: false,
+      isOwner: false
     }
   },
   methods: {

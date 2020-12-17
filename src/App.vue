@@ -12,7 +12,7 @@
         <!--        </v-toolbar-title>-->
         <v-toolbar-title class="text-h5">
           <router-link to="/à-propos">
-            seldemer.org
+            partageheure.com
           </router-link>
         </v-toolbar-title>
         <v-spacer></v-spacer>

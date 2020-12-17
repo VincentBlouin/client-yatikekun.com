@@ -7,6 +7,8 @@ export default {
             offer.image = Images.getImageWithName(offer.image);
         }
         offer.description = offer.title_fr[0].toUpperCase() + offer.title_fr.substr(1);
+        offer.experience = offer.experience_fr;
+        offer.additionalFees = offer.additionalFees_fr;
         return offer;
     }
 }
