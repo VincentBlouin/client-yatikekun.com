@@ -68,7 +68,7 @@ export default {
         return;
       }
       LoadingFlow.enter();
-      await this.$store.dispatch('setUser', undefined);
+      await this.$store.dispatch('setUser', null);
       let recaptchaToken = await this.$recaptcha("login");
       AuthenticateService.login(this.user, recaptchaToken).then((response) => {
         this.$store.dispatch('setToken', response.data.token)

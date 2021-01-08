@@ -21,6 +21,7 @@
           {{ $t('app:members') }}
         </v-btn>
         <v-btn text v-if="$vuetify.breakpoint.mdAndUp && $store.state.user !== null" to="/offres">
+          <span class="mr-2">🌈</span>
           {{ $t('app:offers') }}
         </v-btn>
         <v-btn text v-if="$vuetify.breakpoint.mdAndUp && $store.state.user === null" @click="becomeMember">
@@ -173,8 +174,9 @@
 import I18n from "@/i18n";
 
 export default {
-  mounted: function () {
-    this.$store.dispatch('setLocale', "fr");
+  mounted: async function () {
+    await this.$store.dispatch('setLocale', "fr");
+    this.$vuetify.lang.current = this.$store.state.locale;
   },
   methods: {
     logout: function () {

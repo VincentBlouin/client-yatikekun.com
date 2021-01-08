@@ -1,5 +1,6 @@
 import I18n from '@/i18n'
 
+const floatRegex = /^-?\d+(?:[.,]\d*?)?$/;
 export default {
     required: function (value) {
         return !!value || I18n.i18next.t('required')
@@ -23,5 +24,12 @@ export default {
             return true;
         }
         return value.length <= 255 || I18n.i18next.t('max255Char');
+    },
+    isFloat: function (value) {
+        if (!floatRegex.test(value)) {
+            return false;
+        }
+        const val = parseFloat(value);
+        return isNaN(val);
     }
 }

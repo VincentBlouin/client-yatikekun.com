@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib';
 import colors from 'vuetify/es5/util/colors'
+import fr from 'vuetify/lib/locale/fr'
 Vue.use(Vuetify);
 
 export default new Vuetify({
@@ -9,6 +10,10 @@ export default new Vuetify({
     },
     theme: {
         dark:false,
+        lang: {
+            locales: { fr },
+            current: 'fr',
+        },
         themes:{
             light:{
                 primary: "#177C72",

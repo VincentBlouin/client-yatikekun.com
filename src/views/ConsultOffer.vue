@@ -35,6 +35,7 @@
           :class="{
             'pb-7 pt-7': $vuetify.breakpoint.smAndDown
           }"
+          @click="enterTransactionFlow"
       >
         <v-row v-if="$vuetify.breakpoint.smAndDown">
           <v-col cols="12" class="pa-0 pb-0">
@@ -178,6 +179,48 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="transactionDialog" v-if="transactionDialog" width="900">
+      <v-card>
+        <v-card-title>
+          <v-spacer></v-spacer>
+          <v-btn icon @click="transactionDialog=false;">
+            <v-icon>close</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-card-text>
+          <v-card>
+            <v-card-title>
+              <span class="font-weight-bold mr-2">
+                {{ $store.state.user.firstname }}
+                {{ $store.state.user.lastname }}
+              </span>
+              {{ $t('consult:receivedService') }}
+            </v-card-title>
+          </v-card>
+        </v-card-text>
+        <v-card-text>
+          <v-card>
+            <v-card-title>
+              <span class="font-weight-bold mr-2">
+                {{ offer.User.firstname }}
+                {{ offer.User.lastname }}
+              </span>
+              {{ $t('consult:performedService') }}
+            </v-card-title>
+          </v-card>
+        </v-card-text>
+        <v-card-text class="text-body-1 vh-center">
+          <!--          <v-autocomplete-->
+          <!--              :items="users"-->
+          <!--              :filter="usersFilter"-->
+          <!--              color="white"-->
+          <!--              item-text="name"-->
+          <!--              v-model="userOfTransaction"-->
+          <!--              :label="$t('consult:chooseUser')"-->
+          <!--          ></v-autocomplete>-->
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 <script>
@@ -203,14 +246,20 @@ export default {
       transaction: "Transaction",
       experience: "Expérience",
       fees: "Frais additionels",
-      notMentioned: "Pas mentionné"
+      notMentioned: "Pas mentionné",
+      chooseUser: "L'autre usager dans la transaction",
+      receivedService: "as reçu le service",
+      performedService: "as rendu le service"
     });
     I18n.i18next.addResources("en", "offer", {
       contact: "Contacter",
       transaction: "Transaction",
       experience: "Expérience",
       fees: "Frais additionels",
-      notMentioned: "Pas mentionné"
+      notMentioned: "Pas mentionné",
+      chooseUser: "L'autre usager dans la transaction",
+      receivedService: "as reçu le service",
+      performedService: "as rendu le service"
     });
     /*
       concat is to avoid re-adding uploadImage
@@ -230,12 +279,27 @@ export default {
       rules: Rules,
       isLoading: true,
       contactDialog: false,
-      isOwner: false
+      isOwner: false,
+      transactionDialog: false,
+      transactionStepper: null,
+      users: [],
+      userOfTransaction: null
     }
   },
   methods: {
     getCustomImageUrl: function (customImage) {
       return Images.getCustomBase64Url(customImage);
+    },
+    cancel: function () {
+      this.transactionStepper = null;
+      this.transactionDialog = false;
+    },
+    usersFilter: function () {
+
+    },
+    enterTransactionFlow: function () {
+
+      this.transactionDialog = true;
     }
   },
   computed: {}

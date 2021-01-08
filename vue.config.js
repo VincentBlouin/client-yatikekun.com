@@ -6,7 +6,7 @@ module.exports = {
     config
         .plugin('html')
         .tap(args => {
-          args[0].title = "seldemer.org";
+          args[0].title = "partageheure.com";
           return args;
         })
   }
