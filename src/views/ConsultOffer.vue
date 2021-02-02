@@ -179,7 +179,7 @@
         </v-card-text>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="transactionDialog" v-if="transactionDialog" width="900">
+    <v-dialog v-model="transactionDialog" v-if="transactionDialog" width="700">
       <v-card>
         <v-card-title>
           <v-spacer></v-spacer>
@@ -200,9 +200,20 @@
           ></v-autocomplete>
         </v-card-text>
         <v-card-text>
-          <v-card width="100%">
+          <v-card>
             <v-card-title class="vh-center">
-              <span class="font-weight-bold mr-2">
+              {{$t('consult:durationTitle')}}
+            </v-card-title>
+            <v-card-text>
+              <v-time-picker :allowed-minutes="allowedMinutes" v-model="quantity"></v-time-picker>
+            </v-card-text>
+          </v-card>
+        </v-card-text>
+        <v-card-text>
+          <v-card width="100%">
+            <v-card-text class="text-h6 font-weight-regular">
+              <p>
+              <span class="font-weight-bold">
                 <span v-if="isOwner && !userOfTransaction">
                   ...
                 </span>
@@ -212,20 +223,25 @@
                 </span>
                 <span v-if="!isOwner">
                   {{ $store.state.user.firstname }}
-                {{ $store.state.user.lastname }}
+                  {{ $store.state.user.lastname }}
                 </span>
               </span>
-              {{ $t('consult:receivedService') }}
-              {{ $t('consult:performedService') }}
-              <span class="font-weight-bold ml-2">
+                {{ $t('consult:receivedService') }}
+                {{ $t('consult:performedService') }}
+                <span class="font-weight-bold">
                   {{ offer.User.firstname }}
                   {{ offer.User.lastname }}
-              </span>
-            </v-card-title>
+              </span>.
+              </p>
+              <p>
+                {{ $t('consult:billedQuantity') }}
+                {{ quantity }}h
+              </p>
+            </v-card-text>
           </v-card>
         </v-card-text>
         <v-card-actions>
-          <v-btn color="primary" :disabled="isOwner && userOfTransaction === null">
+          <v-btn color="primary" :disabled="(isOwner && userOfTransaction === null) || quantity === 0">
             {{ $t('confirm') }}
           </v-btn>
           <v-spacer></v-spacer>
@@ -273,7 +289,9 @@ export default {
       notMentioned: "Pas mentionné",
       chooseUser: "L'autre usager dans la transaction",
       receivedService: "as reçu le service",
-      performedService: "rendu par"
+      performedService: "rendu par",
+      billedQuantity: "La quantité de temps facturé est de",
+      durationTitle: "Durée du service en heures et minutes"
     });
     I18n.i18next.addResources("en", "offer", {
       contact: "Contacter",
@@ -283,7 +301,9 @@ export default {
       notMentioned: "Pas mentionné",
       chooseUser: "L'autre usager dans la transaction",
       receivedService: "as reçu le service",
-      performedService: "rendu par"
+      performedService: "rendu par",
+      billedQuantity: "La quantité de temps facturé est de",
+      durationTitle: "Durée du service en heures et minutes"
     });
     /*
       concat is to avoid re-adding uploadImage
@@ -308,9 +328,13 @@ export default {
       transactionStepper: null,
       members: [],
       userOfTransaction: null,
+      quantity: 0,
+      allowedMinutes: [0, 15, 30, 45],
+      allowedHours: [0, 1, 2, 3, 4, 5, 6],
       membersAutocompleteMenuProps: {
         'content-class': 'text-left'
-      }
+      },
+      hours: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     }
   },
   methods: {
@@ -330,8 +354,9 @@ export default {
           lastname.indexOf(searchText) > -1
     },
     enterTransactionFlow: function () {
-
       this.transactionDialog = true;
+      this.userOfTransaction = null;
+      this.quantity = 0;
     }
   }
 }
@@ -339,6 +364,14 @@ export default {
 <style>
 .v-menu__content {
   text-align: left;
+}
+
+.v-time-picker-title__ampm {
+  visibility: hidden;
+}
+
+.v-time-picker-clock__ampm .v-picker__title__btn {
+  visibility: hidden;
 }
 
 .offer-margin-top {
