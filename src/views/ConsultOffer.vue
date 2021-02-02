@@ -187,38 +187,52 @@
             <v-icon>close</v-icon>
           </v-btn>
         </v-card-title>
+        <v-card-text class="text-body-1 vh-center" v-if="isOwner">
+          <v-autocomplete
+              :items="members"
+              :filter="membersFilter"
+              item-text="fullname"
+              v-model="userOfTransaction"
+              :label="$t('consult:chooseUser')"
+              class="members-autocomplete"
+              :menu-props="membersAutocompleteMenuProps"
+              return-object
+          ></v-autocomplete>
+        </v-card-text>
         <v-card-text>
-          <v-card>
-            <v-card-title>
+          <v-card width="100%">
+            <v-card-title class="vh-center">
               <span class="font-weight-bold mr-2">
-                {{ $store.state.user.firstname }}
+                <span v-if="isOwner && !userOfTransaction">
+                  ...
+                </span>
+                <span v-if="isOwner && userOfTransaction">
+                  {{ userOfTransaction.firstname }}
+                  {{ userOfTransaction.lastname }}
+                </span>
+                <span v-if="!isOwner">
+                  {{ $store.state.user.firstname }}
                 {{ $store.state.user.lastname }}
+                </span>
               </span>
               {{ $t('consult:receivedService') }}
-            </v-card-title>
-          </v-card>
-        </v-card-text>
-        <v-card-text>
-          <v-card>
-            <v-card-title>
-              <span class="font-weight-bold mr-2">
-                {{ offer.User.firstname }}
-                {{ offer.User.lastname }}
-              </span>
               {{ $t('consult:performedService') }}
+              <span class="font-weight-bold ml-2">
+                  {{ offer.User.firstname }}
+                  {{ offer.User.lastname }}
+              </span>
             </v-card-title>
           </v-card>
         </v-card-text>
-        <v-card-text class="text-body-1 vh-center">
-          <!--          <v-autocomplete-->
-          <!--              :items="users"-->
-          <!--              :filter="usersFilter"-->
-          <!--              color="white"-->
-          <!--              item-text="name"-->
-          <!--              v-model="userOfTransaction"-->
-          <!--              :label="$t('consult:chooseUser')"-->
-          <!--          ></v-autocomplete>-->
-        </v-card-text>
+        <v-card-actions>
+          <v-btn color="primary" :disabled="isOwner && userOfTransaction === null">
+            {{ $t('confirm') }}
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn text @click="transactionDialog=false;">
+            {{ $t('cancel') }}
+          </v-btn>
+        </v-card-actions>
       </v-card>
     </v-dialog>
   </v-card>
@@ -229,16 +243,26 @@ import Images from '@/Images'
 import OfferService from "@/offer/OfferService";
 import Rules from "@/Rules";
 import Offer from '@/offer/Offer'
+import MemberService from "@/service/MemberService";
 
 export default {
   components: {},
   async mounted() {
     this.isLoading = true;
+    this.userOfTransaction = null;
     this.offer.id = this.$route.params.offerId;
     const response = await OfferService.get(this.offer);
     this.offer = Offer.format(response.data);
     this.isLoading = false;
     this.isOwner = this.offer.UserId === this.$store.state.user.id;
+    if (this.isOwner) {
+      const response = await MemberService.list();
+      this.members = response.data.map((member) => {
+        member.fullname = member.firstname + " " + member.lastname;
+        member.disabled = member.uuid === this.$store.state.user.uuid;
+        return member;
+      });
+    }
   },
   data: function () {
     I18n.i18next.addResources("fr", "consult", {
@@ -249,7 +273,7 @@ export default {
       notMentioned: "Pas mentionné",
       chooseUser: "L'autre usager dans la transaction",
       receivedService: "as reçu le service",
-      performedService: "as rendu le service"
+      performedService: "rendu par"
     });
     I18n.i18next.addResources("en", "offer", {
       contact: "Contacter",
@@ -259,7 +283,7 @@ export default {
       notMentioned: "Pas mentionné",
       chooseUser: "L'autre usager dans la transaction",
       receivedService: "as reçu le service",
-      performedService: "as rendu le service"
+      performedService: "rendu par"
     });
     /*
       concat is to avoid re-adding uploadImage
@@ -282,8 +306,11 @@ export default {
       isOwner: false,
       transactionDialog: false,
       transactionStepper: null,
-      users: [],
-      userOfTransaction: null
+      members: [],
+      userOfTransaction: null,
+      membersAutocompleteMenuProps: {
+        'content-class': 'text-left'
+      }
     }
   },
   methods: {
@@ -294,18 +321,26 @@ export default {
       this.transactionStepper = null;
       this.transactionDialog = false;
     },
-    usersFilter: function () {
+    membersFilter: function (member, queryText) {
+      const firstname = member.firstname.toLowerCase()
+      const lastname = member.lastname.toLowerCase()
+      const searchText = queryText.toLowerCase()
 
+      return firstname.indexOf(searchText) > -1 ||
+          lastname.indexOf(searchText) > -1
     },
     enterTransactionFlow: function () {
 
       this.transactionDialog = true;
     }
-  },
-  computed: {}
+  }
 }
 </script>
 <style>
+.v-menu__content {
+  text-align: left;
+}
+
 .offer-margin-top {
   margin-top: -40px;
 }
