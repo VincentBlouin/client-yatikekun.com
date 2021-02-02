@@ -16,53 +16,57 @@
           </router-link>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn text v-if="$vuetify.breakpoint.mdAndUp && $store.state.user !== null && $store.state.user.status === 'admin'" to="/membres">
-          <v-icon class="mr-2">people</v-icon>
-          {{ $t('app:members') }}
-        </v-btn>
-        <v-btn text v-if="$vuetify.breakpoint.mdAndUp && $store.state.user !== null" to="/offres">
-          <span class="mr-2">🌈</span>
-          {{ $t('app:offers') }}
-        </v-btn>
-        <v-btn text v-if="$vuetify.breakpoint.mdAndUp && $store.state.user === null" @click="becomeMember">
-          <v-icon class="mr-2">how_to_reg</v-icon>
-          {{ $t('app:becomeMember') }}
-        </v-btn>
-        <v-btn text v-if="$vuetify.breakpoint.mdAndUp && $store.state.user === null" to="/connexion">
-          <v-icon class="mr-2">login</v-icon>
-          {{ $t('app:login') }}
-        </v-btn>
-        <v-btn text to="/charte" v-if="$vuetify.breakpoint.mdAndUp">
-          <v-icon class="mr-2">assignment</v-icon>
-          {{ $t('app:charter') }}
-        </v-btn>
-        <v-menu
-            bottom
-            left
-            nudge-bottom="50"
-            v-if="$vuetify.breakpoint.mdAndUp && $store.state.user !== null"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-                icon
-                v-bind="attrs"
-                v-on="on"
-            >
-              <v-icon>account_circle</v-icon>
-            </v-btn>
-          </template>
+        <v-toolbar-items class="hidden-sm-and-down" v-if="$vuetify.breakpoint.mdAndUp">
+          <v-btn text
+                 v-if="$store.state.user !== null && $store.state.user.status === 'admin'"
+                 to="/membres">
+            <v-icon class="mr-2">people</v-icon>
+            {{ $t('app:members') }}
+          </v-btn>
+          <v-btn text v-if="$store.state.user !== null" to="/offres">
+            <span class="mr-2">🌈</span>
+            {{ $t('app:offers') }}
+          </v-btn>
+          <v-btn text v-if="$store.state.user === null" @click="becomeMember">
+            <v-icon class="mr-2">how_to_reg</v-icon>
+            {{ $t('app:becomeMember') }}
+          </v-btn>
+          <v-btn text v-if="$store.state.user === null" to="/connexion">
+            <v-icon class="mr-2">login</v-icon>
+            {{ $t('app:login') }}
+          </v-btn>
+          <v-btn text to="/charte">
+            <v-icon class="mr-2">assignment</v-icon>
+            {{ $t('app:charter') }}
+          </v-btn>
+          <v-menu
+              bottom
+              left
+              nudge-bottom="50"
+              v-if="$store.state.user !== null"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                  icon
+                  v-bind="attrs"
+                  v-on="on"
+              >
+                <v-icon>account_circle</v-icon>
+              </v-btn>
+            </template>
 
-          <v-list>
-            <v-list-item @click="logout">
-              <v-list-item-action>
-                <v-icon>exit_to_app</v-icon>
-              </v-list-item-action>
-              <v-list-item-title>
-                {{ $t('app:logout') }}
-              </v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
+            <v-list>
+              <v-list-item @click="logout">
+                <v-list-item-action>
+                  <v-icon>exit_to_app</v-icon>
+                </v-list-item-action>
+                <v-list-item-title>
+                  {{ $t('app:logout') }}
+                </v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-toolbar-items>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="black--text"
                             v-if="$vuetify.breakpoint.smAndDown"></v-app-bar-nav-icon>
         <v-navigation-drawer
