@@ -179,7 +179,8 @@
         </v-card-text>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="transactionDialog" v-if="transactionDialog" width="700">
+    <v-dialog v-model="transactionDialog" v-if="transactionDialog" width="700"
+              :fullscreen="$vuetify.breakpoint.smAndDown">
       <v-card>
         <v-card-title>
           <v-spacer></v-spacer>
@@ -197,13 +198,17 @@
               class="members-autocomplete"
               :menu-props="membersAutocompleteMenuProps"
               return-object
+              :no-data-text="$t('noSearchResults')"
           ></v-autocomplete>
         </v-card-text>
         <v-card-text>
           <v-card>
             <v-card-title class="vh-center">
-              {{$t('consult:durationTitle')}}
+              {{ $t('consult:durationTitle') }}
             </v-card-title>
+            <v-card-subtitle>
+              {{ $t('consult:durationSubtitle') }}
+            </v-card-subtitle>
             <v-card-text>
               <v-time-picker :allowed-minutes="allowedMinutes" v-model="quantity"></v-time-picker>
             </v-card-text>
@@ -291,7 +296,8 @@ export default {
       receivedService: "as reçu le service",
       performedService: "rendu par",
       billedQuantity: "La quantité de temps facturé est de",
-      durationTitle: "Durée du service en heures et minutes"
+      durationTitle: "Durée du service",
+      durationSubtitle: "En heures et minutes"
     });
     I18n.i18next.addResources("en", "offer", {
       contact: "Contacter",
@@ -303,7 +309,8 @@ export default {
       receivedService: "as reçu le service",
       performedService: "rendu par",
       billedQuantity: "La quantité de temps facturé est de",
-      durationTitle: "Durée du service en heures et minutes"
+      durationTitle: "Durée du service en heures et minutes",
+      durationSubtitle: "En heures et minutes"
     });
     /*
       concat is to avoid re-adding uploadImage
