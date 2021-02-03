@@ -240,7 +240,9 @@
               </p>
               <p>
                 {{ $t('consult:billedQuantity') }}
-                {{ quantity }}h
+                <span class="font-weight-bold">
+                  {{ quantity }}h
+                </span>
               </p>
             </v-card-text>
           </v-card>
