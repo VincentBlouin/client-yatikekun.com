@@ -210,7 +210,7 @@
               {{ $t('consult:durationSubtitle') }}
             </v-card-subtitle>
             <v-card-text>
-              <v-time-picker :allowed-minutes="allowedMinutes" v-model="quantity"></v-time-picker>
+              <v-time-picker format="24hr" :allowed-minutes="allowedMinutes" v-model="quantity"></v-time-picker>
             </v-card-text>
           </v-card>
         </v-card-text>
@@ -248,7 +248,8 @@
           </v-card>
         </v-card-text>
         <v-card-actions>
-          <v-btn color="primary" :disabled="(isOwner && userOfTransaction === null) || quantity === 0">
+          <v-btn color="primary" @click="addTransaction"
+                 :disabled="(isOwner && userOfTransaction === null) || quantity === '00:00'">
             {{ $t('confirm') }}
           </v-btn>
           <v-spacer></v-spacer>
@@ -267,6 +268,7 @@ import OfferService from "@/offer/OfferService";
 import Rules from "@/Rules";
 import Offer from '@/offer/Offer'
 import MemberService from "@/service/MemberService";
+import TransactionService from "@/service/TransactionService";
 
 export default {
   components: {},
@@ -337,7 +339,7 @@ export default {
       transactionStepper: null,
       members: [],
       userOfTransaction: null,
-      quantity: 0,
+      quantity: '00:00',
       allowedMinutes: [0, 15, 30, 45],
       allowedHours: [0, 1, 2, 3, 4, 5, 6],
       membersAutocompleteMenuProps: {
@@ -347,6 +349,16 @@ export default {
     }
   },
   methods: {
+    addTransaction: function () {
+      TransactionService.add({
+        amount: this.quantity,
+        details: this.offer.title_fr,
+        InitiatorId: this.$store.state.user.id,
+        GiverId: this.offer.UserId,
+        ReceiverUuid: this.userOfTransaction === null ? this.$store.state.user.uuid : this.userOfTransaction.uuid,
+        OfferId: this.offer.id
+      });
+    },
     getCustomImageUrl: function (customImage) {
       return Images.getCustomBase64Url(customImage);
     },
@@ -365,7 +377,7 @@ export default {
     enterTransactionFlow: function () {
       this.transactionDialog = true;
       this.userOfTransaction = null;
-      this.quantity = 0;
+      this.quantity = '00:00';
     }
   }
 }
@@ -385,5 +397,9 @@ export default {
 
 .offer-margin-top {
   margin-top: -40px;
+}
+
+.v-time-picker-clock__inner :nth-child(n+14) {
+  display: none;
 }
 </style>
