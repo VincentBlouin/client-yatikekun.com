@@ -10,8 +10,8 @@ export default {
             transaction
         )
     },
-    getPendingForOfferAndUserId: function (offerId, userId) {
-        const response = Service.api().get(
+    getPendingForOfferAndUserId: async function (offerId, userId) {
+        const response = await Service.api().get(
             '/transaction/pending/user/' + userId + '/offer/' + offerId
         );
         return response.data;

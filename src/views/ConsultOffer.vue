@@ -259,6 +259,40 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-bottom-sheet
+        v-model="pendingTransactionSheet"
+        inset
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+            color="orange"
+            dark
+            v-bind="attrs"
+            v-on="on"
+        >
+          Open Inset
+        </v-btn>
+      </template>
+      <v-sheet
+          class="text-center"
+          height="200px"
+      >
+        <v-btn
+            class="mt-6"
+            text
+            color="primary"
+            @click="pendingTransactionSheet = !pendingTransactionSheet"
+        >
+          {{ $t('close') }}
+        </v-btn>
+        <div class="my-3 text-h6 font-italic">
+          {{ $t('consult:pendingTransaction') }}
+        </div>
+        <div>
+          {{ pendingTransaction.length }}
+        </div>
+      </v-sheet>
+    </v-bottom-sheet>
   </v-card>
 </template>
 <script>
@@ -292,6 +326,9 @@ export default {
         this.offer.id,
         this.$store.state.user.id
     );
+    if (this.pendingTransaction !== null) {
+      this.pendingTransactionSheet = true;
+    }
   },
   data: function () {
     I18n.i18next.addResources("fr", "consult", {
@@ -305,7 +342,8 @@ export default {
       performedService: "rendu par",
       billedQuantity: "La quantité de temps facturé est de",
       durationTitle: "Durée du service",
-      durationSubtitle: "En heures et minutes"
+      durationSubtitle: "En heures et minutes",
+      pendingTransaction: "Transaction en attente"
     });
     I18n.i18next.addResources("en", "offer", {
       contact: "Contacter",
@@ -318,7 +356,8 @@ export default {
       performedService: "rendu par",
       billedQuantity: "La quantité de temps facturé est de",
       durationTitle: "Durée du service en heures et minutes",
-      durationSubtitle: "En heures et minutes"
+      durationSubtitle: "En heures et minutes",
+      pendingTransaction: "Transaction en attente"
     });
     /*
       concat is to avoid re-adding uploadImage
@@ -349,7 +388,8 @@ export default {
       membersAutocompleteMenuProps: {
         'content-class': 'text-left'
       },
-      pendingTransaction: null
+      pendingTransaction: null,
+      pendingTransactionSheet: false
     }
   },
   methods: {
