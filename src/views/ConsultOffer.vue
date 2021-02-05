@@ -241,7 +241,7 @@
               <p>
                 {{ $t('consult:billedQuantity') }}
                 <span class="font-weight-bold">
-                  {{ quantity }}h
+                  {{ quantityFormatted }}
                 </span>
               </p>
             </v-card-text>
@@ -288,6 +288,10 @@ export default {
         return member;
       });
     }
+    this.pendingTransaction = await TransactionService.getPendingForOfferAndUserId(
+        this.offer.id,
+        this.$store.state.user.id
+    );
   },
   data: function () {
     I18n.i18next.addResources("fr", "consult", {
@@ -345,7 +349,7 @@ export default {
       membersAutocompleteMenuProps: {
         'content-class': 'text-left'
       },
-      hours: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+      pendingTransaction: null
     }
   },
   methods: {
@@ -378,6 +382,13 @@ export default {
       this.transactionDialog = true;
       this.userOfTransaction = null;
       this.quantity = '00:00';
+    }
+  },
+  computed: {
+    quantityFormatted: function () {
+      const quantities = this.quantity.split(":");
+      const hours = parseInt(quantities[0]);
+      return hours + "h" + quantities[1] + "m";
     }
   }
 }

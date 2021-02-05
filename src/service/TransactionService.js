@@ -9,5 +9,11 @@ export default {
             '/transaction',
             transaction
         )
+    },
+    getPendingForOfferAndUserId: function (offerId, userId) {
+        const response = Service.api().get(
+            '/transaction/pending/user/' + userId + '/offer/' + offerId
+        );
+        return response.data;
     }
 }
