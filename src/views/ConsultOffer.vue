@@ -226,6 +226,7 @@
             :giver="pendingTransaction[0].giver"
             :receiver="pendingTransaction[0].receiver"
             :initiator="pendingTransaction[0].initiator"
+            :transactionId="pendingTransaction[0].id"
             :flatCard="true"
             @close="pendingTransactionSheet = false"
           ></Transaction>
@@ -267,8 +268,8 @@ export default {
       transaction: "Transaction",
       experience: "Expérience",
       fees: "Frais additionels",
-      notMentioned: "Pas mentionné",      
-      billedQuantity: "La quantité de temps facturé est de",      
+      notMentioned: "Pas mentionné",
+      billedQuantity: "La quantité de temps facturé est de",
       pendingTransaction: "Transaction en attente",
     });
     I18n.i18next.addResources("en", "consult", {
@@ -276,8 +277,8 @@ export default {
       transaction: "Transaction",
       experience: "Expérience",
       fees: "Frais additionels",
-      notMentioned: "Pas mentionné",    
-      billedQuantity: "La quantité de temps facturé est de",    
+      notMentioned: "Pas mentionné",
+      billedQuantity: "La quantité de temps facturé est de",
       pendingTransaction: "Transaction en attente",
     });
     /*
@@ -298,16 +299,16 @@ export default {
       rules: Rules,
       isLoading: true,
       contactDialog: false,
-      isOwner: false,            
+      isOwner: false,
       pendingTransaction: null,
       pendingTransactionSheet: false,
     };
   },
-  methods: {  
+  methods: {
     getCustomImageUrl: function (customImage) {
       return Images.getCustomBase64Url(customImage);
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

@@ -63,6 +63,7 @@
 <script>
 import I18n from "@/i18n";
 import Transaction from "@/Transaction";
+import TransactionService from "@/service/TransactionService";
 export default {
   components: {},
   props: [
@@ -70,6 +71,7 @@ export default {
     "giver",
     "receiver",
     "initiator",
+    "transactionId",
     "flatCard",
     "preventShowActions",
   ],
@@ -92,7 +94,9 @@ export default {
     return {};
   },
   methods: {
-    confirm: function () {},
+    confirm: function () {
+      TransactionService.confirm(this.transactionId)
+    },
   },
   computed: {
     quantityFormatted: function () {
