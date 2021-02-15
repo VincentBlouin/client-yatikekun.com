@@ -43,6 +43,7 @@ export default {
             resources: {
                 en: {
                     translation: {
+                        to: "to",
                         close: 'Fermer',
                         login: 'Login',
                         register: 'Register',
@@ -86,6 +87,7 @@ export default {
                 },
                 fr: {
                     translation: {
+                        to: "à",
                         close: 'Fermer',
                         login: 'Connexion',
                         register: "S'inscrire",

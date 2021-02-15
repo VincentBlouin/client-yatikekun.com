@@ -254,11 +254,13 @@
               ></v-time-picker>
             </v-card-text>
           </v-card>
-        </v-card-text>            
+        </v-card-text>
         <Transaction
           :quantity="quantity"
           :giver="giver"
           :receiver="receiver"
+          :initiator="$store.state.user"
+          :preventShowActions="true"
         ></Transaction>
         <v-card-actions>
           <v-btn
@@ -282,25 +284,29 @@
       v-model="pendingTransactionSheet"
       v-if="pendingTransaction !== null && pendingTransaction.length"
       inset
+      scrollable
     >
       <v-sheet class="text-center" height="200px">
-        <v-btn
+        <!-- <v-btn
           class="mt-6"
           text
           color="primary"
           @click="pendingTransactionSheet = !pendingTransactionSheet"
         >
           {{ $t("close") }}
-        </v-btn>
-        <div class="my-3 text-h6 font-italic">
+        </v-btn> -->
+        <!-- <div class="my-3 text-h6 font-italic">
           {{ $t("consult:pendingTransaction") }}
-        </div>
+        </div> -->
         <div>
           <Transaction
-          :quantity="pendingTransaction[0].amount"
-          :giver="pendingTransaction[0].giver"
-          :receiver="pendingTransaction[0].receiver"
-        ></Transaction>        
+            :quantity="pendingTransaction[0].amount"
+            :giver="pendingTransaction[0].giver"
+            :receiver="pendingTransaction[0].receiver"
+            :initiator="pendingTransaction[0].initiator"
+            :flatCard="true"
+            @close="pendingTransactionSheet = false"
+          ></Transaction>
         </div>
       </v-sheet>
     </v-bottom-sheet>
@@ -351,9 +357,7 @@ export default {
       experience: "Expérience",
       fees: "Frais additionels",
       notMentioned: "Pas mentionné",
-      chooseUser: "L'autre usager dans la transaction",
-      receivedService: "as reçu le service",
-      performedService: "rendu par",
+      chooseUser: "L'autre usager dans la transaction",      
       billedQuantity: "La quantité de temps facturé est de",
       durationTitle: "Durée du service",
       durationSubtitle: "En heures et minutes",
@@ -365,9 +369,7 @@ export default {
       experience: "Expérience",
       fees: "Frais additionels",
       notMentioned: "Pas mentionné",
-      chooseUser: "L'autre usager dans la transaction",
-      receivedService: "as reçu le service",
-      performedService: "rendu par",
+      chooseUser: "L'autre usager dans la transaction",      
       billedQuantity: "La quantité de temps facturé est de",
       durationTitle: "Durée du service en heures et minutes",
       durationSubtitle: "En heures et minutes",
