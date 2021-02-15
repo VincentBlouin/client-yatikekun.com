@@ -12,7 +12,7 @@ const Transaction = {
         if (minutes === 0) {
             minutes = "00";
         }
-        return hours + "h" + minutes + "m";
+        return hours + "h" + minutes;
     },
     minutesToDecimal: function (minutes) {
         return minutes / 60;
