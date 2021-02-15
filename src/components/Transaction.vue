@@ -38,7 +38,7 @@ import I18n from "@/i18n";
 import Transaction from "@/Transaction";
 export default {
   components: {},
-  props: ["giver", "receiver", "amount"],
+  props: ["giver", "receiver", "quantity"],
   async mounted() {},
   data: function () {
     I18n.i18next.addResources("fr", "transaction", {
@@ -61,13 +61,7 @@ export default {
     });
     return {};
   },
-  methods: {
-    enterTransactionFlow: function () {
-      this.transactionDialog = true;
-      this.userOfTransaction = null;
-      this.quantity = "00:00";
-    },
-  },
+  methods: {},
   computed: {
     quantityFormatted: function () {
       return Transaction.quantityToFormatted(this.quantity);

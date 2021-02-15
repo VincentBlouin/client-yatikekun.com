@@ -254,11 +254,11 @@
               ></v-time-picker>
             </v-card-text>
           </v-card>
-        </v-card-text>
+        </v-card-text>            
         <Transaction
-          :amount="quantity"
+          :quantity="quantity"
           :giver="giver"
-          :receiver="receiver"        
+          :receiver="receiver"
         ></Transaction>
         <v-card-actions>
           <v-btn
@@ -296,7 +296,11 @@
           {{ $t("consult:pendingTransaction") }}
         </div>
         <div>
-          {{ pendingTransaction.length }}
+          <Transaction
+          :quantity="pendingTransaction[0].amount"
+          :giver="pendingTransaction[0].giver"
+          :receiver="pendingTransaction[0].receiver"
+        ></Transaction>        
         </div>
       </v-sheet>
     </v-bottom-sheet>
