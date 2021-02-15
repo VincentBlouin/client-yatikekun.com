@@ -35,7 +35,14 @@
           >
             {{ $t("transaction:pendingTransaction") }}
           </v-btn>
-          <v-btn @click="confirm" color="primary" class="ml-4" v-else>
+          <v-btn
+            @click="confirm"
+            color="primary"
+            class="ml-4"
+            v-else
+            :loading="confirmLoading"
+            :disabled="confirmLoading || hasConfirmed"
+          >
             {{ $t("confirm") }}
           </v-btn>
           <v-spacer></v-spacer>
@@ -49,7 +56,9 @@
           </v-btn>
           <v-spacer v-if="$vuetify.breakpoint.mdAndUp"></v-spacer>
         </v-card-actions>
-        <v-card-actions v-if="$vuetify.breakpoint.smAndDown && !preventShowActions">
+        <v-card-actions
+          v-if="$vuetify.breakpoint.smAndDown && !preventShowActions"
+        >
           <v-spacer></v-spacer>
           <v-btn @click="$emit('close')" right class="mr-4">
             {{ $t("close") }}
@@ -58,6 +67,20 @@
         </v-card-actions>
       </v-card>
     </v-card-text>
+    <v-snackbar v-model="confirmSuccess" color="primary" dark :timeout="7000">
+      {{ $t("transaction:confirmed") }}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="white"
+          text
+          icon
+          v-bind="attrs"
+          @click="confirmSuccess = false"
+        >
+          <v-icon>close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-card>
 </template>
 <script>
@@ -83,6 +106,7 @@ export default {
       durationTitle: "Durée du service",
       durationSubtitle: "En heures et minutes",
       pendingTransaction: "En attente de confirmation",
+      confirmed: "Merci d'avoir confirmé la transaction",
     });
     I18n.i18next.addResources("en", "transaction", {
       performedService: "a rendu le service à",
@@ -90,12 +114,21 @@ export default {
       durationTitle: "Durée du service en heures et minutes",
       durationSubtitle: "En heures et minutes",
       pendingTransaction: "En attente de confirmation",
+      confirmed: "Merci d'avoir confirmé la transaction",
     });
-    return {};
+    return {
+      hasConfirmed: false,
+      confirmLoading: false,
+      confirmSuccess: false,
+    };
   },
   methods: {
-    confirm: function () {
-      TransactionService.confirm(this.transactionId)
+    confirm: async function () {
+      this.confirmLoading = true;
+      await TransactionService.confirm(this.transactionId);
+      this.confirmLoading = false;
+      this.hasConfirmed = true;
+      this.confirmSuccess = true;
     },
   },
   computed: {
