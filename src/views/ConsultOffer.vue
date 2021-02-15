@@ -219,7 +219,7 @@
       inset
       scrollable
     >
-      <v-sheet class="text-center" height="200px">
+      <v-sheet class="text-center">
         <div>
           <Transaction
             :quantity="pendingTransaction[0].amount"

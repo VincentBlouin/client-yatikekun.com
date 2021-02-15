@@ -39,6 +39,18 @@
             {{ $t("confirm") }}
           </v-btn>
           <v-spacer></v-spacer>
+          <v-btn
+            @click="$emit('close')"
+            right
+            class="mr-4"
+            v-if="$vuetify.breakpoint.mdAndUp"
+          >
+            {{ $t("close") }}
+          </v-btn>
+          <v-spacer v-if="$vuetify.breakpoint.mdAndUp"></v-spacer>
+        </v-card-actions>
+        <v-card-actions v-if="$vuetify.breakpoint.smAndDown && !preventShowActions">
+          <v-spacer></v-spacer>
           <v-btn @click="$emit('close')" right class="mr-4">
             {{ $t("close") }}
           </v-btn>
