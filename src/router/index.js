@@ -59,6 +59,11 @@ const routes = [
         name: 'ConsultOffer',
         component: () => import('../views/ConsultOffer.vue')
     },
+    {
+        path: '/transactions',
+        name: 'Transactions',
+        component: () => import('../views/Transactions.vue')
+    },
 ]
 
 const router = new VueRouter({

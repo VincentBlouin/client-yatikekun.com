@@ -20,23 +20,27 @@
           <v-btn text
                  v-if="$store.state.user !== null && $store.state.user.status === 'admin'"
                  to="/membres">
-            <v-icon class="mr-2">people</v-icon>
+            <v-icon left>people</v-icon>
             {{ $t('app:members') }}
           </v-btn>
           <v-btn text v-if="$store.state.user !== null" to="/offres">
             <span class="mr-2">🌈</span>
             {{ $t('app:offers') }}
           </v-btn>
+          <v-btn text v-if="$store.state.user !== null" to="/transactions">
+            <v-icon left>list</v-icon>
+            {{ $t('app:yourTransactions') }}
+          </v-btn>
           <v-btn text v-if="$store.state.user === null" @click="becomeMember">
-            <v-icon class="mr-2">how_to_reg</v-icon>
+            <v-icon left>how_to_reg</v-icon>
             {{ $t('app:becomeMember') }}
           </v-btn>
           <v-btn text v-if="$store.state.user === null" to="/connexion">
-            <v-icon class="mr-2">login</v-icon>
+            <v-icon left>login</v-icon>
             {{ $t('app:login') }}
           </v-btn>
           <v-btn text to="/charte">
-            <v-icon class="mr-2">assignment</v-icon>
+            <v-icon left>assignment</v-icon>
             {{ $t('app:charter') }}
           </v-btn>
           <v-menu
@@ -94,11 +98,24 @@
             </v-list-item>
             <v-list-item v-if="$store.state.user !== null">
               <v-list-item-action>
+                🌈
               </v-list-item-action>
               <v-list-item-content>
                 <v-list-item-title>
                   <v-btn text to="/offres">
                     {{ $t('app:offers') }}
+                  </v-btn>
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item v-if="$store.state.user !== null">
+              <v-list-item-action>
+                <v-icon>list</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>
+                  <v-btn text to="/transactions">
+                    {{ $t('app:yourTransactions') }}
                   </v-btn>
                 </v-list-item-title>
               </v-list-item-content>
@@ -203,6 +220,7 @@ export default {
       logout: "Déconnecter",
       charter: "Charte",
       offers: "Offres",
+      yourTransactions: "Transactions",
       members: "Membres"
     });
     I18n.i18next.addResources("en", "app", {
@@ -211,6 +229,7 @@ export default {
       logout: "Déconnecter",
       charter: "Charte",
       offers: "Offres",
+      yourTransactions: "Transactions",
       members: "Membres"
     });
     return {

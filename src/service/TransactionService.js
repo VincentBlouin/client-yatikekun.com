@@ -1,8 +1,8 @@
 import Service from '@/Service'
 
 export default {
-    list: function (user) {
-        return Service.api().get(user.id + '/transaction');
+    listForUserId: function (userId) {
+        return Service.api().get('/transaction/user/' + userId);
     },
     add: function (transaction) {
         return Service.api().post(
@@ -10,9 +10,9 @@ export default {
             transaction
         );
     },
-    confirm: function(transactionId){
+    confirm: function (transactionId) {
         return Service.api().post(
-            '/transaction/' + transactionId + '/confirm'            
+            '/transaction/' + transactionId + '/confirm'
         );
     },
     getPendingForOfferAndUserId: async function (offerId, userId) {

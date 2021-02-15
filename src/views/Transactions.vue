@@ -1,0 +1,117 @@
+<template>
+  <v-row align="center" justify="center" class="vh-center pt-16 pb-16">
+    <v-col cols="12" class="col-md-6 text-center">
+      <v-card flat class="pt-8">
+        <v-card-title>
+          {{ $t("transactions:title") }}
+        </v-card-title>
+        <v-simple-table>
+          <template v-slot:default>
+            <thead>
+              <tr>
+                <th class="text-left">
+                  {{ $t("transactions:status") }}
+                </th>
+                <th class="text-left">
+                  {{ $t("transactions:details") }}
+                </th>
+                <th class="text-left">{{ $t("transactions:gave") }}</th>
+                <th class="text-left">{{ $t("transactions:received") }}</th>
+                <th class="text-left">{{ $t("transactions:amount") }}</th>
+                <th class="text-left">{{ $t("transactions:balance") }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="transaction in transactions" :key="transaction.id">
+                <td>                
+                  {{ transaction.statusName }}
+                </td>
+                <td>
+                  {{ transaction.details }}
+                </td>
+                <td>{{ transaction.giverFullname }}</td>
+                <td>{{ transaction.receiverFullname }}</td>
+                <td>{{ transaction.amount }}</td>
+                <td>{{ transaction.balance }}</td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
+      </v-card>
+    </v-col>
+  </v-row>
+</template>
+<script>
+import I18n from "@/i18n";
+import TransactionService from "@/service/TransactionService";
+export default {
+  components: {},
+  async mounted() {
+    window.scrollTo(0, 0);
+    this.isLoading = true;
+    let response = await TransactionService.listForUserId(
+      this.$store.state.user.id
+    );
+    this.transactions = response.data
+      .map((transaction) => {
+        transaction.statusName = this.$t('transactions:' + transaction.status.toLowerCase())
+        transaction.balance =
+          transaction.giver !== null && transaction.giver.id === this.$store.state.user.id
+            ? transaction.balanceGiver
+            : transaction.balanceReceiver;
+        transaction.giverFullname = "";
+        if (transaction.giver) {
+          transaction.giverFullname =
+            transaction.giver.firstname + " " + transaction.giver.lastname;
+        }
+        transaction.receiverFullname = "";
+        if (transaction.receiver) {
+          transaction.receiverFullname =
+            transaction.receiver.firstname +
+            " " +
+            transaction.receiver.lastname;
+        }
+        return transaction;
+      })
+      .sort((a, b) => {
+        const aDate =
+          a.confirmDate === null
+            ? new Date(a.createdAt).getTime()
+            : a.confirmDate;
+        const bDate =
+          b.confirmDate === null
+            ? new Date(b.createdAt).getTime()
+            : b.confirmDate;
+        return bDate - aDate;
+      });
+    this.isLoading = false;
+  },
+  data: function () {
+    I18n.i18next.addResources("fr", "transactions", {
+      title: "Transactions",
+      details: "Détails",
+      gave: "A rendu",
+      received: "A reçu",
+      amount: "Montant",
+      balance: "Balance",
+      status: "Statut",
+      confirmed: "Confirmée",
+      pending: "En attente",
+    });
+    I18n.i18next.addResources("en", "transactions", {
+      title: "Transactions",
+      details: "Détails",
+      gave: "A rendu",
+      received: "A reçu",
+      amount: "Montant",
+      balance: "Balance",    
+      status: "Statut",
+      confirmed: "Confirmée",
+      pending: "En attente",
+    });
+    return {
+      transactions: [],
+    };
+  },
+};
+</script>
