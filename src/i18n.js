@@ -44,6 +44,7 @@ export default {
                 en: {
                     translation: {
                         to: "to",
+                        finish: "Finish",
                         close: 'Fermer',
                         login: 'Login',
                         register: 'Register',
@@ -88,6 +89,7 @@ export default {
                 fr: {
                     translation: {
                         to: "à",
+                        finish: "Terminer",
                         close: 'Fermer',
                         login: 'Connexion',
                         register: "S'inscrire",

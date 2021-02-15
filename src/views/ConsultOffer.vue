@@ -44,7 +44,7 @@
         :class="{
           'pb-7 pt-7': $vuetify.breakpoint.smAndDown,
         }"
-        @click="enterTransactionFlow"
+        @click="$refs.newTransaction.enter()"
       >
         <v-row v-if="$vuetify.breakpoint.smAndDown">
           <v-col cols="12" class="pa-0 pb-0">
@@ -212,74 +212,7 @@
         </v-card-text>
       </v-card>
     </v-dialog>
-    <v-dialog
-      v-model="transactionDialog"
-      v-if="transactionDialog"
-      width="700"
-      :fullscreen="$vuetify.breakpoint.smAndDown"
-    >
-      <v-card>
-        <v-card-title>
-          <v-spacer></v-spacer>
-          <v-btn icon @click="transactionDialog = false">
-            <v-icon>close</v-icon>
-          </v-btn>
-        </v-card-title>
-        <v-card-text class="text-body-1 vh-center" v-if="isOwner">
-          <v-autocomplete
-            :items="members"
-            :filter="membersFilter"
-            item-text="fullname"
-            v-model="userOfTransaction"
-            :label="$t('consult:chooseUser')"
-            class="members-autocomplete"
-            :menu-props="membersAutocompleteMenuProps"
-            return-object
-            :no-data-text="$t('noSearchResults')"
-          ></v-autocomplete>
-        </v-card-text>
-        <v-card-text>
-          <v-card>
-            <v-card-title class="vh-center">
-              {{ $t("consult:durationTitle") }}
-            </v-card-title>
-            <v-card-subtitle>
-              {{ $t("consult:durationSubtitle") }}
-            </v-card-subtitle>
-            <v-card-text>
-              <v-time-picker
-                format="24hr"
-                :allowed-minutes="allowedMinutes"
-                v-model="timePickerQuantity"
-              ></v-time-picker>
-            </v-card-text>
-          </v-card>
-        </v-card-text>
-        <Transaction
-          :quantity="quantity"
-          :giver="giver"
-          :receiver="receiver"
-          :initiator="$store.state.user"
-          :preventShowActions="true"
-        ></Transaction>
-        <v-card-actions>
-          <v-btn
-            color="primary"
-            @click="addTransaction"
-            :disabled="
-              (isOwner && userOfTransaction === null) ||
-              timePickerQuantity === '00:00'
-            "
-          >
-            {{ $t("confirm") }}
-          </v-btn>
-          <v-spacer></v-spacer>
-          <v-btn text @click="transactionDialog = false">
-            {{ $t("cancel") }}
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <NewTransaction :offer="offer" ref="newTransaction"></NewTransaction>
     <v-bottom-sheet
       v-model="pendingTransactionSheet"
       v-if="pendingTransaction !== null && pendingTransaction.length"
@@ -287,17 +220,6 @@
       scrollable
     >
       <v-sheet class="text-center" height="200px">
-        <!-- <v-btn
-          class="mt-6"
-          text
-          color="primary"
-          @click="pendingTransactionSheet = !pendingTransactionSheet"
-        >
-          {{ $t("close") }}
-        </v-btn> -->
-        <!-- <div class="my-3 text-h6 font-italic">
-          {{ $t("consult:pendingTransaction") }}
-        </div> -->
         <div>
           <Transaction
             :quantity="pendingTransaction[0].amount"
@@ -318,30 +240,19 @@ import Images from "@/Images";
 import OfferService from "@/offer/OfferService";
 import Rules from "@/Rules";
 import Offer from "@/offer/Offer";
-import MemberService from "@/service/MemberService";
 import TransactionService from "@/service/TransactionService";
-import Transaction from "@/Transaction";
 
 export default {
   components: {
     Transaction: () => import("@/components/Transaction"),
+    NewTransaction: () => import("@/components/NewTransaction"),
   },
   async mounted() {
     this.isLoading = true;
-    this.userOfTransaction = null;
     this.offer.id = this.$route.params.offerId;
     const response = await OfferService.get(this.offer);
     this.offer = Offer.format(response.data);
     this.isLoading = false;
-    this.isOwner = this.offer.UserId === this.$store.state.user.id;
-    if (this.isOwner) {
-      const response = await MemberService.list();
-      this.members = response.data.map((member) => {
-        member.fullname = member.firstname + " " + member.lastname;
-        member.disabled = member.uuid === this.$store.state.user.uuid;
-        return member;
-      });
-    }
     this.pendingTransaction = await TransactionService.getPendingForOfferAndUserId(
       this.offer.id,
       this.$store.state.user.id
@@ -356,11 +267,8 @@ export default {
       transaction: "Transaction",
       experience: "Expérience",
       fees: "Frais additionels",
-      notMentioned: "Pas mentionné",
-      chooseUser: "L'autre usager dans la transaction",      
-      billedQuantity: "La quantité de temps facturé est de",
-      durationTitle: "Durée du service",
-      durationSubtitle: "En heures et minutes",
+      notMentioned: "Pas mentionné",      
+      billedQuantity: "La quantité de temps facturé est de",      
       pendingTransaction: "Transaction en attente",
     });
     I18n.i18next.addResources("en", "consult", {
@@ -368,11 +276,8 @@ export default {
       transaction: "Transaction",
       experience: "Expérience",
       fees: "Frais additionels",
-      notMentioned: "Pas mentionné",
-      chooseUser: "L'autre usager dans la transaction",      
-      billedQuantity: "La quantité de temps facturé est de",
-      durationTitle: "Durée du service en heures et minutes",
-      durationSubtitle: "En heures et minutes",
+      notMentioned: "Pas mentionné",    
+      billedQuantity: "La quantité de temps facturé est de",    
       pendingTransaction: "Transaction en attente",
     });
     /*
@@ -393,90 +298,20 @@ export default {
       rules: Rules,
       isLoading: true,
       contactDialog: false,
-      isOwner: false,
-      transactionDialog: false,
-      transactionStepper: null,
-      members: [],
-      userOfTransaction: null,
-      timePickerQuantity: "00:00",
-      allowedMinutes: [0, 15, 30, 45],
-      allowedHours: [0, 1, 2, 3, 4, 5, 6],
-      membersAutocompleteMenuProps: {
-        "content-class": "text-left",
-      },
+      isOwner: false,            
       pendingTransaction: null,
       pendingTransactionSheet: false,
     };
   },
-  methods: {
-    addTransaction: function () {
-      TransactionService.add({
-        amount: this.quantity,
-        details: this.offer.title_fr,
-        InitiatorId: this.$store.state.user.id,
-        GiverId: this.offer.UserId,
-        ReceiverUuid:
-          this.userOfTransaction === null
-            ? this.$store.state.user.uuid
-            : this.userOfTransaction.uuid,
-        OfferId: this.offer.id,
-      });
-    },
+  methods: {  
     getCustomImageUrl: function (customImage) {
       return Images.getCustomBase64Url(customImage);
-    },
-    cancel: function () {
-      this.transactionStepper = null;
-      this.transactionDialog = false;
-    },
-    membersFilter: function (member, queryText) {
-      const firstname = member.firstname.toLowerCase();
-      const lastname = member.lastname.toLowerCase();
-      const searchText = queryText.toLowerCase();
-
-      return (
-        firstname.indexOf(searchText) > -1 || lastname.indexOf(searchText) > -1
-      );
-    },
-    enterTransactionFlow: function () {
-      this.transactionDialog = true;
-      this.userOfTransaction = null;
-      this.timePickerQuantity = "00:00";
-    },
-  },
-  computed: {
-    quantity: function () {
-      return Transaction.timePickerToQuantity(this.timePickerQuantity);
-    },
-    receiver: function () {
-      return this.userOfTransaction === null
-        ? this.$store.state.user
-        : this.userOfTransaction;
-    },
-    giver: function () {
-      return this.offer.User;
-    },
-  },
+    }
+  }
 };
 </script>
 <style>
-.v-menu__content {
-  text-align: left;
-}
-
-.v-time-picker-title__ampm {
-  visibility: hidden;
-}
-
-.v-time-picker-clock__ampm .v-picker__title__btn {
-  visibility: hidden;
-}
-
 .offer-margin-top {
   margin-top: -40px;
-}
-
-.v-time-picker-clock__inner :nth-child(n + 14) {
-  display: none;
 }
 </style>
