@@ -15,6 +15,12 @@ export default {
             '/transaction/' + transactionId + '/confirm'
         );
     },
+    confirmWithToken: function (token) {    
+        return Service.api().post(
+            '/transaction/token', {
+            token: token
+        });
+    },
     getPendingForOfferAndUserId: async function (offerId, userId) {
         const response = await Service.api().get(
             '/transaction/pending/user/' + userId + '/offer/' + offerId

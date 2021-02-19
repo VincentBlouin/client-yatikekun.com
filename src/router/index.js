@@ -64,6 +64,11 @@ const routes = [
         name: 'Transactions',
         component: () => import('../views/Transactions.vue')
     },
+    {
+        path: '/confirm-transaction/:token',
+        name: 'ConfirmTransaction',
+        component: () => import('../views/ConfirmTransaction.vue')
+    },
 ]
 
 const router = new VueRouter({
