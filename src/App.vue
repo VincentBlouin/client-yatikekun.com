@@ -28,7 +28,7 @@
             {{ $t('app:offers') }}
           </v-btn>
           <v-btn text v-if="$store.state.user !== null" to="/transactions">
-            <v-icon left>list</v-icon>
+            <v-icon left>attach_money</v-icon>
             {{ $t('app:yourTransactions') }}
           </v-btn>
           <v-btn text v-if="$store.state.user === null" @click="becomeMember">

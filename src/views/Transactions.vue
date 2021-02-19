@@ -1,5 +1,5 @@
 <template>
-  <v-row align="center" justify="center" class="vh-center pt-16 pb-16">
+  <v-row justify="center" class="pt-16 pb-16">
     <v-col cols="12" class="col-md-6 text-center">
       <v-card flat class="pt-8">
         <v-card-title>
@@ -10,28 +10,32 @@
             <thead>
               <tr>
                 <th class="text-left">
-                  {{ $t("transactions:status") }}
-                </th>
-                <th class="text-left">
                   {{ $t("transactions:details") }}
                 </th>
                 <th class="text-left">{{ $t("transactions:gave") }}</th>
                 <th class="text-left">{{ $t("transactions:received") }}</th>
                 <th class="text-left">{{ $t("transactions:amount") }}</th>
+                <th class="text-left">
+                  {{ $t("transactions:status") }}
+                </th>
                 <th class="text-left">{{ $t("transactions:balance") }}</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="transaction in transactions" :key="transaction.id">
-                <td>                
-                  {{ transaction.statusName }}
-                </td>
+              <tr
+                v-for="transaction in transactions"
+                :key="transaction.id"
+                class="text-left"
+              >
                 <td>
                   {{ transaction.details }}
                 </td>
                 <td>{{ transaction.giverFullname }}</td>
                 <td>{{ transaction.receiverFullname }}</td>
                 <td>{{ transaction.amount }}</td>
+                <td>
+                  {{ transaction.statusName }}
+                </td>
                 <td>{{ transaction.balance }}</td>
               </tr>
             </tbody>
@@ -54,9 +58,15 @@ export default {
     );
     this.transactions = response.data
       .map((transaction) => {
-        transaction.statusName = this.$t('transactions:' + transaction.status.toLowerCase())
+        if (transaction.details === "initial") {
+          transaction.details = this.$t("transactions:initial");
+        }
+        transaction.statusName = this.$t(
+          "transactions:" + transaction.status.toLowerCase()
+        );
         transaction.balance =
-          transaction.giver !== null && transaction.giver.id === this.$store.state.user.id
+          transaction.GiverId !== null &&
+          transaction.GiverId === this.$store.state.user.id
             ? transaction.balanceGiver
             : transaction.balanceReceiver;
         transaction.giverFullname = "";
@@ -90,6 +100,7 @@ export default {
     I18n.i18next.addResources("fr", "transactions", {
       title: "Transactions",
       details: "Détails",
+      initial: "Montant initial",
       gave: "A rendu",
       received: "A reçu",
       amount: "Montant",
@@ -101,10 +112,11 @@ export default {
     I18n.i18next.addResources("en", "transactions", {
       title: "Transactions",
       details: "Détails",
+      initial: "Montant initial",
       gave: "A rendu",
       received: "A reçu",
       amount: "Montant",
-      balance: "Balance",    
+      balance: "Balance",
       status: "Statut",
       confirmed: "Confirmée",
       pending: "En attente",
