@@ -193,6 +193,9 @@
 
 <script>
 import I18n from "@/i18n";
+import Vue from 'vue'
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard);
 
 export default {
   mounted: async function () {

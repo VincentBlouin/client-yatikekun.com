@@ -43,6 +43,7 @@ export default {
             resources: {
                 en: {
                     translation: {
+                        copy: "Copy",
                         to: "to",
                         finish: "Finish",
                         close: 'Fermer',
@@ -88,6 +89,7 @@ export default {
                 },
                 fr: {
                     translation: {
+                        copy: "Copier",
                         to: "à",
                         finish: "Terminer",
                         close: 'Fermer',
