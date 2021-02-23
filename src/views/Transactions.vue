@@ -30,11 +30,32 @@
                 <td>
                   {{ transaction.details }}
                 </td>
-                <td>{{ transaction.giverFullname }}</td>
-                <td>{{ transaction.receiverFullname }}</td>
+                <td
+                  :class="{
+                    'font-weight-bold':
+                      transaction.GiverId === $store.state.user.id,
+                  }"
+                >
+                  {{ transaction.giverFullname }}
+                </td>
+                <td
+                  :class="{
+                    'font-weight-bold':
+                      transaction.ReceiverId === $store.state.user.id,
+                  }"
+                >
+                  {{ transaction.receiverFullname }}
+                </td>
                 <td>{{ transaction.amount }}</td>
                 <td>
-                  {{ transaction.statusName }}
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon  v-bind="attrs" v-on="on" color="primary">
+                        {{ transaction.statusIcon }}
+                      </v-icon>
+                    </template>
+                    <span>{{ transaction.statusName }}</span>
+                  </v-tooltip>
                 </td>
                 <td>{{ transaction.balance }}</td>
               </tr>
@@ -64,6 +85,11 @@ export default {
         transaction.statusName = this.$t(
           "transactions:" + transaction.status.toLowerCase()
         );
+        if (transaction.status.toLowerCase() === "confirmed") {
+          transaction.statusIcon = "done";
+        } else if (transaction.status.toLowerCase() === "pending") {
+          transaction.statusIcon = "pending";
+        }
         transaction.balance =
           transaction.GiverId !== null &&
           transaction.GiverId === this.$store.state.user.id
