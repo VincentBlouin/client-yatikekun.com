@@ -28,12 +28,11 @@ const UserService = {
             {email: email}
         );
     },
-    changePassword: function (password, email, token) {
+    changePassword: function (password, token) {
         return Service.api().post(
-            "/users/password",
+            "/change-password",
             {
-                password: password,
-                email: email,
+                newPassword: password,
                 token: token
             }
         );
