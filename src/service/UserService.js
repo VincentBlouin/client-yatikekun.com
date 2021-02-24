@@ -25,7 +25,10 @@ const UserService = {
     resetPassword: function (email) {
         return Service.api().post(
             "reset-password",
-            {email: email}
+            {
+                email: email,
+                locale: "fr"
+            }
         );
     },
     changePassword: function (password, token) {

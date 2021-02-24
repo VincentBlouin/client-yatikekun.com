@@ -74,6 +74,11 @@ const routes = [
         name: 'ChangePassword',
         component: () => import('../views/ChangePassword.vue')
     },
+    {
+        path: '/send-change-password-email',
+        name: 'SendChangePasswordEmail',
+        component: () => import('../views/SendChangePasswordEmail.vue')
+    },
 ]
 
 const router = new VueRouter({

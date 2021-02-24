@@ -32,6 +32,11 @@
         >
           {{ $t('login:loginBtn') }}
         </v-btn>
+        <div class="mt-4">
+          <router-link to="/send-change-password-email">
+            {{ $t('login:forgotPassword') }}
+          </router-link>
+        </div>
       </v-form>
       <RecaptchaInfo></RecaptchaInfo>
     </v-col>
