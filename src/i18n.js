@@ -43,6 +43,8 @@ export default {
             resources: {
                 en: {
                     translation: {
+                        member: "Membre",
+                        admin: "Administrateur",
                         copy: "Copy",
                         to: "to",
                         finish: "Finish",
@@ -89,6 +91,8 @@ export default {
                 },
                 fr: {
                     translation: {
+                        member: "Membre",
+                        admin: "Administrateur",
                         copy: "Copier",
                         to: "à",
                         finish: "Terminer",

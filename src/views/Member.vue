@@ -82,6 +82,17 @@
                   :label="$t('member:address')"
                   :rules="[rules.required]"
               ></v-text-field>
+              <v-select
+                  :items="status"
+                  v-model="member.status"
+                  :label="$t('member:status')"
+                  required
+                  prepend-icon="map"
+                  :item-text="getSelectText"
+                  item-value="value"
+                  :rules="[rules.required]"
+              >
+              </v-select>
             </v-form>
           </v-card-text>
           <v-card-text>
@@ -208,6 +219,7 @@ export default {
       registered2:
           "Vous pouvez envoyer le lien au membre ou définir le mot de passe maintenant avec lui.",
       linkCopied: "lien copié",
+      status: "Statut"
     });
     I18n.i18next.addResources("en", "member", {
       title: "Nouveau membre",
@@ -228,6 +240,7 @@ export default {
       registered2:
           "Vous pouvez envoyer le lien au membre ou le changer maintenant avec lui.",
       linkCopied: "lien copié",
+      status: "Statut"
     });
     return {
       submitLoading: false,
@@ -243,6 +256,14 @@ export default {
       showRegisteredMessage: false,
       resetPasswordUrlCopied: false,
       resetPasswordUrlCopiedTimeout: null,
+      status: [
+        {
+          value: "member"
+        },
+        {
+          value: "admin"
+        }
+      ]
     };
   },
   methods: {
