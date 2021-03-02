@@ -6,6 +6,11 @@ export default {
             "offer"
         );
     },
+    listForUserId: function (userId) {
+        return Service.api().get(
+            "offer/user/" + userId
+        );
+    },
     uploadImage: function (formData) {
         return Service.api().post('/offer/image', formData)
     },

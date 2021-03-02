@@ -30,6 +30,11 @@ const routes = [
         component: () => import('../views/Offers.vue')
     },
     {
+        path: '/vos-offres',
+        name: 'YourOffers',
+        component: () => import('../views/YourOffers.vue')
+    },
+    {
         path: '/offre',
         name: 'OfferNew',
         component: () => import('../views/Offer.vue')

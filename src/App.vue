@@ -59,6 +59,14 @@
               </v-btn>
             </template>
             <v-list>
+              <v-list-item to="/vos-offres">
+                <v-list-item-action>
+                  🌈
+                </v-list-item-action>
+                <v-list-item-title>
+                  {{ $t('app:yourOffers') }}
+                </v-list-item-title>
+              </v-list-item>
               <v-list-item :to="'/membre/'+ $store.state.user.uuid">
                 <v-list-item-avatar>
                   <v-avatar color="primary" dark size="35">
@@ -237,7 +245,8 @@ export default {
       offers: "Offres",
       yourTransactions: "Transactions",
       members: "Membres",
-      informations: "Informations"
+      informations: "Informations",
+      yourOffers: "Vos offres"
     });
     I18n.i18next.addResources("en", "app", {
       becomeMember: "Devenez membre",
@@ -247,7 +256,8 @@ export default {
       offers: "Offres",
       yourTransactions: "Transactions",
       members: "Membres",
-      informations: "Informations"
+      informations: "Informations",
+      yourOffers: "Vos offres"
     });
     return {
       drawer: false

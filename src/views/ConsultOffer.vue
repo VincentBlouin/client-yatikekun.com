@@ -1,20 +1,20 @@
 <template>
   <v-card flat class="mt-16 vh-center">
     <v-card-actions
-      class="vh-center"
-      :class="{
+        class="vh-center"
+        :class="{
         'pt-8': $vuetify.breakpoint.smAndDown,
         'pt-16': $vuetify.breakpoint.mdAndUp,
       }"
     >
       <v-btn
-        color="primary"
-        large
-        class="white--text subtitle-1 pl-4 pr-4"
-        :class="{
+          color="primary"
+          large
+          class="white--text subtitle-1 pl-4 pr-4"
+          :class="{
           'pb-7 pt-7': $vuetify.breakpoint.smAndDown,
         }"
-        @click="contactDialog = true"
+          @click="contactDialog = true"
       >
         <v-row v-if="$vuetify.breakpoint.smAndDown">
           <v-col cols="12" class="pa-0 pb-0">
@@ -26,25 +26,25 @@
         </v-row>
         <v-icon class="mr-2" v-if="$vuetify.breakpoint.mdAndUp">person</v-icon>
         <span v-if="$vuetify.breakpoint.mdAndUp">{{
-          $t("consult:contact")
-        }}</span>
+            $t("consult:contact")
+          }}</span>
       </v-btn>
       <v-divider
-        vertical
-        class=""
-        :class="{
+          vertical
+          class=""
+          :class="{
           'ml-5 mr-5': $vuetify.breakpoint.smAndDown,
           'ml-4 mr-4': $vuetify.breakpoint.mdAndUp,
         }"
       ></v-divider>
       <v-btn
-        color="primary"
-        large
-        class="white--text subtitle-1 pl-4 pr-4"
-        :class="{
+          color="primary"
+          large
+          class="white--text subtitle-1 pl-4 pr-4"
+          :class="{
           'pb-7 pt-7': $vuetify.breakpoint.smAndDown,
         }"
-        @click="$refs.newTransaction.enter()"
+          @click="$refs.newTransaction.enter()"
       >
         <v-row v-if="$vuetify.breakpoint.smAndDown">
           <v-col cols="12" class="pa-0 pb-0">
@@ -55,11 +55,12 @@
           </v-col>
         </v-row>
         <v-icon class="mr-2" v-if="$vuetify.breakpoint.mdAndUp"
-          >attach_money</v-icon
+        >attach_money
+        </v-icon
         >
         <span v-if="$vuetify.breakpoint.mdAndUp">{{
-          $t("consult:transaction")
-        }}</span>
+            $t("consult:transaction")
+          }}</span>
       </v-btn>
     </v-card-actions>
     <v-card-actions class="vh-center" v-if="isOwner">
@@ -71,48 +72,48 @@
     <v-card-text class="">
       <v-row align="center" justify="center" class="h-center">
         <v-col
-          cols="12"
-          class="col-md-6 col-lg-4 text-center vh-center"
-          v-if="isLoading"
+            cols="12"
+            class="col-md-6 col-lg-4 text-center vh-center"
+            v-if="isLoading"
         >
           <v-skeleton-loader
-            width="250"
-            type="image, list-item-two-line"
+              width="250"
+              type="image, list-item-two-line"
           ></v-skeleton-loader>
         </v-col>
         <v-col
-          cols="12"
-          class="col-md-6 col-lg-3"
-          v-if="!isLoading"
-          :class="{
+            cols="12"
+            class="col-md-6 col-lg-3"
+            v-if="!isLoading"
+            :class="{
             'h-right': $vuetify.breakpoint.mdAndUp,
             'vh-center': $vuetify.breakpoint.smAndDown,
           }"
         >
           <v-card
-            flat
-            class="text-center pt-0"
-            max-width="300"
-            :class="{
+              flat
+              class="text-center pt-0"
+              max-width="300"
+              :class="{
               'h-right mr-8': $vuetify.breakpoint.mdAndUp,
               'vh-center': $vuetify.breakpoint.smAndDown,
             }"
           >
             <v-img
-              height="200"
-              v-if="offer.image"
-              :src="getCustomImageUrl(offer.image)"
-              :alt="offer.image.name"
-              class="pt-0"
+                height="200"
+                v-if="offer.image"
+                :src="getCustomImageUrl(offer.image)"
+                :alt="offer.image.name"
+                class="pt-0"
             ></v-img>
             <v-img
-              height="200"
-              v-if="offer.customImage"
-              :src="getCustomImageUrl(offer.customImage)"
-              class="pt-0"
+                height="200"
+                v-if="offer.customImage"
+                :src="getCustomImageUrl(offer.customImage)"
+                class="pt-0"
             ></v-img>
             <v-card-text
-              class="subtitle-1 text-right pl-0 pr-0 pb-0 pt-0 font-italic"
+                class="subtitle-1 text-right pl-0 pr-0 pb-0 pt-0 font-italic"
             >
               {{ $t(offer.User.subRegion) }}
             </v-card-text>
@@ -127,8 +128,8 @@
               {{ $t("consult:fees") }}
             </v-card-title>
             <v-card-text
-              class="text-left subtitle-1"
-              v-if="
+                class="text-left subtitle-1"
+                v-if="
                 !offer.additionalFees_fr ||
                 offer.additionalFees_fr.trim() === ''
               "
@@ -144,8 +145,8 @@
               {{ $t("consult:experience") }}
             </v-card-title>
             <v-card-text
-              class="text-left subtitle-1"
-              v-if="!offer.experience_fr || offer.experience_fr.trim() === ''"
+                class="text-left subtitle-1"
+                v-if="!offer.experience_fr || offer.experience_fr.trim() === ''"
             >
               {{ $t("consult:notMentioned") }}
             </v-card-text>
@@ -178,14 +179,14 @@
               </v-list-item-content>
             </v-list-item>
             <v-list-item
-              :href="'https://m.me/' + offer.User.facebookId"
-              target="_blank"
+                :href="'https://m.me/' + offer.User.facebookId"
+                target="_blank"
             >
               <v-list-item-action>
                 <v-icon>messenger</v-icon>
               </v-list-item-action>
               <v-list-item-content>
-                <v-list-item-title> Messenger </v-list-item-title>
+                <v-list-item-title> Messenger</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item :href="'mailto:' + offer.User.email">
@@ -214,21 +215,21 @@
     </v-dialog>
     <NewTransaction :offer="offer" ref="newTransaction"></NewTransaction>
     <v-bottom-sheet
-      v-model="pendingTransactionSheet"
-      v-if="pendingTransaction !== null && pendingTransaction.length"
-      inset
-      scrollable
+        v-model="pendingTransactionSheet"
+        v-if="pendingTransaction !== null && pendingTransaction.length"
+        inset
+        scrollable
     >
       <v-sheet class="text-center">
         <div>
           <Transaction
-            :quantity="pendingTransaction[0].amount"
-            :giver="pendingTransaction[0].giver"
-            :receiver="pendingTransaction[0].receiver"
-            :initiator="pendingTransaction[0].initiator"
-            :transactionId="pendingTransaction[0].id"
-            :flatCard="true"
-            @close="pendingTransactionSheet = false"
+              :quantity="pendingTransaction[0].amount"
+              :giver="pendingTransaction[0].giver"
+              :receiver="pendingTransaction[0].receiver"
+              :initiator="pendingTransaction[0].initiator"
+              :transactionId="pendingTransaction[0].id"
+              :flatCard="true"
+              @close="pendingTransactionSheet = false"
           ></Transaction>
         </div>
       </v-sheet>
@@ -255,12 +256,13 @@ export default {
     this.offer = Offer.format(response.data);
     this.isLoading = false;
     this.pendingTransaction = await TransactionService.getPendingForOfferAndUserId(
-      this.offer.id,
-      this.$store.state.user.id
+        this.offer.id,
+        this.$store.state.user.id
     );
     if (this.pendingTransaction !== null) {
       this.pendingTransactionSheet = true;
     }
+    this.isOwner = this.offer.UserId === this.$store.state.user.id;
   },
   data: function () {
     I18n.i18next.addResources("fr", "consult", {

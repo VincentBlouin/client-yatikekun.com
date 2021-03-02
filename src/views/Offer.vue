@@ -2,7 +2,7 @@
   <v-row
       align="center"
       justify="center"
-      class="vh-center"
+      class="vh-center mt-16 mb-16 pb-8"
   >
     <v-col cols="12" class="col-md-6 text-center">
       <v-card flat class="">
