@@ -20,10 +20,10 @@
         </v-card-title>
         <v-list class="pt-0">
           <v-list-item v-for="member in members" :key="member.uuid" class="text-left" :to="'/membre/'+member.uuid">
+            <v-avatar color="primary" class="white--text" size="35">
+              {{ member.initials }}
+            </v-avatar>
             <v-list-item-avatar>
-              <v-avatar color="primary" class="white--text">
-                {{ member.initials }}
-              </v-avatar>
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title>
