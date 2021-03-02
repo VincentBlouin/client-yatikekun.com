@@ -58,8 +58,19 @@
                 <v-icon>account_circle</v-icon>
               </v-btn>
             </template>
-
             <v-list>
+              <v-list-item :to="'/membre/'+ $store.state.user.uuid">
+                <v-list-item-avatar>
+                  <v-avatar color="primary" dark size="35">
+                      <span class="white--text">
+                        {{ initials }}
+                      </span>
+                  </v-avatar>
+                </v-list-item-avatar>
+                <v-list-item-title>
+                  {{ $t('app:informations') }}
+                </v-list-item-title>
+              </v-list-item>
               <v-list-item @click="logout">
                 <v-list-item-action>
                   <v-icon>exit_to_app</v-icon>
@@ -195,6 +206,7 @@
 import I18n from "@/i18n";
 import Vue from 'vue'
 import VueClipboard from 'vue-clipboard2'
+
 Vue.use(VueClipboard);
 
 export default {
@@ -224,7 +236,8 @@ export default {
       charter: "Charte",
       offers: "Offres",
       yourTransactions: "Transactions",
-      members: "Membres"
+      members: "Membres",
+      informations: "Informations"
     });
     I18n.i18next.addResources("en", "app", {
       becomeMember: "Devenez membre",
@@ -233,11 +246,18 @@ export default {
       charter: "Charte",
       offers: "Offres",
       yourTransactions: "Transactions",
-      members: "Membres"
+      members: "Membres",
+      informations: "Informations"
     });
     return {
       drawer: false
     };
+  },
+  computed: {
+    initials: function () {
+      const fullname = this.$store.state.user.firstname + " " + this.$store.state.user.lastname;
+      return fullname.split(" ").map((n) => n[0]).join("");
+    }
   }
 }
 </script>

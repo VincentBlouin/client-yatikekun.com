@@ -91,6 +91,7 @@
                   :item-text="getSelectText"
                   item-value="value"
                   :rules="[rules.required]"
+                  :disabled="$store.state.user.status !== 'admin'"
               >
               </v-select>
             </v-form>
