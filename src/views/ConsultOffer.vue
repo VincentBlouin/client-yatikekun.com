@@ -70,7 +70,7 @@
       </v-btn>
     </v-card-actions>
     <v-card-text class="">
-      <v-row align="center" justify="center" class="h-center">
+      <v-row justify="center" class="h-center">
         <v-col cols="12" md="10" xl="8" class="text-center"
             v-if="isLoading"
         >
@@ -82,7 +82,7 @@
         <v-col
             cols="12"
             md="6"
-            lg="3"
+            lg="4"
             v-if="!isLoading"
             :class="{
             'h-right': $vuetify.breakpoint.mdAndUp,
@@ -103,13 +103,13 @@
                 v-if="offer.image"
                 :src="getCustomImageUrl(offer.image)"
                 :alt="offer.image.name"
-                class="pt-0"
+                class="mt-6"
             ></v-img>
             <v-img
                 height="200"
                 v-if="offer.customImage"
                 :src="getCustomImageUrl(offer.customImage)"
-                class="pt-0"
+                class="mt-6"
             ></v-img>
             <v-card-text
                 class="subtitle-1 text-right pl-0 pr-0 pb-0 pt-0 font-italic"

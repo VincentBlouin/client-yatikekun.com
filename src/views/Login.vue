@@ -4,7 +4,7 @@
       justify="center"
       class="pt-8 pb-8"
   >
-    <v-col cols="12" class="col-md-6 text-left">
+    <v-col cols="12" md="10" lg="9" xl="6" class="text-left">
       <v-form ref="loginForm">
         <v-alert
             :value="wrongLogin"

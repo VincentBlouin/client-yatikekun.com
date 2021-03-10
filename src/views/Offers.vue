@@ -1,10 +1,9 @@
 <template>
   <v-row
-      align="center"
       justify="center"
-      class="vh-center pt-16 pb-16"
+      class="pt-16 pb-16"
   >
-    <v-col cols="12" md="10" xl="8" class="text-center">
+    <v-col cols="12" md="10" lg="9" xl="6" class="text-center">
       <v-card flat class="pt-8">
         <v-card-title>
           {{ $t('offers:title') }}
@@ -13,7 +12,7 @@
           <v-text-field v-model="filterInput" :label="$t('offers:search')" prepend-icon="search"></v-text-field>
         </v-card-actions>
         <v-row v-if="isLoading">
-          <v-col cols="12" class="col-md-6 col-lg-4 text-center vh-center" v-for="n in 20" :key="n">
+          <v-col cols="12" md="6" lg="4" xl="4"  class="text-center vh-center" v-for="n in 20" :key="n">
             <v-skeleton-loader
                 width="250"
                 type="image, list-item-two-line"
@@ -26,7 +25,7 @@
               {{ $t('offers:noResults') }}
             </v-sheet>
           </v-col>
-          <v-col v-else cols="12" class="col-md-6 col-lg-4 text-center" v-for="offer in offersFiltered" :key="offer.id">
+          <v-col v-else cols="12" md="6" lg="4" xl="4" class="text-center" v-for="offer in offersFiltered" :key="offer.id">
             <OfferCard :offer="offer"></OfferCard>
           </v-col>
         </v-row>

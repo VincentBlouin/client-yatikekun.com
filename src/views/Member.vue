@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row align="center" justify="center" class="vh-center">
-      <v-col cols="12" class="col-md-6 text-center">
+      <v-col cols="12" md="10" lg="9" xl="6" class="text-center">
         <v-card flat class="mt-16 mb-16 pt-16">
           <v-card-text class="text-center pb-0">
             <v-form ref="memberForm" v-model="isFormValid">

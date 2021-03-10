@@ -1,6 +1,6 @@
 <template>
   <v-row class="vh-center">
-    <v-col cols="12" class="col-md-6">
+    <v-col cols="12" md="10" lg="9" xl="6">
       <v-card class="pt-16" flat color="transparent">
         <v-card-text>
           <v-form ref="changePasswordForm">
