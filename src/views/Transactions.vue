@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center" class="pt-16 pb-16">
-    <v-col cols="12" class="col-md-6 text-center">
+    <v-col cols="12" md="10" class="text-center">
       <v-card flat class="pt-8">
         <v-card-title>
           {{ $t("transactions:title") }}

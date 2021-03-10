@@ -3,7 +3,7 @@
       justify="center"
       class="mt-16 pt-16 pb-16"
   >
-    <v-col cols="12" class="col-md-6 text-center">
+    <v-col cols="12" md="10" xl="8" class="text-center">
       <h2 class="text-center">
         {{$t('yourOffer:title')}}
       </h2>

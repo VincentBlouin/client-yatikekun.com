@@ -4,7 +4,7 @@
       justify="center"
       class="vh-center mt-16 mb-16 pb-8"
   >
-    <v-col cols="12" class="col-md-6 text-center">
+    <v-col cols="12" md="10" lg="8" xl="8" class="text-center">
       <v-card flat class="">
         <v-card-text class="text-center pb-0">
           <v-form ref="offerForm">
