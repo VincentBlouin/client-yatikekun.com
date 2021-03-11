@@ -1,116 +1,112 @@
 <template>
-  <v-row
-      align="center"
-      justify="center"
-      class="vh-center pt-16 pb-16"
-  >
-    <v-col cols="12" md="10" lg="9" xl="6" class="text-center">
-      <v-card flat class="pt-8">
-        <v-card-title class="vh-center primary-color">
-          <h3 class="text-center">{{ $t('charter:title') }}</h3>
-        </v-card-title>
-      </v-card>
-      <v-card flat>
-        <v-card-title class="text-h5 primary-color">
-          {{ $t('charter:intention') }}
-        </v-card-title>
-        <v-card-text>
-          <p class="text-h6 font-weight-regular text-left">
-            {{ $t('charter:intention1') }}
-          </p>
-          <p class="text-h6 font-weight-regular text-left">
-            {{ $t('charter:intention2') }}
-          </p>
-        </v-card-text>
-      </v-card>
-      <v-card flat>
-        <v-card-title class="text-h5 primary-color">
-          {{ $t('charter:vision') }}
-        </v-card-title>
-        <v-card-text>
-          <p class="text-h6 font-weight-regular text-left">
-            {{ $t('charter:visionObjective') }}
-          </p>
-          <ul class="text-left text-h6 font-weight-regular">
-            <li>
-              {{ $t('charter:visionObjective1') }}
-            </li>
-            <li>
-              {{ $t('charter:visionObjective2') }}
-            </li>
-            <li>
-              {{ $t('charter:visionObjective3') }}
-            </li>
-            <li>
-              {{ $t('charter:visionObjective4') }}
-            </li>
-          </ul>
-          <p class="text-h6 font-weight-regular text-left">
-            {{ $t('charter:intention2') }}
-          </p>
-        </v-card-text>
-      </v-card>
-      <v-card flat>
-        <v-card-title class="text-h5 primary-color">
-          {{ $t('charter:principle') }}
-        </v-card-title>
-        <v-card-subtitle v-html="$t('charter:principleAccorderie')" class="text-left">
-        </v-card-subtitle>
-        <v-card-text>
-          <ol class="text-h6 font-weight-regular text-left">
-            <li class="font-weight-bold">
-              {{ $t('charter:principle1') }}
-              <p class="text-h6 font-weight-regular text-left">
-                {{ $t('charter:principle1Details') }}
-              </p>
-            </li>
-            <li class="font-weight-bold">
-              {{ $t('charter:principle2') }}
-              <p class="text-h6 font-weight-regular text-left">
-                {{ $t('charter:principle2Details') }}
-              </p>
-            </li>
-            <li class="font-weight-bold">
-              {{ $t('charter:principle3') }}
-              <p class="text-h6 font-weight-regular text-left">
-                {{ $t('charter:principle3Details') }}
-              </p>
-            </li>
-            <li class="font-weight-bold">
-              {{ $t('charter:principle4') }}
-              <p class="text-h6 font-weight-regular text-left">
-                {{ $t('charter:principle4Details') }}
-              </p>
-            </li>
-            <li class="font-weight-bold">
-              {{ $t('charter:principle5') }}
-              <p class="text-h6 font-weight-regular text-left">
-                {{ $t('charter:principle5Details') }}
-                <a href="https://www.facebook.com/groups/seldemergaspesie/">
-                  {{ $t('charter:principle51Details') }}
-                </a>
-              </p>
-            </li>
-            <li class="font-weight-bold">
-              {{ $t('charter:principle6') }}
-              <p class="text-h6 font-weight-regular text-left">
-                {{ $t('charter:principle6Details') }}
-                <a href="mailto:horizonsgaspesiens@gmail.com">
-                  horizonsgaspesiens@gmail.com
-                </a>
-              </p>
-            </li>
-          </ol>
-        </v-card-text>
-      </v-card>
-    </v-col>
-  </v-row>
+  <Page>
+    <v-card flat class="pt-8">
+      <v-card-title class="vh-center primary-color">
+        <h3 class="text-center">{{ $t('charter:title') }}</h3>
+      </v-card-title>
+    </v-card>
+    <v-card flat>
+      <v-card-title class="text-h5 primary-color">
+        {{ $t('charter:intention') }}
+      </v-card-title>
+      <v-card-text>
+        <p class="text-h6 font-weight-regular text-left">
+          {{ $t('charter:intention1') }}
+        </p>
+        <p class="text-h6 font-weight-regular text-left">
+          {{ $t('charter:intention2') }}
+        </p>
+      </v-card-text>
+    </v-card>
+    <v-card flat>
+      <v-card-title class="text-h5 primary-color">
+        {{ $t('charter:vision') }}
+      </v-card-title>
+      <v-card-text>
+        <p class="text-h6 font-weight-regular text-left">
+          {{ $t('charter:visionObjective') }}
+        </p>
+        <ul class="text-left text-h6 font-weight-regular">
+          <li>
+            {{ $t('charter:visionObjective1') }}
+          </li>
+          <li>
+            {{ $t('charter:visionObjective2') }}
+          </li>
+          <li>
+            {{ $t('charter:visionObjective3') }}
+          </li>
+          <li>
+            {{ $t('charter:visionObjective4') }}
+          </li>
+        </ul>
+        <p class="text-h6 font-weight-regular text-left">
+          {{ $t('charter:intention2') }}
+        </p>
+      </v-card-text>
+    </v-card>
+    <v-card flat>
+      <v-card-title class="text-h5 primary-color">
+        {{ $t('charter:principle') }}
+      </v-card-title>
+      <v-card-subtitle v-html="$t('charter:principleAccorderie')" class="text-left">
+      </v-card-subtitle>
+      <v-card-text>
+        <ol class="text-h6 font-weight-regular text-left">
+          <li class="font-weight-bold">
+            {{ $t('charter:principle1') }}
+            <p class="text-h6 font-weight-regular text-left">
+              {{ $t('charter:principle1Details') }}
+            </p>
+          </li>
+          <li class="font-weight-bold">
+            {{ $t('charter:principle2') }}
+            <p class="text-h6 font-weight-regular text-left">
+              {{ $t('charter:principle2Details') }}
+            </p>
+          </li>
+          <li class="font-weight-bold">
+            {{ $t('charter:principle3') }}
+            <p class="text-h6 font-weight-regular text-left">
+              {{ $t('charter:principle3Details') }}
+            </p>
+          </li>
+          <li class="font-weight-bold">
+            {{ $t('charter:principle4') }}
+            <p class="text-h6 font-weight-regular text-left">
+              {{ $t('charter:principle4Details') }}
+            </p>
+          </li>
+          <li class="font-weight-bold">
+            {{ $t('charter:principle5') }}
+            <p class="text-h6 font-weight-regular text-left">
+              {{ $t('charter:principle5Details') }}
+              <a href="https://www.facebook.com/groups/seldemergaspesie/">
+                {{ $t('charter:principle51Details') }}
+              </a>
+            </p>
+          </li>
+          <li class="font-weight-bold">
+            {{ $t('charter:principle6') }}
+            <p class="text-h6 font-weight-regular text-left">
+              {{ $t('charter:principle6Details') }}
+              <a href="mailto:horizonsgaspesiens@gmail.com">
+                horizonsgaspesiens@gmail.com
+              </a>
+            </p>
+          </li>
+        </ol>
+      </v-card-text>
+    </v-card>
+  </Page>
 </template>
 <script>
 import I18n from "@/i18n";
 
 export default {
-  components: {},
+  components: {
+    Page: () => import('@/components/Page')
+  },
   mounted() {
     window.scrollTo(0, 0)
   },

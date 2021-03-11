@@ -1,23 +1,23 @@
 <template>
-  <v-row
-      align="center"
-      justify="center"
-      class="vh-center pt-16 pb-16"
-  >
-    <v-col cols="12" class="col-md-6 col-lg-4 text-center vh-center">
-      <v-card flat class="pt-8">
-        <v-card-actions>
-          <v-btn
-              color="primary"
-              to="membre"
-          >
-            <v-icon class="mr-2">add</v-icon>
-            {{ $t('members:addMember') }}
-          </v-btn>
-        </v-card-actions>
-        <v-card-title>
-          {{ $t('members:title') }}
-        </v-card-title>
+  <Page class="h-center">
+    <v-card flat class="pt-8 h-center">
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn
+            color="primary"
+            to="membre"
+        >
+          <v-icon class="mr-2">add</v-icon>
+          {{ $t('members:addMember') }}
+        </v-btn>
+        <v-spacer></v-spacer>
+      </v-card-actions>
+      <v-card-title>
+        <v-spacer></v-spacer>
+        {{ $t('members:title') }}
+        <v-spacer></v-spacer>
+      </v-card-title>
+      <v-card-text class="vh-center">
         <v-list class="pt-0">
           <v-list-item v-for="member in members" :key="member.uuid" class="text-left" :to="'/membre/'+member.uuid">
             <v-avatar color="primary" class="white--text" size="35">
@@ -35,16 +35,18 @@
             </v-list-item-content>
           </v-list-item>
         </v-list>
-      </v-card>
-    </v-col>
-  </v-row>
+      </v-card-text>
+    </v-card>
+  </Page>
 </template>
 <script>
 import I18n from "@/i18n";
 import MemberService from "@/service/MemberService";
 
 export default {
-  components: {},
+  components: {
+    Page: () => import('@/components/Page')
+  },
   async mounted() {
     window.scrollTo(0, 0)
     this.isLoading = true;

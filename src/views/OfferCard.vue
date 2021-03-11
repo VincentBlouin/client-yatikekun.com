@@ -1,5 +1,5 @@
 <template>
-  <v-card flat class="pl-8 pr-8">
+  <v-card flat class="pl-8 pr-8" max-width="375">
     <v-card-actions class="h-center pb-0" v-if="isAvailableSwitch">
       <v-switch
           v-model="offer.isAvailable"

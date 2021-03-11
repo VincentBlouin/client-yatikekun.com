@@ -1,19 +1,14 @@
 <template>
-  <v-row
-      justify="center"
-      class="mt-16 pt-16 pb-16"
-  >
-    <v-col cols="12" md="10" lg="9" xl="6" class="text-center">
-      <h2 class="text-center">
-        {{$t('yourOffer:title')}}
-      </h2>
-      <v-row class="">
-        <v-col cols="12" md="6" lg="4" v-for="offer in offers" :key="offer.id">
-          <OfferCard :offer="offer" :isAvailableSwitch="true"></OfferCard>
-        </v-col>
-      </v-row>
-    </v-col>
-  </v-row>
+  <Page>
+    <h2 class="text-center">
+      {{ $t('yourOffer:title') }}
+    </h2>
+    <v-row class="">
+      <v-col cols="12" md="6" lg="4" v-for="offer in offers" :key="offer.id">
+        <OfferCard :offer="offer" :isAvailableSwitch="true"></OfferCard>
+      </v-col>
+    </v-row>
+  </Page>
 </template>
 
 <script>
@@ -24,7 +19,8 @@ import I18n from "@/i18n";
 export default {
   name: "YourOffers",
   components: {
-    OfferCard: () => import('@/views/OfferCard')
+    OfferCard: () => import('@/views/OfferCard'),
+    Page: () => import('@/components/Page')
   },
   data: function () {
     I18n.i18next.addResources("fr", "yourOffer", {

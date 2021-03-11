@@ -1,185 +1,181 @@
 <template>
-  <div>
-    <v-row align="center" justify="center" class="vh-center">
-      <v-col cols="12" md="10" lg="9" xl="6" class="text-center">
-        <v-card flat class="mt-16 mb-16 pt-16">
-          <v-card-text class="text-center pb-0">
-            <v-form ref="memberForm" v-model="isFormValid">
-              <v-text-field
-                  v-model="member.firstname"
-                  :label="$t('member:firstname')"
-                  required
-                  :rules="[rules.required]"
-              ></v-text-field>
-              <v-text-field
-                  v-model="member.lastname"
-                  :label="$t('member:lastname')"
-                  required
-                  :rules="[rules.required]"
-              ></v-text-field>
-              <v-text-field
-                  v-model="member.email"
-                  :label="$t('member:email')"
-                  prepend-icon="email"
-                  required
-                  :rules="[rules.required, rules.email]"
-              ></v-text-field>
-              <v-text-field
-                  v-model="member.facebookId"
-                  :label="$t('member:facebookId')"
-                  prepend-icon="facebook"
-                  required
-                  :rules="[]"
-              ></v-text-field>
-              <v-text-field
-                  v-model="member.region"
-                  :label="$t('member:region')"
-                  disabled
-                  required
-              ></v-text-field>
-              <v-select
-                  :items="subRegions"
-                  v-model="member.subRegion"
-                  :label="$t('member:subRegion')"
-                  required
-                  prepend-icon="map"
-                  :item-text="getSelectText"
-                  item-value="value"
-                  :rules="[rules.required]"
-              >
-                <template v-slot:item="{ item }">
-                  {{ $t(item.value) }}
-                </template>
-              </v-select>
-              <v-text-field
-                  v-model="member.phone1"
-                  :label="$t('member:phone1')"
-                  prepend-icon="phone"
-                  required
-                  :rules="[rules.required]"
-              ></v-text-field>
-              <v-text-field
-                  v-model="member.phone2"
-                  :label="$t('member:phone2')"
-                  prepend-icon="phone"
-              ></v-text-field>
-              <v-select
-                  :items="genders"
-                  v-model="member.gender"
-                  :label="$t('member:gender')"
-                  required
-                  prepend-icon="map"
-                  :item-text="getSelectText"
-                  item-value="value"
-                  :rules="[rules.required]"
-              >
-                <template v-slot:item="{ item }">
-                  {{ $t(item.value) }}
-                </template>
-              </v-select>
-              <v-text-field
-                  v-model="member.address"
-                  :label="$t('member:address')"
-                  :rules="[rules.required]"
-              ></v-text-field>
-              <v-select
-                  :items="status"
-                  v-model="member.status"
-                  :label="$t('member:status')"
-                  required
-                  prepend-icon="map"
-                  :item-text="getSelectText"
-                  item-value="value"
-                  :rules="[rules.required]"
-                  :disabled="$store.state.user.status !== 'admin'"
-              >
-              </v-select>
-            </v-form>
-          </v-card-text>
-          <v-card-text>
-            <v-scale-transition>
-              <v-alert
-                  v-if="showRegisteredMessage"
-                  type="success"
-                  :icon="false"
-                  color="primary"
-                  class="body-1 text-left"
-              >
-                <p class="body-1">
-                  {{ $t("member:registered") }}
-                </p>
-                <p>
-                  <a :href="resetPasswordUrl" class="white--text">{{
-                      resetPasswordUrl
-                    }}</a>
-                </p>
-                <v-row class="pb-0">
-                  <v-col cols="12" class="vh-center pb-0">
-                    <v-btn text small @click="copyPasswordUrl()">{{
-                        $t("copy")
-                      }}
-                    </v-btn>
-                  </v-col>
-                </v-row>
-                <v-row>
-                  <v-col cols="12" class="vh-center pt-0">
-                    <transition name="fade-transition">
-                      <small v-if="resetPasswordUrlCopied">{{
-                          $t("member:linkCopied")
-                        }}</small>
-                    </transition>
-                  </v-col>
-                </v-row>
-                <p class="body-1">
-                  {{ $t("member:registered2") }}
-                </p>
-              </v-alert>
-            </v-scale-transition>
-          </v-card-text>
-          <v-card-actions class="text-center vh-center pt-8">
-            <v-btn
-                color="primary"
-                @click="addMember"
-                :loading="submitLoading"
-                :disabled="submitLoading || showRegisteredMessage"
-                v-if="isCreate"
-            >
-              {{ $t("member:addMember") }}
-            </v-btn>
-            <v-btn
-                color="primary"
-                @click="modifyMember"
-                :loading="submitLoading"
-                :disabled="submitLoading"
-                v-if="!isCreate"
-            >
-              {{ $t("change") }}
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-      <v-snackbar
-          v-model="modifySuccess"
-          top
-          color="primary"
-          dark
-          :timeout="7000"
-      >
-        {{ $t("member:modified") }}
-        <template v-slot:action="{ attrs }">
-          <v-btn
-              color="white"
-              text
-              icon
-              v-bind="attrs"
-              @click="modifySuccess = false"
+  <Page>
+    <v-card flat class="">
+      <v-card-text class="text-center pb-0">
+        <v-form ref="memberForm" v-model="isFormValid">
+          <v-text-field
+              v-model="member.firstname"
+              :label="$t('member:firstname')"
+              required
+              :rules="[rules.required]"
+          ></v-text-field>
+          <v-text-field
+              v-model="member.lastname"
+              :label="$t('member:lastname')"
+              required
+              :rules="[rules.required]"
+          ></v-text-field>
+          <v-text-field
+              v-model="member.email"
+              :label="$t('member:email')"
+              prepend-icon="email"
+              required
+              :rules="[rules.required, rules.email]"
+          ></v-text-field>
+          <v-text-field
+              v-model="member.facebookId"
+              :label="$t('member:facebookId')"
+              prepend-icon="facebook"
+              required
+              :rules="[]"
+          ></v-text-field>
+          <v-text-field
+              v-model="member.region"
+              :label="$t('member:region')"
+              disabled
+              required
+          ></v-text-field>
+          <v-select
+              :items="subRegions"
+              v-model="member.subRegion"
+              :label="$t('member:subRegion')"
+              required
+              prepend-icon="map"
+              :item-text="getSelectText"
+              item-value="value"
+              :rules="[rules.required]"
           >
-            <v-icon>close</v-icon>
-          </v-btn>
-        </template>
-      </v-snackbar>
-    </v-row>
-  </div>
+            <template v-slot:item="{ item }">
+              {{ $t(item.value) }}
+            </template>
+          </v-select>
+          <v-text-field
+              v-model="member.phone1"
+              :label="$t('member:phone1')"
+              prepend-icon="phone"
+              required
+              :rules="[rules.required]"
+          ></v-text-field>
+          <v-text-field
+              v-model="member.phone2"
+              :label="$t('member:phone2')"
+              prepend-icon="phone"
+          ></v-text-field>
+          <v-select
+              :items="genders"
+              v-model="member.gender"
+              :label="$t('member:gender')"
+              required
+              prepend-icon="map"
+              :item-text="getSelectText"
+              item-value="value"
+              :rules="[rules.required]"
+          >
+            <template v-slot:item="{ item }">
+              {{ $t(item.value) }}
+            </template>
+          </v-select>
+          <v-text-field
+              v-model="member.address"
+              :label="$t('member:address')"
+              :rules="[rules.required]"
+          ></v-text-field>
+          <v-select
+              :items="status"
+              v-model="member.status"
+              :label="$t('member:status')"
+              required
+              prepend-icon="map"
+              :item-text="getSelectText"
+              item-value="value"
+              :rules="[rules.required]"
+              :disabled="$store.state.user.status !== 'admin'"
+          >
+          </v-select>
+        </v-form>
+      </v-card-text>
+      <v-card-text>
+        <v-scale-transition>
+          <v-alert
+              v-if="showRegisteredMessage"
+              type="success"
+              :icon="false"
+              color="primary"
+              class="body-1 text-left"
+          >
+            <p class="body-1">
+              {{ $t("member:registered") }}
+            </p>
+            <p>
+              <a :href="resetPasswordUrl" class="white--text">{{
+                  resetPasswordUrl
+                }}</a>
+            </p>
+            <v-row class="pb-0">
+              <v-col cols="12" class="vh-center pb-0">
+                <v-btn text small @click="copyPasswordUrl()">{{
+                    $t("copy")
+                  }}
+                </v-btn>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" class="vh-center pt-0">
+                <transition name="fade-transition">
+                  <small v-if="resetPasswordUrlCopied">{{
+                      $t("member:linkCopied")
+                    }}</small>
+                </transition>
+              </v-col>
+            </v-row>
+            <p class="body-1">
+              {{ $t("member:registered2") }}
+            </p>
+          </v-alert>
+        </v-scale-transition>
+      </v-card-text>
+      <v-card-actions class="text-center vh-center pt-8">
+        <v-btn
+            color="primary"
+            @click="addMember"
+            :loading="submitLoading"
+            :disabled="submitLoading || showRegisteredMessage"
+            v-if="isCreate"
+        >
+          {{ $t("member:addMember") }}
+        </v-btn>
+        <v-btn
+            color="primary"
+            @click="modifyMember"
+            :loading="submitLoading"
+            :disabled="submitLoading"
+            v-if="!isCreate"
+        >
+          {{ $t("change") }}
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+    <v-snackbar
+        v-model="modifySuccess"
+        top
+        color="primary"
+        dark
+        :timeout="7000"
+    >
+      {{ $t("member:modified") }}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+            color="white"
+            text
+            icon
+            v-bind="attrs"
+            @click="modifySuccess = false"
+        >
+          <v-icon>close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
+  </Page>
 </template>
 <script>
 import I18n from "@/i18n";
@@ -189,7 +185,9 @@ import Genders from "@/Genders";
 import Rules from "@/Rules";
 
 export default {
-  components: {},
+  components: {
+    Page: () => import('@/components/Page')
+  },
   async mounted() {
     this.member.uuid = this.$route.params.memberId;
     if (!this.member.uuid) {

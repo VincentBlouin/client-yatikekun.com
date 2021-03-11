@@ -1,9 +1,6 @@
 <template>
-  <v-row
-      justify="center"
-      class="pt-16 pb-16"
-  >
-    <v-col cols="12" md="10" lg="9" xl="6" class="text-center">
+  <div>
+    <Page>
       <v-card flat class="pt-8">
         <v-card-title>
           {{ $t('offers:title') }}
@@ -12,7 +9,7 @@
           <v-text-field v-model="filterInput" :label="$t('offers:search')" prepend-icon="search"></v-text-field>
         </v-card-actions>
         <v-row v-if="isLoading">
-          <v-col cols="12" md="6" lg="4" xl="4"  class="text-center vh-center" v-for="n in 20" :key="n">
+          <v-col cols="12" md="4" class="text-center vh-center" v-for="n in 20" :key="n">
             <v-skeleton-loader
                 width="250"
                 type="image, list-item-two-line"
@@ -25,28 +22,31 @@
               {{ $t('offers:noResults') }}
             </v-sheet>
           </v-col>
-          <v-col v-else cols="12" md="6" lg="4" xl="4" class="text-center" v-for="offer in offersFiltered" :key="offer.id">
+          <v-col v-else cols="12" md="4" class="text-center" v-for="offer in offersFiltered"
+                 :key="offer.id">
             <OfferCard :offer="offer"></OfferCard>
           </v-col>
         </v-row>
       </v-card>
-    </v-col>
-    <v-fab-transition>
-      <v-btn
-          color="primary"
-          fab
-          dark
-          fixed
-          bottom
-          right
-          to="offre"
-          style="left:72%;"
-          x-large
-      >
-        <v-icon>add</v-icon>
-      </v-btn>
-    </v-fab-transition>
-  </v-row>
+    </Page>
+    <v-row>
+      <v-fab-transition>
+        <v-btn
+            color="primary"
+            fab
+            dark
+            fixed
+            bottom
+            right
+            to="offre"
+            style="left:72%;"
+            x-large
+        >
+          <v-icon>add</v-icon>
+        </v-btn>
+      </v-fab-transition>
+    </v-row>
+  </div>
 </template>
 <script>
 import I18n from "@/i18n";
@@ -55,7 +55,8 @@ import Offer from '@/offer/Offer'
 
 export default {
   components: {
-    OfferCard: () => import('@/views/OfferCard')
+    OfferCard: () => import('@/views/OfferCard'),
+    Page: () => import('@/components/Page')
   },
   async mounted() {
     window.scrollTo(0, 0)
