@@ -71,8 +71,14 @@
     </v-card-actions>
     <v-card-text class="">
       <v-row justify="center" class="h-center">
-        <v-col cols="12" md="10" xl="8" class="text-center"
-            v-if="isLoading"
+        <v-col cols="12"
+               md="6"
+               lg="4"
+               v-if="isLoading"
+               :class="{
+            'h-right': $vuetify.breakpoint.mdAndUp,
+            'vh-center': $vuetify.breakpoint.smAndDown,
+          }"
         >
           <v-skeleton-loader
               width="250"
@@ -93,6 +99,7 @@
               flat
               class="text-center pt-0"
               max-width="300"
+              min-width="250"
               :class="{
               'h-right mr-8': $vuetify.breakpoint.mdAndUp,
               'vh-center': $vuetify.breakpoint.smAndDown,
