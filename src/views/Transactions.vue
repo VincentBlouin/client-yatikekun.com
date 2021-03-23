@@ -93,7 +93,7 @@ export default {
           }
           transaction.formattedDate = format(
               new Date(transaction.createdAt),
-              'dd MMMM yyyy',
+              'd MMMM yyyy',
               {
                 locale: fr
               } // Pass the locale as an option
