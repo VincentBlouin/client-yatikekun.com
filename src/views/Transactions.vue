@@ -11,6 +11,9 @@
             <th class="text-left">
               {{ $t("transactions:details") }}
             </th>
+            <th class="text-left">
+              Date
+            </th>
             <th class="text-left">{{ $t("transactions:gave") }}</th>
             <th class="text-left">{{ $t("transactions:received") }}</th>
             <th class="text-left">{{ $t("transactions:amount") }}</th>
@@ -28,6 +31,9 @@
           >
             <td>
               {{ transaction.details }}
+            </td>
+            <td>
+              {{ transaction.formattedDate }}
             </td>
             <td
                 :class="{
@@ -67,6 +73,8 @@
 <script>
 import I18n from "@/i18n";
 import TransactionService from "@/service/TransactionService";
+import {format} from 'date-fns'
+import {fr} from 'date-fns/locale'
 
 export default {
   components: {
@@ -83,6 +91,14 @@ export default {
           if (transaction.details === "initial") {
             transaction.details = this.$t("transactions:initial");
           }
+          transaction.formattedDate = format(
+              new Date(transaction.createdAt),
+              'dd MMMM yyyy',
+              {
+                locale: fr
+              } // Pass the locale as an option
+          )
+          ;
           transaction.statusName = this.$t(
               "transactions:" + transaction.status.toLowerCase()
           );
