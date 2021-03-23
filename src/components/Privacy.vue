@@ -1,11 +1,11 @@
 <template>
   <v-card flat>
-    <v-card-title class="primary-color">
+    <v-card-title class="primary-color font-weight-bold">
       {{ $t('privacy:title') }}
     </v-card-title>
     <v-card-text>
       <p class="text-h6 font-weight-regular text-left">
-        Les courriels, adresses, messenger, téléphones et transactions sont visibles pour les autres membres.
+        Les courriels, adresses, messenger, téléphones et transactions sont visibles par les autres membres.
       </p>
       <p class="text-h6 font-weight-regular text-left">
         Les courriels, adresses, genres, url messenger et téléphones sont visibles par tous les membres.
