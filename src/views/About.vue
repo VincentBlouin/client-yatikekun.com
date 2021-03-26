@@ -149,36 +149,36 @@
                       {{ $t('about:member2') }}
                     </span>
                   </v-subheader>
-                  <v-list-item class="ml-8" href="tel:555-555-5555">
-                    <v-list-item-avatar>
-                      <v-avatar color="primary" dark>
-                        <span class="white--text headline">DO</span>
-                      </v-avatar>
-                    </v-list-item-avatar>
-                    <v-list-item-content>
-                      <v-list-item-title class="text-h6 font-weight-regular">
-                        Donna Lévesque
-                      </v-list-item-title>
-                      <v-list-item-subtitle class="text-subtitle-1">
-                        555-555-5555
-                      </v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item class="ml-8" href="tel:581-886-4000">
-                    <v-list-item-avatar>
-                      <v-avatar color="primary" dark>
-                        <span class="white--text headline">FA</span>
-                      </v-avatar>
-                    </v-list-item-avatar>
-                    <v-list-item-content>
-                      <v-list-item-title class="text-h6 font-weight-regular">
-                        Fatou Minot
-                      </v-list-item-title>
-                      <v-list-item-subtitle class="text-subtitle-1">
-                        581-886-4000
-                      </v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item>
+<!--                  <v-list-item class="ml-8" href="tel:555-555-5555">-->
+<!--                    <v-list-item-avatar>-->
+<!--                      <v-avatar color="primary" dark>-->
+<!--                        <span class="white&#45;&#45;text headline">DO</span>-->
+<!--                      </v-avatar>-->
+<!--                    </v-list-item-avatar>-->
+<!--                    <v-list-item-content>-->
+<!--                      <v-list-item-title class="text-h6 font-weight-regular">-->
+<!--                        Donna Lévesque-->
+<!--                      </v-list-item-title>-->
+<!--                      <v-list-item-subtitle class="text-subtitle-1">-->
+<!--                        555-555-5555-->
+<!--                      </v-list-item-subtitle>-->
+<!--                    </v-list-item-content>-->
+<!--                  </v-list-item>-->
+<!--                  <v-list-item class="ml-8" href="tel:581-886-4000">-->
+<!--                    <v-list-item-avatar>-->
+<!--                      <v-avatar color="primary" dark>-->
+<!--                        <span class="white&#45;&#45;text headline">FA</span>-->
+<!--                      </v-avatar>-->
+<!--                    </v-list-item-avatar>-->
+<!--                    <v-list-item-content>-->
+<!--                      <v-list-item-title class="text-h6 font-weight-regular">-->
+<!--                        Fatou Minot-->
+<!--                      </v-list-item-title>-->
+<!--                      <v-list-item-subtitle class="text-subtitle-1">-->
+<!--                        581-886-4000-->
+<!--                      </v-list-item-subtitle>-->
+<!--                    </v-list-item-content>-->
+<!--                  </v-list-item>-->
                   <v-list-item class="ml-8" href="tel:418-751-3103">
                     <v-list-item-avatar>
                       <v-avatar>
@@ -212,24 +212,6 @@
                       </v-list-item-title>
                       <v-list-item-subtitle class="text-subtitle-1">
                         581-233-9481
-                      </v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item class="ml-8" href="tel:418-392-9867">
-                    <v-list-item-avatar>
-                      <v-avatar>
-                        <img
-                            :src="require('@/assets/hug_petit_carre.jpg')"
-                            alt="Hug Arsenault"
-                        >
-                      </v-avatar>
-                    </v-list-item-avatar>
-                    <v-list-item-content>
-                      <v-list-item-title class="text-h6 font-weight-regular">
-                        Hug Arsenault
-                      </v-list-item-title>
-                      <v-list-item-subtitle class="text-subtitle-1">
-                        418-392-9867
                       </v-list-item-subtitle>
                     </v-list-item-content>
                   </v-list-item>
