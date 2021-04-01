@@ -5,17 +5,16 @@
     </v-card-title>
     <v-card-text>
       <p class="text-h6 font-weight-regular text-left">
-        Les courriels, adresses, messenger, téléphones et transactions sont visibles par les autres membres.
+        {{ $t('privacy:visibility') }}
       </p>
       <p class="text-h6 font-weight-regular text-left">
-        Les courriels, adresses, genres, url messenger et téléphones sont visibles par tous les membres.
+        {{ $t('privacy:passwords') }}
       </p>
       <p class="text-h6 font-weight-regular text-left">
-        Les mots de passe ne sont jamais partagés.
+        {{ $t('privacy:facebook') }}
       </p>
       <p class="text-h6 font-weight-regular text-left">
-        Les données sauvergardées se trouvent dans des serveurs à Paspébiac.
-        Des backups se trouvent également à Bonaventure.
+        {{ $t('privacy:location') }}
       </p>
     </v-card-text>
   </v-card>
@@ -27,10 +26,18 @@ export default {
   components: {},
   data: function () {
     I18n.i18next.addResources("fr", "privacy", {
-      title: "Vie privée"
+      title: "Vie privée",
+      visibility: "Les courriels, adresses, genres, url messenger, téléphones et transactions sont visibles par tous les membres.",
+      passwords: "Les mots de passe ne sont jamais partagés.",
+      facebook: "Les offres de services sont publiées automatique sur le groupe Facebook privé réservé aux membres",
+      location: "Les données sauvergardées se trouvent dans des serveurs à Paspébiac. Des backups se trouvent également à Bonaventure."
     });
     I18n.i18next.addResources("en", "privacy", {
-      title: "Vie privée"
+      title: "Vie privée",
+      visibility: "Les courriels, adresses, genres, url messenger, téléphones et transactions sont visibles par tous les membres.",
+      passwords: "Les mots de passe ne sont jamais partagés.",
+      facebook: "Les offres de services sont publiées automatique sur le groupe Facebook privé réservé aux membres",
+      location: "Les données sauvergardées se trouvent dans des serveurs à Paspébiac. Des backups se trouvent également à Bonaventure."
     });
     return {}
   },
