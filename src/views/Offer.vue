@@ -148,6 +148,38 @@
         </v-btn>
       </template>
     </v-snackbar>
+    <v-dialog
+        transition="dialog-top-transition"
+        max-width="600"
+        v-model="publishToFacebookDialog"
+        v-if="publishToFacebookDialog"
+    >
+      <v-card>
+        <v-card-text>
+          <v-row class="mt-4 pt-8 vh-center">
+            <v-col cols="12" md="6" class="text-center">
+              <OfferCard :offer="offer"></OfferCard>
+            </v-col>
+          </v-row>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn
+              text
+              @click="publishToFacebookGroup()"
+              color="primary"
+          >
+            {{ $t('offer:publish') }}
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn
+              text
+              @click="dialog.value = false"
+          >
+            {{ $t('close') }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-row>
 </template>
 <script>
@@ -161,8 +193,14 @@ const STATUS_INITIAL_UPLOAD = 0
 const STATUS_SAVING_UPLOAD = 1
 const STATUS_SUCCESS_UPLOAD = 2
 const STATUS_FAILED_UPLOAD = 3
+
+const facebookAppId = process.env.VUE_APP_FACEBOOK_APP_ID;
+const facebookGroupId = process.env.VUE_APP_FACEBOOK_GROUP_ID;
+
 export default {
-  components: {},
+  components: {
+    OfferCard: () => import('@/views/OfferCard'),
+  },
   async mounted() {
     this.offer.id = this.$route.params.offerId;
     if (!this.offer.id) {
@@ -171,6 +209,14 @@ export default {
     }
     const response = await OfferService.get(this.offer);
     this.offer = Offer.format(response.data);
+    window.fbAsyncInit = function () {
+      window.FB.init({
+        appId: facebookAppId,
+        autoLogAppEvents: true,
+        xfbml: true,
+        version: 'v10.0'
+      });
+    };
   },
   data: function () {
     I18n.i18next.addResources("fr", "offer", {
@@ -187,7 +233,8 @@ export default {
       isNotAvailable: "N'est pas disponible",
       offerModified: "Votre offre a été modifiée",
       experience: "Expérience",
-      additionalFees: "Frais additionels"
+      additionalFees: "Frais additionels",
+      publish: "Publier"
     });
     I18n.i18next.addResources("en", "offer", {
       title: "Nouvelle offre",
@@ -203,7 +250,8 @@ export default {
       isNotAvailable: "N'est pas disponible",
       offerModified: "Votre offre a été modifiée",
       experience: "Expérience",
-      additionalFees: "Frais additionels"
+      additionalFees: "Frais additionels",
+      publish: "Publier"
     });
     /*
       concat is to avoid re-adding uploadImage
@@ -227,7 +275,8 @@ export default {
       currentUploadStatus: STATUS_INITIAL_UPLOAD,
       submitLoading: false,
       modifiedMessage: false,
-      rules: Rules
+      rules: Rules,
+      publishToFacebookDialog: false
     }
   },
   methods: {
@@ -239,9 +288,22 @@ export default {
         return;
       }
       this.submitLoading = true;
-      await OfferService.create(this.offer);
+      this.offer.User = this.$store.state.user;
+      this.publishToFacebookDialog = true;
+      // await OfferService.create(this.offer);
       this.submitLoading = false;
-      await this.$router.push("/offres");
+      // await this.$router.push("/offres");
+    },
+    publishToFacebookGroup: async function () {
+      window.FB.getLoginStatus(function (response) {
+        if (response.status === 'connected') {
+          var accessToken = response.authResponse.accessToken;
+          window.FB.api('/v10.0/' + facebookGroupId + '/feed', 'post', {
+            message: this.offer.description + " test",
+            accessToken: accessToken
+          });
+        }
+      }, {scope: 'publish_actions, user_groups, publish_to_groups'});
     },
     modifyOffer: async function () {
       this.submitLoading = true;
