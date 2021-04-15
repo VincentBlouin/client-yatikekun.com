@@ -306,6 +306,14 @@ export default {
             message: this.offer.description + " test",
             accessToken: accessToken
           });
+        }else{
+          window.FB.login(function(response) {
+            if (response.authResponse) {
+              // proceed
+            } else {
+              // not auth / cancelled the login!
+            }
+          });
         }
       }, {scope: 'publish_actions, user_groups, publish_to_groups'});
       console.log('facebook publish 6')
