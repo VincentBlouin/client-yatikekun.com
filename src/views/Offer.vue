@@ -295,8 +295,12 @@ export default {
       // await this.$router.push("/offres");
     },
     publishToFacebookGroup: async function () {
+      console.log('facebook publish 1')
       window.FB.getLoginStatus(function (response) {
+        console.log('facebook publish 2')
+        console.log(response.status);
         if (response.status === 'connected') {
+          console.log('facebook publish 3')
           var accessToken = response.authResponse.accessToken;
           window.FB.api('/v10.0/' + facebookGroupId + '/feed', 'post', {
             message: this.offer.description + " test",
@@ -304,6 +308,7 @@ export default {
           });
         }
       }, {scope: 'publish_actions, user_groups, publish_to_groups'});
+      console.log('facebook publish 6')
     },
     modifyOffer: async function () {
       this.submitLoading = true;
