@@ -304,7 +304,7 @@ export default {
       this.submitLoading = true;
       this.offer.User = this.$store.state.user;
       const response = await OfferService.create(this.offer);
-      this.offer.id = response.id;
+      this.offer.id = response.data.id;
       this.publishToFacebookDialog = true;
       this.submitLoading = false;
     },
@@ -339,8 +339,9 @@ export default {
       console.log('facebook publish 6')
     },
     publishToFacebookGroupUsingAccessToken: async function (accessToken) {
+      console.log("image url " + this.getCurrentImageUrl());
       return window.FB.api('/v10.0/' + facebookGroupId + '/feed', 'post', {
-        message: this.offer.description + " test",
+        message: this.offer.description,
         link: "https://www.partageheure.com/consulter-offre/" + this.offer.id,
         full_picture: this.getCurrentImageUrl(),
         accessToken: accessToken
