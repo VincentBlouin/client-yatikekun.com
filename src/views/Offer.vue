@@ -306,29 +306,31 @@ export default {
       await OfferService.create(this.offer);
       this.publishToFacebookDialog = true;
       this.submitLoading = false;
-      await this.$router.push("/offres");
     },
     publishToFacebookGroup: async function () {
       console.log('facebook publish 1')
-      window.FB.getLoginStatus((response) => {
+      window.FB.getLoginStatus(async (response) => {
         console.log('facebook publish 2')
         console.log(response.status);
         console.log(response.session);
         if (response.status === 'connected') {
           console.log('facebook publish 3')
-          this.publishToFacebookGroupUsingAccessToken(
+          await this.publishToFacebookGroupUsingAccessToken(
               response.authResponse.accessToken
           );
+          await this.$router.push("/offres");
         } else {
-          window.FB.login((response) => {
+          window.FB.login(async (response) => {
             if (response.authResponse) {
               console.log("facebook login 1");
-              this.publishToFacebookGroupUsingAccessToken(
+              await this.publishToFacebookGroupUsingAccessToken(
                   response.authResponse.accessToken
               );
+              await this.$router.push("/offres");
             } else {
               // not auth / cancelled the login!
               console.log("refused to login 2");
+              await this.$router.push("/offres");
             }
           });
         }
@@ -336,7 +338,7 @@ export default {
       console.log('facebook publish 6')
     },
     publishToFacebookGroupUsingAccessToken: async function (accessToken) {
-      window.FB.api('/v10.0/' + facebookGroupId + '/feed', 'post', {
+      return window.FB.api('/v10.0/' + facebookGroupId + '/feed', 'post', {
         message: this.offer.description + " test",
         link: "https://www.partageheure.com/consulter-offre/" + this.offer.id,
         full_picture: this.offer.image,
