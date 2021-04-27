@@ -180,7 +180,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <div id="fb-root"></div>
   </v-row>
 </template>
 <script>
