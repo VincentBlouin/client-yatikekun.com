@@ -310,7 +310,7 @@ export default {
     },
     publishToFacebookGroup: async function () {
       console.log('facebook publish 1')
-      window.FB.getLoginStatus(function (response) {
+      window.FB.getLoginStatus((response) => {
         console.log('facebook publish 2')
         console.log(response.status);
         console.log(response.session);
@@ -324,9 +324,10 @@ export default {
         } else {
           window.FB.login(function (response) {
             if (response.authResponse) {
-              // proceed
+              console.log("facebook login 1");
             } else {
               // not auth / cancelled the login!
+              console.log("refused to login 2");
             }
           });
         }
