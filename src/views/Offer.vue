@@ -343,7 +343,7 @@ export default {
       return window.FB.api('/v10.0/' + facebookGroupId + '/feed', 'post', {
         message: this.offer.description,
         link: "https://www.partageheure.com/consulter-offre/" + this.offer.id,
-        picture: this.getCurrentImageUrl(),
+        source: this.getCurrentImageUrl(),
         accessToken: accessToken
       });
     },
