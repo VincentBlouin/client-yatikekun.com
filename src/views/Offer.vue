@@ -173,7 +173,7 @@
           <v-spacer></v-spacer>
           <v-btn
               text
-              @click="dialog.value = false"
+              @click="dialog.value = false; $router.push('/offres');"
           >
             {{ $t('close') }}
           </v-btn>
@@ -303,7 +303,8 @@ export default {
       }
       this.submitLoading = true;
       this.offer.User = this.$store.state.user;
-      await OfferService.create(this.offer);
+      const response = await OfferService.create(this.offer);
+      this.offer.id = response.id;
       this.publishToFacebookDialog = true;
       this.submitLoading = false;
     },
@@ -341,7 +342,7 @@ export default {
       return window.FB.api('/v10.0/' + facebookGroupId + '/feed', 'post', {
         message: this.offer.description + " test",
         link: "https://www.partageheure.com/consulter-offre/" + this.offer.id,
-        full_picture: this.offer.image,
+        full_picture: this.getCurrentImageUrl(),
         accessToken: accessToken
       });
     },
