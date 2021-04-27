@@ -344,6 +344,7 @@ export default {
         message: this.offer.description,
         link: "https://www.partageheure.com/consulter-offre/" + this.offer.id,
         source: this.getCurrentImageUrl(),
+        caption: "Lien vers la nouvelle offre",
         accessToken: accessToken
       });
     },
