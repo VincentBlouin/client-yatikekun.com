@@ -303,10 +303,10 @@ export default {
       }
       this.submitLoading = true;
       this.offer.User = this.$store.state.user;
+      await OfferService.create(this.offer);
       this.publishToFacebookDialog = true;
-      // await OfferService.create(this.offer);
       this.submitLoading = false;
-      // await this.$router.push("/offres");
+      await this.$router.push("/offres");
     },
     publishToFacebookGroup: async function () {
       console.log('facebook publish 1')
@@ -316,15 +316,16 @@ export default {
         console.log(response.session);
         if (response.status === 'connected') {
           console.log('facebook publish 3')
-          var accessToken = response.authResponse.accessToken;
-          window.FB.api('/v10.0/' + facebookGroupId + '/feed', 'post', {
-            message: this.offer.description + " test",
-            accessToken: accessToken
-          });
+          this.publishToFacebookGroupUsingAccessToken(
+              response.authResponse.accessToken
+          );
         } else {
-          window.FB.login(function (response) {
+          window.FB.login((response) => {
             if (response.authResponse) {
               console.log("facebook login 1");
+              this.publishToFacebookGroupUsingAccessToken(
+                  response.authResponse.accessToken
+              );
             } else {
               // not auth / cancelled the login!
               console.log("refused to login 2");
@@ -333,6 +334,14 @@ export default {
         }
       }, {scope: 'publish_actions, user_groups, publish_to_groups'});
       console.log('facebook publish 6')
+    },
+    publishToFacebookGroupUsingAccessToken: async function (accessToken) {
+      window.FB.api('/v10.0/' + facebookGroupId + '/feed', 'post', {
+        message: this.offer.description + " test",
+        link: "https://www.partageheure.com/consulter-offre/" + this.offer.id,
+        full_picture: this.offer.image,
+        accessToken: accessToken
+      });
     },
     modifyOffer: async function () {
       this.submitLoading = true;
