@@ -180,6 +180,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <div id="fb-root"></div>
   </v-row>
 </template>
 <script>
@@ -209,7 +210,12 @@ export default {
     }
     const response = await OfferService.get(this.offer);
     this.offer = Offer.format(response.data);
+  },
+  created: function () {
+    console.log("created 1")
     window.fbAsyncInit = function () {
+      console.log("created 2")
+      console.log("facebook app id " + facebookAppId)
       window.FB.init({
         appId: facebookAppId,
         autoLogAppEvents: true,
@@ -217,6 +223,15 @@ export default {
         version: 'v10.0'
       });
     };
+    (function () {
+      console.log("created 3")
+      let e = document.createElement('script');
+      e.async = true;
+      console.log("created 4")
+      e.src = document.location.protocol +
+          '//connect.facebook.net/fr_CA/all.js#xfbml=1&version=v10.0';
+      document.getElementById('fb-root').appendChild(e);
+    }());
   },
   data: function () {
     I18n.i18next.addResources("fr", "offer", {
@@ -299,6 +314,7 @@ export default {
       window.FB.getLoginStatus(function (response) {
         console.log('facebook publish 2')
         console.log(response.status);
+        console.log(response.session);
         if (response.status === 'connected') {
           console.log('facebook publish 3')
           var accessToken = response.authResponse.accessToken;
@@ -306,8 +322,8 @@ export default {
             message: this.offer.description + " test",
             accessToken: accessToken
           });
-        }else{
-          window.FB.login(function(response) {
+        } else {
+          window.FB.login(function (response) {
             if (response.authResponse) {
               // proceed
             } else {
