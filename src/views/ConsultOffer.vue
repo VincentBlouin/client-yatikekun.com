@@ -5,6 +5,8 @@
         <v-card-title>
 
         </v-card-title>
+        <meta v-if="offer.image" property="og:image" :content="getCustomImageUrl(offer.image)" />
+        <meta v-if="offer.customImage" property="og:image" :content="getCustomImageUrl(offer.customImage)" />
         <v-img
             max-width="500"
             v-if="offer.image"
