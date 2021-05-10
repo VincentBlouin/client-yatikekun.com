@@ -275,13 +275,6 @@ export default {
     NewTransaction: () => import("@/components/NewTransaction"),
   },
   async mounted() {
-    if (this.$store.state.user === null) {
-      this.isLoading = true;
-      this.offer = await OfferService.getOfferImageById(this.$route.params.offerId);
-      this.offer.id = this.$route.params.offerId;
-      this.isLoading = false;
-      return;
-    }
     this.offer.UserId = this.$store.state.user.id;
     this.offer.id = this.$route.params.offerId;
     this.isLoading = true;

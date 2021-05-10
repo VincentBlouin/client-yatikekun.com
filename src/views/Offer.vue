@@ -378,7 +378,7 @@ export default {
     publishToFacebookGroupUsingAccessToken: async function (accessToken) {
       console.log("image url " + this.getCurrentImageUrl());
       return window.FB.api('/v10.0/' + facebookGroupId + '/photos', 'post', {
-        caption: this.offer.description + " (" + this.$store.state.user.subRegion + ")",
+        caption: this.offer.description + " (" + this.$t(this.offer.User.subRegion) + ")",
         url: OfferService.getMediumImageUrl(this.offer),
         // link: "https://www.partageheure.com/consulter-offre/" + this.offer.id + "?imageUuid=",
         // source: this.getCurrentImageUrl(),
