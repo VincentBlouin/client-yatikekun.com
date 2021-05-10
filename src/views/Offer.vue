@@ -121,6 +121,11 @@
                  :disabled="submitLoading || !canAddOffer()">
             {{ $t('offer:modifyOffer') }}
           </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn @click="removeDialog=true" text color="primary">
+            <v-icon left>delete</v-icon>
+            {{ $t('remove') }}
+          </v-btn>
         </v-card-actions>
       </v-card>
       <input type="file" name="images" ref="uploadOfferImage"
@@ -180,6 +185,26 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="removeDialog" max-width="600">
+      <v-card>
+        <v-card-title>
+          {{$t('offer:removeOffer')}}
+          <v-spacer></v-spacer>
+          <v-btn icon @click="removeDialog=false">
+            <v-icon>close</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-card-actions>
+          <v-btn color="primary" @click="remove">
+            {{$t('confirm')}}
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn @click="removeDialog=false">
+            {{$t('close')}}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-row>
 </template>
 <script>
@@ -188,6 +213,7 @@ import Images from '@/Images'
 import OfferService from "@/offer/OfferService";
 import Rules from "@/Rules";
 import Offer from '@/offer/Offer'
+import LoadingFlow from "@/LoadingFlow";
 
 const STATUS_INITIAL_UPLOAD = 0
 const STATUS_SAVING_UPLOAD = 1
@@ -248,7 +274,8 @@ export default {
       offerModified: "Votre offre a été modifiée",
       experience: "Expérience",
       additionalFees: "Frais additionels",
-      publish: "Publier"
+      publish: "Publier",
+      removeOffer: "Vraiment effacer cette offre?"
     });
     I18n.i18next.addResources("en", "offer", {
       title: "Nouvelle offre",
@@ -265,7 +292,8 @@ export default {
       offerModified: "Votre offre a été modifiée",
       experience: "Expérience",
       additionalFees: "Frais additionels",
-      publish: "Publier"
+      publish: "Publier",
+      removeOffer: "Vraiment effacer cette offre?"
     });
     /*
       concat is to avoid re-adding uploadImage
@@ -290,10 +318,17 @@ export default {
       submitLoading: false,
       modifiedMessage: false,
       rules: Rules,
-      publishToFacebookDialog: false
+      publishToFacebookDialog: false,
+      removeDialog: false
     }
   },
   methods: {
+    remove: async function () {
+      LoadingFlow.enter();
+      await OfferService.remove(this.offer.id);
+      this.$router.push('/vos-offres');
+      LoadingFlow.leave();
+    },
     canAddOffer: function () {
       return !this.isSaving && this.offer.description && (this.offer.image || this.offer.customImage);
     },

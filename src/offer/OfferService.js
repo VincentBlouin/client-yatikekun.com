@@ -29,4 +29,7 @@ export default {
     update: function (offer) {
         return Service.api().put('/offer/' + offer.id, offer)
     },
+    remove: function (offerId) {
+        return Service.api().delete('/offer/' + offerId)
+    }
 }

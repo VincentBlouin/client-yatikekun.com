@@ -5,7 +5,7 @@
     </h2>
     <v-row class="">
       <v-col cols="12" md="6" lg="4" v-for="offer in offers" :key="offer.id">
-        <OfferCard :offer="offer" :isAvailableSwitch="true"></OfferCard>
+        <OfferCard :offer="offer" :isAvailableSwitch="true" @remove="removeOffer"></OfferCard>
       </v-col>
     </v-row>
   </Page>
@@ -42,6 +42,17 @@ export default {
       offer.User = this.$store.state.user;
       return Offer.format(offer);
     });
+  },
+  methods: {
+    removeOffer: function (offerId) {
+      let l = this.offers.length;
+      while (l--) {
+        let offer = this.offers[l];
+        if (this.offers[l].id === offerId) {
+          this.offers.splice(offer, 1);
+        }
+      }
+    }
   }
 }
 </script>

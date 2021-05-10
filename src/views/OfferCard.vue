@@ -1,6 +1,7 @@
 <template>
   <v-card flat class="pl-8 pr-8" max-width="375">
     <v-card-actions class="h-center pb-0" v-if="isAvailableSwitch">
+      <v-spacer></v-spacer>
       <v-switch
           v-model="offer.isAvailable"
           :label="$t('yourOffer:isAvailable')"
@@ -8,6 +9,7 @@
           right
           @click.prevent="updateOffer()"
       ></v-switch>
+      <v-spacer></v-spacer>
     </v-card-actions>
     <v-card flat class="text-center" :to="'/consulter-offre/' + offer.id">
       <v-img
