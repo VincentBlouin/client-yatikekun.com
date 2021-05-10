@@ -20,6 +20,12 @@ export default {
         }
         return Service.baseUrl() + '/offer/image/' + offer.customImage.fileName
     },
+    getMediumImageUrl: function (offer) {
+        if (offer.customImage === null) {
+            return ''
+        }
+        return Service.baseUrl() + '/offer/image/' + offer.customImage.fileName + '/medium'
+    },
     getOfferImageById: async function (offerId) {
         const response = await Service.api().get('/offer/' + offerId + '/image');
         return response.data;

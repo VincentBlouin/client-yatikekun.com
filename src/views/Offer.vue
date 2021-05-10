@@ -156,6 +156,8 @@
     <v-dialog
         transition="dialog-top-transition"
         max-width="600"
+        persistent
+        :fullscreen="$vuetify.breakpoint.smAndDown"
         v-model="publishToFacebookDialog"
         v-if="publishToFacebookDialog"
     >
@@ -167,20 +169,20 @@
             </v-col>
           </v-row>
         </v-card-text>
-        <v-card-actions>
+        <v-card-actions class="vh-center">
           <v-btn
-              text
               @click="publishToFacebookGroup()"
               color="primary"
           >
             {{ $t('offer:publish') }}
           </v-btn>
-          <v-spacer></v-spacer>
+        </v-card-actions>
+        <v-card-actions class="vh-center">
           <v-btn
               text
-              @click="dialog.value = false; $router.push('/offres');"
+              @click="publishToFacebookDialog = false; $router.push('/offres');"
           >
-            {{ $t('close') }}
+            {{ $t('ignore') }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -274,7 +276,7 @@ export default {
       offerModified: "Votre offre a été modifiée",
       experience: "Expérience",
       additionalFees: "Frais additionels",
-      publish: "Publier",
+      publish: "Publier sur le groupe facebook des membres",
       removeOffer: "Vraiment effacer cette offre?"
     });
     I18n.i18next.addResources("en", "offer", {
@@ -292,7 +294,7 @@ export default {
       offerModified: "Votre offre a été modifiée",
       experience: "Expérience",
       additionalFees: "Frais additionels",
-      publish: "Publier",
+      publish: "Publier sur le groupe facebook des membres",
       removeOffer: "Vraiment effacer cette offre?"
     });
     /*
@@ -376,8 +378,8 @@ export default {
     publishToFacebookGroupUsingAccessToken: async function (accessToken) {
       console.log("image url " + this.getCurrentImageUrl());
       return window.FB.api('/v10.0/' + facebookGroupId + '/photos', 'post', {
-        caption: this.offer.description,
-        url: "https://www.partageheure.com/api/offer/image/14ccf2ab-dcf8-4f24-a157-61654e54be9b",
+        caption: this.offer.description + " (" + this.$store.state.user.subRegion + ")",
+        url: OfferService.getMediumImageUrl(this.offer),
         // link: "https://www.partageheure.com/consulter-offre/" + this.offer.id + "?imageUuid=",
         // source: this.getCurrentImageUrl(),
         // caption: "Lien vers la nouvelle offre",
