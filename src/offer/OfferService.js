@@ -20,6 +20,10 @@ export default {
         }
         return Service.baseUrl() + '/offer/image/' + offer.customImage.fileName
     },
+    getOfferImageById: async function (offerId) {
+        const response = await Service.api().get('/offer/' + offerId + '/image');
+        return response.data;
+    },
     create: function (offer) {
         return Service.api().post('/offer', offer)
     },
