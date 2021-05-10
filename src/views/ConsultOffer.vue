@@ -280,12 +280,12 @@ export default {
       this.offer = await OfferService.getOfferImageById(this.$route.params.offerId);
       this.offer.id = this.$route.params.offerId;
       let meta = document.createElement('meta');
-      meta.property = "og:image";
+      meta.setAttribute("property", "og:image");
       if (this.offer.image) {
         meta.content = this.getCustomImageUrl(this.offer.image);
       }
       if (this.offer.customImage) {
-        meta.content = this.getCustomImageUrl(this.offer.customImage);
+        meta.content = OfferService.getImageUrl(this.offer);
       }
       document.getElementsByTagName('head')[0].appendChild(meta);
       this.isLoading = false;
