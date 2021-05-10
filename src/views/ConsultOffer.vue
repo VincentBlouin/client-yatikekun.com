@@ -5,8 +5,6 @@
         <v-card-title>
 
         </v-card-title>
-        <meta v-if="offer.image" property="og:image" :content="getCustomImageUrl(offer.image)" />
-        <meta v-if="offer.customImage" property="og:image" :content="getCustomImageUrl(offer.customImage)" />
         <v-img
             max-width="500"
             v-if="offer.image"
@@ -281,6 +279,15 @@ export default {
       this.isLoading = true;
       this.offer = await OfferService.getOfferImageById(this.$route.params.offerId);
       this.offer.id = this.$route.params.offerId;
+      let meta = document.createElement('meta');
+      meta.property = "og:image";
+      if (this.offer.image) {
+        meta.content = this.getCustomImageUrl(this.offer.image);
+      }
+      if (this.offer.customImage) {
+        meta.content = this.getCustomImageUrl(this.offer.customImage);
+      }
+      document.getElementsByTagName('head')[0].appendChild(meta);
       this.isLoading = false;
       return;
     }
