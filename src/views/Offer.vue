@@ -380,7 +380,8 @@ export default {
         link: "https://www.partageheure.com/consulter-offre/" + this.offer.id,
         // source: this.getCurrentImageUrl(),
         caption: "Lien vers la nouvelle offre",
-        accessToken: accessToken
+        accessToken: accessToken,
+        url: "https://www.partageheure.com/api/offer/image/14ccf2ab-dcf8-4f24-a157-61654e54be9b"
       });
     },
     modifyOffer: async function () {
