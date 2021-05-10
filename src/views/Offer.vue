@@ -188,7 +188,7 @@
     <v-dialog v-model="removeDialog" max-width="600">
       <v-card>
         <v-card-title>
-          {{$t('offer:removeOffer')}}
+          {{ $t('offer:removeOffer') }}
           <v-spacer></v-spacer>
           <v-btn icon @click="removeDialog=false">
             <v-icon>close</v-icon>
@@ -196,11 +196,11 @@
         </v-card-title>
         <v-card-actions>
           <v-btn color="primary" @click="remove">
-            {{$t('confirm')}}
+            {{ $t('confirm') }}
           </v-btn>
           <v-spacer></v-spacer>
           <v-btn @click="removeDialog=false">
-            {{$t('close')}}
+            {{ $t('close') }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -380,7 +380,8 @@ export default {
         link: "https://www.partageheure.com/consulter-offre/" + this.offer.id,
         // source: this.getCurrentImageUrl(),
         caption: "Lien vers la nouvelle offre",
-        accessToken: accessToken
+        accessToken: accessToken,
+        url: this.getCurrentImageUrl()
       });
     },
     modifyOffer: async function () {
