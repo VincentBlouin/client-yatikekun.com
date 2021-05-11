@@ -161,7 +161,13 @@
         v-model="publishToFacebookDialog"
         v-if="publishToFacebookDialog"
     >
-      <v-card>
+      <v-card class="pb-5">
+        <v-alert
+            type="success"
+            class="text-h6"
+        >
+          {{$t('offer:success')}}
+        </v-alert>
         <v-card-text>
           <v-row class="mt-4 pt-8 vh-center">
             <v-col cols="12" md="6" class="text-center">
@@ -172,8 +178,10 @@
         <v-card-actions class="vh-center">
           <v-btn
               @click="publishToFacebookGroup()"
-              color="primary"
+              color="facebook"
+              dark
           >
+            <v-icon left dark>facebook</v-icon>
             {{ $t('offer:publish') }}
           </v-btn>
         </v-card-actions>
@@ -276,8 +284,9 @@ export default {
       offerModified: "Votre offre a été modifiée",
       experience: "Expérience",
       additionalFees: "Frais additionels",
-      publish: "Publier sur le groupe facebook des membres",
-      removeOffer: "Vraiment effacer cette offre?"
+      publish: "Publier votre offre sur le groupe des membres",
+      removeOffer: "Vraiment effacer cette offre?",
+      success:"Votre offre a été ajoutée, merci !"
     });
     I18n.i18next.addResources("en", "offer", {
       title: "Nouvelle offre",
@@ -294,8 +303,9 @@ export default {
       offerModified: "Votre offre a été modifiée",
       experience: "Expérience",
       additionalFees: "Frais additionels",
-      publish: "Publier sur le groupe facebook des membres",
-      removeOffer: "Vraiment effacer cette offre?"
+      publish: "Publier votre offre sur le groupe des membres",
+      removeOffer: "Vraiment effacer cette offre?",
+      success:"Votre offre a été ajoutée, merci !"
     });
     /*
       concat is to avoid re-adding uploadImage

@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuetify from 'vuetify/lib';
 import colors from 'vuetify/es5/util/colors'
 import fr from 'vuetify/lib/locale/fr'
+
 Vue.use(Vuetify);
 
 export default new Vuetify({
@@ -9,13 +10,13 @@ export default new Vuetify({
         iconfont: 'md'
     },
     theme: {
-        dark:false,
+        dark: false,
         lang: {
-            locales: { fr },
+            locales: {fr},
             current: 'fr',
         },
-        themes:{
-            light:{
+        themes: {
+            light: {
                 primary: "#177C72",
                 secondary: "#7c2e17",
                 secondaryLight: colors.indigo.lighten2,
@@ -28,9 +29,10 @@ export default new Vuetify({
                 info: '#33b5e5',
                 success: '#00C851',
                 warning: '#ffbb33',
-                edgeColor: '#3A87AD'
+                edgeColor: '#3A87AD',
+                facebook: "#3b5998"
             },
-            dark:{
+            dark: {
                 primary: '#FFFFFF',
                 secondary: colors.indigo.darken4,
                 secondaryLight: colors.indigo.lighten2,
@@ -43,7 +45,8 @@ export default new Vuetify({
                 info: '#33b5e5',
                 success: '#00C851',
                 warning: '#ffbb33',
-                edgeColor: '#3A87AD'
+                edgeColor: '#3A87AD',
+                facebook: "#3b5998"
             }
         }
     }
