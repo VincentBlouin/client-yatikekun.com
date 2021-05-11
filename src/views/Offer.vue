@@ -377,14 +377,10 @@ export default {
     },
     publishToFacebookGroupUsingAccessToken: async function (accessToken) {
       return window.FB.api('/v10.0/' + facebookGroupId + '/photos', 'post', {
-        caption: this.offer.description + " (" + this.$t(this.$store.state.user.subRegion) + ")",
+        caption: this.offer.description + " (" + this.$t(this.$store.state.user.subRegion) + ")" + " https://www.partageheure.com/consulter-offre/" + this.offer.id,
         url: OfferService.getMediumImageUrl(this.offer),
-        // link: "https://www.partageheure.com/consulter-offre/" + this.offer.id + "?imageUuid=",
-        // source: this.getCurrentImageUrl(),
-        // caption: "Lien vers la nouvelle offre",
         accessToken: accessToken
       });
-      // full_picture
     },
     modifyOffer: async function () {
       this.submitLoading = true;
