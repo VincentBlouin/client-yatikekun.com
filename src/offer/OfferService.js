@@ -21,10 +21,8 @@ export default {
         return Service.baseUrl() + '/offer/image/' + offer.customImage.fileName
     },
     getMediumImageUrl: function (offer) {
-        if (offer.customImage === null) {
-            return ''
-        }
-        return Service.baseUrl() + '/offer/image/' + offer.customImage.fileName + '/medium'
+        let fileName = offer.customImage === null ? offer.image.name + ".jpg" : offer.customImage.fileName;
+        return Service.baseUrl() + '/offer/image/' + fileName + '/medium'
     },
     getOfferImageById: async function (offerId) {
         const response = await Service.api().get('/offer/' + offerId + '/image');
