@@ -15,16 +15,21 @@ export default {
             '/transaction/' + transactionId + '/confirm'
         );
     },
-    confirmWithToken: function (token) {    
+    confirmWithToken: function (token) {
         return Service.api().post(
             '/transaction/token', {
-            token: token
-        });
+                token: token
+            });
     },
     getPendingForOfferAndUserId: async function (offerId, userId) {
         const response = await Service.api().get(
             '/transaction/pending/user/' + userId + '/offer/' + offerId
         );
         return response.data;
+    },
+    removeTransaction: async function (transactionId) {
+        return Service.api().delete(
+            '/transaction/' + transactionId
+        );
     }
 }

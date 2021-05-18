@@ -21,11 +21,12 @@
               {{ $t("transactions:status") }}
             </th>
             <th class="text-left">{{ $t("transactions:balance") }}</th>
+            <th class="text-left" v-if="$store.state.user.status === 'admin'"></th>
           </tr>
           </thead>
           <tbody>
           <tr
-              v-for="transaction in transactions"
+              v-for="(transaction, index) in transactions"
               :key="transaction.id"
               class="text-left"
           >
@@ -63,6 +64,9 @@
               </v-tooltip>
             </td>
             <td>{{ transaction.balance }}</td>
+            <td v-if="$store.state.user.status === 'admin' && index !== transactions.length - 1">
+              <v-icon @click="removeTransaction(transaction.id)">delete</v-icon>
+            </td>
           </tr>
           </tbody>
         </template>
@@ -82,62 +86,7 @@ export default {
   },
   async mounted() {
     window.scrollTo(0, 0);
-    this.isLoading = true;
-    let response = await TransactionService.listForUserId(
-        this.$store.state.user.id
-    );
-    this.transactions = response.data
-        .map((transaction) => {
-          if (transaction.details === "initial") {
-            transaction.details = this.$t("transactions:initial");
-          }
-          transaction.formattedDate = format(
-              new Date(transaction.createdAt),
-              'd MMMM yyyy',
-              {
-                locale: fr
-              } // Pass the locale as an option
-          )
-          ;
-          transaction.statusName = this.$t(
-              "transactions:" + transaction.status.toLowerCase()
-          );
-          if (transaction.status.toLowerCase() === "confirmed") {
-            transaction.statusIcon = "done";
-          } else if (transaction.status.toLowerCase() === "pending") {
-            transaction.statusIcon = "pending";
-          }
-          transaction.balance =
-              transaction.GiverId !== null &&
-              transaction.GiverId === this.$store.state.user.id
-                  ? transaction.balanceGiver
-                  : transaction.balanceReceiver;
-          transaction.giverFullname = "";
-          if (transaction.giver) {
-            transaction.giverFullname =
-                transaction.giver.firstname + " " + transaction.giver.lastname;
-          }
-          transaction.receiverFullname = "";
-          if (transaction.receiver) {
-            transaction.receiverFullname =
-                transaction.receiver.firstname +
-                " " +
-                transaction.receiver.lastname;
-          }
-          return transaction;
-        })
-        .sort((a, b) => {
-          const aDate =
-              a.confirmDate === null
-                  ? new Date(a.createdAt).getTime()
-                  : a.confirmDate;
-          const bDate =
-              b.confirmDate === null
-                  ? new Date(b.createdAt).getTime()
-                  : b.confirmDate;
-          return bDate - aDate;
-        });
-    this.isLoading = false;
+    await this.setupData();
   },
   data: function () {
     I18n.i18next.addResources("fr", "transactions", {
@@ -168,5 +117,79 @@ export default {
       transactions: [],
     };
   },
+  methods: {
+    setupData: async function () {
+      this.isLoading = true;
+      let response = await TransactionService.listForUserId(
+          this.$store.state.user.id
+      );
+      this.transactions = response.data
+          .map((transaction) => {
+            if (transaction.details === "initial") {
+              transaction.details = this.$t("transactions:initial");
+            }
+            transaction.formattedDate = format(
+                new Date(transaction.createdAt),
+                'd MMMM yyyy',
+                {
+                  locale: fr
+                } // Pass the locale as an option
+            )
+            ;
+            transaction.statusName = this.$t(
+                "transactions:" + transaction.status.toLowerCase()
+            );
+            if (transaction.status.toLowerCase() === "confirmed") {
+              transaction.statusIcon = "done";
+            } else if (transaction.status.toLowerCase() === "pending") {
+              transaction.statusIcon = "pending";
+            }
+            transaction.balance =
+                transaction.GiverId !== null &&
+                transaction.GiverId === this.$store.state.user.id
+                    ? transaction.balanceGiver
+                    : transaction.balanceReceiver;
+            transaction.giverFullname = "";
+            if (transaction.giver) {
+              transaction.giverFullname =
+                  transaction.giver.firstname + " " + transaction.giver.lastname;
+            }
+            transaction.receiverFullname = "";
+            if (transaction.receiver) {
+              transaction.receiverFullname =
+                  transaction.receiver.firstname +
+                  " " +
+                  transaction.receiver.lastname;
+            }
+            return transaction;
+          })
+          .sort((a, b) => {
+            // console.log("a " + a.details + " " + a.createdAt + " " + new Date(a.createdAt).getTime() + " " + a.confirmDate);
+            // console.log("b " + b.details + " " + b.createdAt + " " + new Date(b.createdAt).getTime() + " " + b.confirmDate);
+            let aConfirmDate;
+            if (a.confirmDate !== null) {
+              aConfirmDate = new Date(a.confirmDate).getTime();
+            }
+            const aDate =
+                aConfirmDate === undefined
+                    ? new Date(a.createdAt).getTime()
+                    : aConfirmDate;
+            let bConfirmDate;
+            if (b.confirmDate !== null) {
+              bConfirmDate = new Date(b.confirmDate).getTime();
+            }
+            const bDate =
+                bConfirmDate === undefined
+                    ? new Date(b.createdAt).getTime()
+                    : bConfirmDate;
+            return bDate - aDate;
+          });
+      this.isLoading = false;
+    },
+    removeTransaction: async function (transactionId) {
+      await TransactionService.removeTransaction(transactionId);
+      await this.setupData();
+    }
+  }
 };
 </script>

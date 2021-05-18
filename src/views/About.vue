@@ -310,7 +310,7 @@ export default {
       plusUsefulSkills: "Faites aussi valoir vos compétences.",
       plusMoney: "Créez de la richesse",
       plusLocalCurrency: "Contribuez à l'économie locale avec une monnaie locale.",
-      plus5SEL: "Obtenez 5 SEL à l'enregistrement.",
+      plus5SEL: "Obtenez 5 heures de services à l'enregistrement.",
       plusOffersMobile: "Consultez les offres de la BDC",
       plusOffersSubtitleMobile: "Et ajouter la votre",
       plusTransactions: "Enregistrez des transactions d'heures",
