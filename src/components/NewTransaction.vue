@@ -1,9 +1,9 @@
 <template>
   <v-dialog
-    v-model="dialog"
-    v-if="dialog"
-    width="700"
-    :fullscreen="$vuetify.breakpoint.smAndDown"
+      v-model="dialog"
+      v-if="dialog"
+      width="700"
+      :fullscreen="$vuetify.breakpoint.smAndDown"
   >
     <v-card>
       <v-card-title>
@@ -13,19 +13,19 @@
         </v-btn>
       </v-card-title>
       <v-card-text
-        class="text-body-1 vh-center"
-        v-if="isOwner && !hasConfirmed"
+          class="text-body-1 vh-center"
+          v-if="isOwner && !hasConfirmed"
       >
         <v-autocomplete
-          :items="members"
-          :filter="membersFilter"
-          item-text="fullname"
-          v-model="userOfTransaction"
-          :label="$t('newTransaction:chooseUser')"
-          class="members-autocomplete"
-          :menu-props="membersAutocompleteMenuProps"
-          return-object
-          :no-data-text="$t('noSearchResults')"
+            :items="members"
+            :filter="membersFilter"
+            item-text="fullname"
+            v-model="userOfTransaction"
+            :label="$t('newTransaction:chooseUser')"
+            class="members-autocomplete"
+            :menu-props="membersAutocompleteMenuProps"
+            return-object
+            :no-data-text="$t('noSearchResults')"
         ></v-autocomplete>
       </v-card-text>
       <v-card-text v-if="!hasConfirmed">
@@ -38,27 +38,27 @@
           </v-card-subtitle>
           <v-card-text>
             <v-time-picker
-              format="24hr"
-              :allowed-minutes="allowedMinutes"
-              v-model="timePickerQuantity"
+                format="24hr"
+                :allowed-minutes="allowedMinutes"
+                v-model="timePickerQuantity"
             ></v-time-picker>
           </v-card-text>
         </v-card>
       </v-card-text>
       <Transaction
-        :quantity="quantity"
-        :giver="giver"
-        :receiver="receiver"
-        :initiator="$store.state.user"
-        :preventShowActions="true"
+          :quantity="quantity"
+          :giver="giver"
+          :receiver="receiver"
+          :initiator="$store.state.user"
+          :preventShowActions="true"
       ></Transaction>
       <v-scale-transition>
         <v-alert
-          v-if="showConfirmMessage"
-          type="success"
-          icon="email"
-          color="primary"
-          class="body-1"
+            v-if="showConfirmMessage"
+            type="success"
+            icon="email"
+            color="primary"
+            class="body-1"
         >
           {{ $t("newTransaction:confirmed1") }}
           {{ otherUser.firstname }} {{ otherUser.lastname }}
@@ -69,15 +69,15 @@
       </v-scale-transition>
       <v-card-actions>
         <v-btn
-          color="primary"
-          @click="addTransaction"
-          :disabled="
+            color="primary"
+            @click="addTransaction"
+            :disabled="
             (isOwner && userOfTransaction === null) ||
             timePickerQuantity === '00:00' ||
             confirmLoading ||
             hasConfirmed
           "
-          :loading="confirmLoading"
+            :loading="confirmLoading"
         >
           {{ $t("confirm") }}
         </v-btn>
@@ -105,7 +105,8 @@ export default {
     Transaction: () => import("@/components/Transaction"),
   },
   props: ["offer"],
-  async mounted() {},
+  async mounted() {
+  },
   data: function () {
     I18n.i18next.addResources("fr", "newTransaction", {
       chooseUser: "L'autre usager dans la transaction",
@@ -149,7 +150,9 @@ export default {
       this.isOwner = this.offer.UserId === this.$store.state.user.id;
       if (this.isOwner) {
         const response = await MemberService.list();
-        this.members = response.data.map((member) => {
+        this.members = response.data.filter((member) => {
+          return member.status !== 'disabled';
+        }).map((member) => {
           member.fullname = member.firstname + " " + member.lastname;
           member.disabled = member.uuid === this.$store.state.user.uuid;
           return member;
@@ -165,14 +168,14 @@ export default {
         InitiatorId: this.$store.state.user.id,
         GiverId: this.offer.UserId,
         ReceiverUuid:
-          this.userOfTransaction === null
-            ? this.$store.state.user.uuid
-            : this.userOfTransaction.uuid,
+            this.userOfTransaction === null
+                ? this.$store.state.user.uuid
+                : this.userOfTransaction.uuid,
         OfferId: this.offer.id,
       });
       this.confirmLoading = false;
       this.hasConfirmed = true;
-      await this.$nextTick();    
+      await this.$nextTick();
       this.showConfirmMessage = true;
     },
     membersFilter: function (member, queryText) {
@@ -181,7 +184,7 @@ export default {
       const searchText = queryText.toLowerCase();
 
       return (
-        firstname.indexOf(searchText) > -1 || lastname.indexOf(searchText) > -1
+          firstname.indexOf(searchText) > -1 || lastname.indexOf(searchText) > -1
       );
     },
   },
@@ -191,16 +194,16 @@ export default {
     },
     receiver: function () {
       return this.userOfTransaction === null
-        ? this.$store.state.user
-        : this.userOfTransaction;
+          ? this.$store.state.user
+          : this.userOfTransaction;
     },
     giver: function () {
       return this.offer.User;
     },
     otherUser: function () {
       return this.receiver.uuid === this.$store.state.user.uuid
-        ? this.giver
-        : this.receiver;
+          ? this.giver
+          : this.receiver;
     },
   },
 };

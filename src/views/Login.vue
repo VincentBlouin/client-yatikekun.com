@@ -12,6 +12,12 @@
         >
           {{ $t('login:wrongLogin') }}
         </v-alert>
+        <v-alert
+            :value="userDisabledMessage"
+            type="error"
+        >
+          {{ $t('login:userDisabled') }}
+        </v-alert>
         <v-text-field
             v-model="user.email"
             :label="$t('login:email')"
@@ -68,6 +74,7 @@ export default {
     },
     login: async function () {
       this.wrongLogin = false;
+      this.userDisabledMessage = false;
       this.robotDoubt = false;
       if (!this.$refs.loginForm.validate()) {
         return;
@@ -92,6 +99,8 @@ export default {
       }).catch((response) => {
         if (response.response.data.reason === "recaptcha score") {
           this.robotDoubt = true;
+        } else if (response.response.data.error === " disabled") {
+          this.userDisabledMessage = true;
         } else {
           this.wrongLogin = true;
         }
@@ -112,14 +121,16 @@ export default {
       email: 'Email',
       password: 'Password',
       loginBtn: "Login",
-      wrongLogin: "Not right email or password, try again.",
+      wrongLogin: "Pas le bon courriel ou mot de passe, essayez de nouveau. Il se peut aussi que votre compte soit désactivé",
+      userDisabled: "Votre compte est désactivé",
       forgotPassword: "Forgot password"
     });
     I18n.i18next.addResources("fr", "login", {
       email: 'Courriel',
       password: 'Mot de passe',
       loginBtn: "Connecter",
-      wrongLogin: "Pas le bon courriel ou mot de passe, essayez de nouveau.",
+      wrongLogin: "Pas le bon courriel ou mot de passe, essayez de nouveau. Il se peut aussi que votre compte soit désactivé",
+      userDisabled: "Votre compte est désactivé",
       forgotPassword: "Mot de passe oublié",
     });
     return {
@@ -129,6 +140,7 @@ export default {
         password: ""
       },
       wrongLogin: false,
+      userDisabledMessage: false,
       Rules: Rules,
       forgotPasswordDialog: false,
       robotDoubt: false

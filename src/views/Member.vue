@@ -66,7 +66,6 @@
               v-model="member.gender"
               :label="$t('member:gender')"
               required
-              prepend-icon="map"
               :item-text="getSelectText"
               item-value="value"
               :rules="[rules.required]"
@@ -85,7 +84,6 @@
               v-model="member.status"
               :label="$t('member:status')"
               required
-              prepend-icon="map"
               :item-text="getSelectText"
               item-value="value"
               :rules="[rules.required]"
@@ -261,6 +259,9 @@ export default {
         },
         {
           value: "admin"
+        },
+        {
+          value: "disabled"
         }
       ]
     };

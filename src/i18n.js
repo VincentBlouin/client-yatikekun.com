@@ -45,6 +45,7 @@ export default {
                     translation: {
                         member: "Membre",
                         admin: "Administrateur",
+                        disabled: "Désactivé",
                         copy: "Copy",
                         to: "to",
                         finish: "Finish",
@@ -95,6 +96,7 @@ export default {
                     translation: {
                         member: "Membre",
                         admin: "Administrateur",
+                        disabled: "Désactivé",
                         copy: "Copier",
                         to: "à",
                         finish: "Terminer",
