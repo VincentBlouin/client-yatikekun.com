@@ -43,8 +43,9 @@
             <v-icon left>assignment</v-icon>
             {{ $t('app:charter') }}
           </v-btn>
-          <v-btn text href="https://www.facebook.com/groups/578440053119292" color="facebook">
-            <v-icon color="facebook">facebook</v-icon>
+          <v-btn text href="https://www.facebook.com/groups/578440053119292">
+            <v-icon color="facebook" left>facebook</v-icon>
+            {{$t('app:facebookGroup')}}
           </v-btn>
           <v-menu
               bottom
@@ -138,6 +139,18 @@
                 <v-list-item-title>
                   <v-btn text to="/transactions">
                     {{ $t('app:yourTransactions') }}
+                  </v-btn>
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item v-if="$store.state.user !== null" href="https://www.facebook.com/groups/578440053119292">
+              <v-list-item-action>
+                <v-icon color="facebook">facebook</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>
+                  <v-btn text href="https://www.facebook.com/groups/578440053119292">
+                    {{ $t('app:facebookGroup') }}
                   </v-btn>
                 </v-list-item-title>
               </v-list-item-content>
@@ -249,7 +262,8 @@ export default {
       yourTransactions: "Transactions",
       members: "Membres",
       informations: "Informations",
-      yourOffers: "Vos offres"
+      yourOffers: "Vos offres",
+      facebookGroup: "Notre groupe"
     });
     I18n.i18next.addResources("en", "app", {
       becomeMember: "Devenez membre",
@@ -260,7 +274,8 @@ export default {
       yourTransactions: "Transactions",
       members: "Membres",
       informations: "Informations",
-      yourOffers: "Vos offres"
+      yourOffers: "Vos offres",
+      facebookGroup: "Notre groupe"
     });
     return {
       drawer: false
