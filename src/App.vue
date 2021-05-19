@@ -43,6 +43,9 @@
             <v-icon left>assignment</v-icon>
             {{ $t('app:charter') }}
           </v-btn>
+          <v-btn text href="https://www.facebook.com/groups/578440053119292" color="facebook">
+            <v-icon color="facebook">facebook</v-icon>
+          </v-btn>
           <v-menu
               bottom
               left
