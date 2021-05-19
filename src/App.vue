@@ -43,7 +43,7 @@
             <v-icon left>assignment</v-icon>
             {{ $t('app:charter') }}
           </v-btn>
-          <v-btn text href="https://www.facebook.com/groups/578440053119292">
+          <v-btn text href="https://www.facebook.com/groups/578440053119292" v-if="$store.state.user !== null">
             <v-icon color="facebook" left>facebook</v-icon>
             {{$t('app:facebookGroup')}}
           </v-btn>
