@@ -247,10 +247,10 @@ export default {
     this.offer = Offer.format(response.data);
   },
   created: function () {
-    console.log("created 1")
+    // console.log("created 1")
     window.fbAsyncInit = function () {
-      console.log("created 2")
-      console.log("facebook app id " + facebookAppId)
+      // console.log("created 2")
+      // console.log("facebook app id " + facebookAppId)
       window.FB.init({
         appId: facebookAppId,
         autoLogAppEvents: true,
@@ -259,10 +259,10 @@ export default {
       });
     };
     (function () {
-      console.log("created 3")
+      // console.log("created 3")
       let e = document.createElement('script');
       e.async = true;
-      console.log("created 4")
+      // console.log("created 4")
       e.src = document.location.protocol +
           '//connect.facebook.net/fr_CA/all.js#xfbml=1&version=v10.0';
       document.getElementById('fb-root').appendChild(e);
@@ -356,13 +356,13 @@ export default {
       this.submitLoading = false;
     },
     publishToFacebookGroup: async function () {
-      console.log('facebook publish 1')
+      // console.log('facebook publish 1')
       window.FB.getLoginStatus(async (response) => {
-        console.log('facebook publish 2')
-        console.log(response.status);
-        console.log(response.session);
+        // console.log('facebook publish 2')
+        // console.log(response.status);
+        // console.log(response.session);
         if (response.status === 'connected') {
-          console.log('facebook publish 3')
+          // console.log('facebook publish 3')
           await this.publishToFacebookGroupUsingAccessToken(
               response.authResponse.accessToken
           );
@@ -370,20 +370,20 @@ export default {
         } else {
           window.FB.login(async (response) => {
             if (response.authResponse) {
-              console.log("facebook login 1");
+              // console.log("facebook login 1");
               await this.publishToFacebookGroupUsingAccessToken(
                   response.authResponse.accessToken
               );
               await this.$router.push("/offres");
             } else {
               // not auth / cancelled the login!
-              console.log("refused to login 2");
+              // console.log("refused to login 2");
               await this.$router.push("/offres");
             }
           });
         }
       }, {scope: 'publish_actions, user_groups, publish_to_groups'});
-      console.log('facebook publish 6')
+      // console.log('facebook publish 6')
     },
     publishToFacebookGroupUsingAccessToken: async function (accessToken) {
       return window.FB.api('/v10.0/' + facebookGroupId + '/photos', 'post', {

@@ -46,6 +46,12 @@
             {{ $t('login:forgotPassword') }}
           </router-link>
         </div>
+        <div class="mt-4">
+          <v-btn href="/api/auth/facebook" color="facebook" dark>
+            <v-icon left>facebook</v-icon>
+            {{ $t('login:loginWithFacebook') }}
+          </v-btn>
+        </div>
       </v-form>
 <!--      <RecaptchaInfo></RecaptchaInfo>-->
     </v-col>
@@ -126,7 +132,8 @@ export default {
       loginBtn: "Login",
       wrongLogin: "Pas le bon courriel ou mot de passe, essayez de nouveau. Il se peut aussi que votre compte soit désactivé",
       userDisabled: "Votre compte est désactivé",
-      forgotPassword: "Forgot password"
+      forgotPassword: "Forgot password",
+      loginWithFacebook: "Login with Facebook"
     });
     I18n.i18next.addResources("fr", "login", {
       email: 'Courriel',
@@ -135,6 +142,7 @@ export default {
       wrongLogin: "Pas le bon courriel ou mot de passe, essayez de nouveau. Il se peut aussi que votre compte soit désactivé",
       userDisabled: "Votre compte est désactivé",
       forgotPassword: "Mot de passe oublié",
+      loginWithFacebook: "Se connecter avec Facebook"
     });
     return {
       valid: true,
