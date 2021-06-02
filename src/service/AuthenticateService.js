@@ -13,6 +13,9 @@ export default {
         user.recaptchaToken = recaptchaToken;
         return Service.api().post("/login", user);
     },
+    facebookLogin: function (authResponse) {
+        return Service.api().post("/login/facebook", authResponse);
+    },
     logout: async function () {
         await Service.api().delete("/users/session");
         await Promise.all([

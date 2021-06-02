@@ -47,10 +47,13 @@
           </router-link>
         </div>
         <div class="mt-4">
-          <div class="fb-login-button" data-width="" data-size="medium" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
+          <v-btn @click="facebookLogin()" color="facebook" dark>
+            <v-icon left>facebook</v-icon>
+            {{ $t('login:loginWithFacebook') }}
+          </v-btn>
         </div>
       </v-form>
-<!--      <RecaptchaInfo></RecaptchaInfo>-->
+      <!--      <RecaptchaInfo></RecaptchaInfo>-->
     </v-col>
   </v-row>
 </template>
@@ -62,6 +65,8 @@ import LoadingFlow from '@/LoadingFlow'
 import Vue from 'vue'
 import {VueReCaptcha} from "vue-recaptcha-v3"
 
+const facebookAppId = process.env.VUE_APP_FACEBOOK_APP_ID;
+
 Vue.use(VueReCaptcha, {siteKey: process.env.VUE_APP_RECAPTCHA_KEY});
 
 export default {
@@ -69,7 +74,34 @@ export default {
   // components: {
   //   RecaptchaInfo: () => import('@/components/RecaptchaInfo')
   // },
+  created: function () {
+    window.fbAsyncInit = function () {
+      // console.log("created 2")
+      // console.log("facebook app id " + facebookAppId)
+      window.FB.init({
+        appId: facebookAppId,
+        autoLogAppEvents: true,
+        xfbml: true,
+        version: 'v10.0'
+      });
+    };
+    (function () {
+      // console.log("created 3")
+      let e = document.createElement('script');
+      e.async = true;
+      // console.log("created 4")
+      e.src = document.location.protocol +
+          '//connect.facebook.net/fr_CA/all.js#xfbml=1&version=v10.0';
+      document.getElementById('fb-root').appendChild(e);
+    }());
+  },
   methods: {
+    facebookLogin: function () {
+      window.FB.login(async (response) => {
+        const loginResponse = await AuthenticateService.facebookLogin(response.authResponse);
+        console.log(loginResponse);
+      }, {scope: 'public_profile,email'});
+    },
     goToForgotPassword: function () {
       this.$emit('flow-is-done');
       Vue.nextTick(function () {
