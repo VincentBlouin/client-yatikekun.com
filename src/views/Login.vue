@@ -97,18 +97,12 @@ export default {
   },
   methods: {
     facebookLogin: function () {
+      LoadingFlow.enter();
       window.FB.login(async (response) => {
         const loginResponse = await AuthenticateService.facebookLogin(response.authResponse);
-        console.log(loginResponse);
+        this.handleLoginResponse(loginResponse);
+        LoadingFlow.leave();
       }, {scope: 'public_profile,email'});
-    },
-    goToForgotPassword: function () {
-      this.$emit('flow-is-done');
-      Vue.nextTick(function () {
-        this.$router.push(
-            "/forgot-password"
-        );
-      }.bind(this))
     },
     login: async function () {
       this.wrongLogin = false;
@@ -121,19 +115,7 @@ export default {
       await this.$store.dispatch('setUser', null);
       let recaptchaToken = await this.$recaptcha("login");
       AuthenticateService.login(this.user, recaptchaToken).then((response) => {
-        this.$store.dispatch('setToken', response.data.token)
-        this.$store.dispatch('setUser', response.data.user);
-        this.$emit('flow-is-done');
-        Vue.nextTick(() => {
-          this.$router.push({
-            name: 'Offers',
-            params: {
-              username: response.data.user_name
-            }
-          });
-          this.$recaptchaInstance.hideBadge();
-          LoadingFlow.leave();
-        });
+        this.handleLoginResponse(response);
       }).catch((response) => {
         if (response.response.data.reason === "recaptcha score") {
           this.robotDoubt = true;
@@ -142,6 +124,21 @@ export default {
         } else {
           this.wrongLogin = true;
         }
+        LoadingFlow.leave();
+      });
+    },
+    handleLoginResponse: function (response) {
+      this.$store.dispatch('setToken', response.data.token)
+      this.$store.dispatch('setUser', response.data.user);
+      this.$emit('flow-is-done');
+      Vue.nextTick(() => {
+        this.$router.push({
+          name: 'Offers',
+          params: {
+            username: response.data.user_name
+          }
+        });
+        this.$recaptchaInstance.hideBadge();
         LoadingFlow.leave();
       });
     },
