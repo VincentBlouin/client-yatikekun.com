@@ -47,10 +47,7 @@
           </router-link>
         </div>
         <div class="mt-4">
-          <v-btn href="/api/auth/facebook" color="facebook" dark>
-            <v-icon left>facebook</v-icon>
-            {{ $t('login:loginWithFacebook') }}
-          </v-btn>
+          <div class="fb-login-button" data-width="" data-size="medium" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
         </div>
       </v-form>
 <!--      <RecaptchaInfo></RecaptchaInfo>-->
