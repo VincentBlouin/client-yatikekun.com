@@ -11,8 +11,8 @@
         <!--          </router-link>-->
         <!--        </v-toolbar-title>-->
         <v-toolbar-title class="text-h5">
-          <router-link to="/à-propos">
-            partageheure.com
+          <router-link to="/à-propos" class="logo-font ml-3">
+            PartageHeure.com
           </router-link>
         </v-toolbar-title>
         <v-spacer></v-spacer>
@@ -326,5 +326,11 @@ export default {
 
 .primary-color {
   color: #2e7d32
+}
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text');
+.logo-font{
+  font-family: 'Crimson Text', serif;
+  font-size:31px;
+  text-decoration: none !important;
 }
 </style>
