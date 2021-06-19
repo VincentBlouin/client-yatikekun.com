@@ -29,6 +29,7 @@
               v-for="(transaction, index) in transactions"
               :key="transaction.id"
               class="text-left"
+              @click="$router.push('/consulter-offre/' + transaction.OfferId)"
           >
             <td>
               {{ transaction.details }}
