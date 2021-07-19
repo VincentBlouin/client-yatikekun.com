@@ -1,7 +1,7 @@
 <template>
   <Page>
     <v-card flat class="pt-8">
-      <v-card-title>
+      <v-card-title class="logo-font text-h4">
         {{ $t("transactions:title") }}
       </v-card-title>
       <v-simple-table>

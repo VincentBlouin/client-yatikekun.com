@@ -1,16 +1,24 @@
 <template>
   <div class="about">
+<!--    image src =https://pixabay.com/photos/ant-ants-insect-nature-animal-5849574-->
     <v-parallax
-        :src="require('@/assets/network-1246209_1920_black.jpg')"
+        :src="require('@/assets/ant-5849574_1920-miroir.jpg')"
+        height="800"
     >
       <v-row
           align="center"
           justify="center"
           class="vh-center"
       >
-        <v-col class="text-center" cols="12">
-          <h1 class="text-h2 text-md-h1">{{ $t('about:vision') }}</h1>
-          <h4 class="text-h5 subheading">{{ $t('about:vision2') }}</h4>
+        <v-col class="text-left" cols="12" :class="{
+          'ml-16 pl-12': $vuetify.breakpoint.mdAndUp
+        }">
+          <h1 class="vision-font" :class="{
+            'vision-small-font' : $vuetify.breakpoint.smAndDown,
+            'vision-bigger-font' : $vuetify.breakpoint.mdAndUp
+          }">{{ $t('about:vision') }}</h1>
+          <h4 class="vision-sub-font">{{ $t('about:vision2') }}</h4>
+<!--          <h4 class="vision-sub-font">{{ $t('about:vision3') }}</h4>-->
         </v-col>
       </v-row>
     </v-parallax>
@@ -34,9 +42,9 @@
       <v-col cols="4" v-if="$vuetify.breakpoint.mdAndUp"></v-col>
       <v-col cols="12" class="col-md-8 text-center">
         <v-card-text class="text-h6 font-weight-regular vh-center">
-          <v-list three-line :class="{
+          <v-list  three-line :class="{
             'pl-0 pr-0': $vuetify.breakpoint.smAndDown
-          }">
+          }" color="transparent">
             <v-list-item :class="{
             'pl-0 pr-0': $vuetify.breakpoint.smAndDown
           }">
@@ -118,7 +126,7 @@
     </v-row>
     <v-row align="center" class="vh-center" id="becomeMember">
       <v-col cols="12" class="col-md-6 text-center">
-        <v-card :flat="!isShowHowToBecomeMember">
+        <v-card :flat="!isShowHowToBecomeMember" color="transparent">
           <v-card-actions class="vh-center">
             <v-btn
                 color="primary"
@@ -259,7 +267,7 @@
     <v-row align="center" class="vh-center pb-16">
       <v-col class="text-center" cols="12" md="8">
         <v-img
-            :src="require('@/assets/banner.png')"
+            :src="require('@/assets/banner-transparent.png')"
         >
         </v-img>
       </v-col>
@@ -293,15 +301,16 @@ export default {
   data: function () {
     I18n.i18next.addResources("fr", "about", {
       vision: "S'entraider",
-      vision2: "Avec une liste d'offres et demandes de services dans la Baie des Chaleurs",
-      vision3: "Avec une monnaie locale pour offrir et reçevoir des services avec le principe 1 heure vaut 1 heure",
+      vision2: "Avec une liste d'offres et demandes de services",
+      vision3: "dans la Baie des Chaleurs",
+      // vision3: "Avec une monnaie locale pour offrir et reçevoir des services avec le principe 1 heure vaut 1 heure",
       becomeMember: "Devenez membre !",
       general1: "SEL de Mer",
       generalSubtitle: "Échanges de services avec le principe une heure vaut une heure",
       general2: "système d'échange de services",
       // general3: "Ce site permet d'afficher des offres de services ainsi que d'enregistrer des transactions d'heures. Les demandes se réalisent sur le",
       plusHelp: "Obtenez de l'aide",
-      plusHelpOffer: "Ayez accès à une liste d'offres de services dans la Baie des Chaleurs.",
+      plusHelpOffer: "Accédez à une liste d'offres de services dans la Baie des Chaleurs.",
       plusHelpRequest: "Faites des demandes de service sur le",
       plusHelpRequestFacebook: "groupe Facebook privé",
       plusOffers: "Consultez les offres de la Baie des Chaleurs et ajouter la votre",
@@ -327,8 +336,9 @@ export default {
     });
     I18n.i18next.addResources("en", "about", {
       vision: "S'entraider",
-      vision2: "Avec une liste d'offres et demandes de services dans la Baie des Chaleurs",
-      vision3: "Avec une monnaie locale pour offrir et reçevoir des services avec le principe 1 heure vaut 1 heure",
+      vision2: "Avec une liste d'offres et demandes de services",
+      vision3: "dans la Baie des Chaleurs",
+      // vision3: "Avec une monnaie locale pour offrir et reçevoir des services avec le principe 1 heure vaut 1 heure",
       general1: "Le SEL de mer est un",
       general2: "système d'échange de services",
       general3: "Ce site permet d'afficher des offres de services ainsi que d'enregistrer des transactions d'heures. Les demandes se réalisent sur le groupe facebook privé.",

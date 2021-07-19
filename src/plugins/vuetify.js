@@ -17,6 +17,7 @@ export default new Vuetify({
         },
         themes: {
             light: {
+                blueTitle: "#17347c",
                 primary: "#177C72",
                 secondary: "#7c2e17",
                 secondaryLight: colors.indigo.lighten2,
@@ -30,7 +31,8 @@ export default new Vuetify({
                 success: '#00C851',
                 warning: '#ffbb33',
                 edgeColor: '#3A87AD',
-                facebook: "#3b5998"
+                facebook: "#3b5998",
+                background:"#fcff2a59"
             },
             dark: {
                 primary: '#FFFFFF',
@@ -46,7 +48,8 @@ export default new Vuetify({
                 success: '#00C851',
                 warning: '#ffbb33',
                 edgeColor: '#3A87AD',
-                facebook: "#3b5998"
+                facebook: "#3b5998",
+                background:"#fcff2a59"
             }
         }
     }

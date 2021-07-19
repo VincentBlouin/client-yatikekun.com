@@ -7,12 +7,8 @@ const routes = [
     {
         path: '/',
         name: 'About',
+        alias: '/a-propos',
         component: () => import('../views/About.vue')
-    },
-    {
-        path: '/à-propos',
-        name: 'Welcome',
-        component: () => import( '../views/About.vue')
     },
     {
         path: '/charte',
@@ -89,7 +85,22 @@ const routes = [
 const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
-    routes
+    scrollBehavior() {
+        // if (savedPosition) {
+        //     return new Promise((resolve) => {
+        //         setTimeout(() => {
+        //             resolve({
+        //                 savedPosition
+        //             });
+        //         }, 1000);
+        //     });
+        // } else {
+        //
+        // }
+        console.log("scroll behavior");
+        return {x: 0, y: 0};
+    },
+    routes,
 })
 
 export default router

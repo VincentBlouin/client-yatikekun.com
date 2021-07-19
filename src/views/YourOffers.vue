@@ -1,6 +1,6 @@
 <template>
   <Page>
-    <h2 class="text-center">
+    <h2 class="text-center logo-font text-h4">
       {{ $t('yourOffer:title') }}
     </h2>
     <v-row class="">

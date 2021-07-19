@@ -12,7 +12,7 @@
         </v-btn>
         <v-spacer></v-spacer>
       </v-card-actions>
-      <v-card-title>
+      <v-card-title class="logo-font text-h4">
         <v-spacer></v-spacer>
         {{ $t('members:title') }}
         <v-spacer></v-spacer>

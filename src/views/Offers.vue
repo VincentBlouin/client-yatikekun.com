@@ -1,8 +1,8 @@
 <template>
   <div>
     <Page>
-      <v-card flat class="pt-8">
-        <v-card-title>
+      <v-card flat class="pt-8" color="transparent">
+        <v-card-title class="logo-font text-h4">
           {{ $t('offers:title') }}
         </v-card-title>
         <v-card-actions>
@@ -13,6 +13,7 @@
             <v-skeleton-loader
                 width="250"
                 type="image, list-item-two-line"
+                color="transparent"
             ></v-skeleton-loader>
           </v-col>
         </v-row>
