@@ -9,12 +9,12 @@ export default new Vuetify({
     icons: {
         iconfont: 'md'
     },
+    lang: {
+        locales: {fr},
+        current: 'fr',
+    },
     theme: {
         dark: false,
-        lang: {
-            locales: {fr},
-            current: 'fr',
-        },
         themes: {
             light: {
                 blueTitle: "#17347c",

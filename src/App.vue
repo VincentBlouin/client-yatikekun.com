@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <v-app class="background-color" >
+    <v-app class="background-color">
       <v-app-bar app flat :class="{
         'yellow-background': $route.name === 'About',
       }" >

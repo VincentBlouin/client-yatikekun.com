@@ -151,7 +151,7 @@ export default {
       if (this.isOwner) {
         const response = await MemberService.list();
         this.members = response.data.filter((member) => {
-          return member.status !== 'disabled';
+          return member.status !== 'disabled' && member.email !== "test@facebook.com";
         }).map((member) => {
           member.fullname = member.firstname + " " + member.lastname;
           member.disabled = member.uuid === this.$store.state.user.uuid;
