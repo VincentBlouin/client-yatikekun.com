@@ -244,7 +244,7 @@ export default {
       return
     }
     const response = await OfferService.get(this.offer);
-    this.offer = Offer.format(response.data);
+    this.offer = Offer.format(response.data, true);
   },
   created: function () {
     // console.log("created 1")

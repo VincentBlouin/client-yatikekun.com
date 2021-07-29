@@ -26,8 +26,7 @@
       <v-card-text class="subtitle-1 text-right pl-0 pr-0 pb-0 pt-0 font-italic">
         {{ $t(offer.User.subRegion) }}
       </v-card-text>
-      <v-card-text class="subtitle-1 text-left pl-0 pr-0 pt-0">
-        {{ offer.description }}
+      <v-card-text class="subtitle-1 text-left pl-0 pr-0 pt-0" v-html="offer.description">
       </v-card-text>
     </v-card>
   </v-card>

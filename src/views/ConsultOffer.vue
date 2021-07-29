@@ -141,8 +141,7 @@
               >
                 {{ $t(offer.User.subRegion) }}
               </v-card-text>
-              <v-card-text class="subtitle-1 text-left pl-0 pr-0 pt-0">
-                {{ offer.description }}
+              <v-card-text class="subtitle-1 text-left pl-0 pr-0 pt-0" v-html="offer.description">
               </v-card-text>
             </v-card>
           </v-col>
@@ -154,14 +153,13 @@
               <v-card-text
                   class="text-left subtitle-1"
                   v-if="
-                !offer.additionalFees_fr ||
-                offer.additionalFees_fr.trim() === ''
+                !offer.additionalFees ||
+                offer.additionalFees.trim() === ''
               "
               >
                 {{ $t("consult:notMentioned") }}
               </v-card-text>
-              <v-card-text class="text-left subtitle-1" v-else>
-                {{ offer.additionalFees_fr }}
+              <v-card-text class="text-left subtitle-1" v-else v-html="offer.additionalFees">
               </v-card-text>
             </v-card>
             <v-card flat min-height="150">
@@ -170,12 +168,11 @@
               </v-card-title>
               <v-card-text
                   class="text-left subtitle-1"
-                  v-if="!offer.experience_fr || offer.experience_fr.trim() === ''"
+                  v-if="!offer.experience || offer.experience.trim() === ''"
               >
                 {{ $t("consult:notMentioned") }}
               </v-card-text>
-              <v-card-text class="text-left subtitle-1">
-                {{ offer.experience_fr }}
+              <v-card-text class="text-left subtitle-1" v-html="offer.experience">
               </v-card-text>
             </v-card>
           </v-col>
