@@ -1,14 +1,33 @@
 <template>
-  <Page>
-    <h2 class="text-center logo-font text-h4">
-      {{ $t('yourOffer:title') }}
-    </h2>
-    <v-row class="">
-      <v-col cols="12" md="6" lg="4" v-for="offer in offers" :key="offer.id">
-        <OfferCard :offer="offer" :isAvailableSwitch="true" @remove="removeOffer"></OfferCard>
-      </v-col>
+  <div>
+    <Page>
+      <h2 class="text-center logo-font text-h4">
+        {{ $t('yourOffer:title') }}
+      </h2>
+      <v-row class="">
+        <v-col cols="12" md="6" lg="4" v-for="offer in offers" :key="offer.id">
+          <OfferCard :offer="offer" :isAvailableSwitch="true" @remove="removeOffer"></OfferCard>
+        </v-col>
+      </v-row>
+    </Page>
+    <v-row>
+      <v-fab-transition>
+        <v-btn
+            color="primary"
+            fab
+            dark
+            fixed
+            bottom
+            right
+            to="offre"
+            style="left:72%;"
+            x-large
+        >
+          <v-icon>add</v-icon>
+        </v-btn>
+      </v-fab-transition>
     </v-row>
-  </Page>
+  </div>
 </template>
 
 <script>
