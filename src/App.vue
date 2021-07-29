@@ -29,7 +29,8 @@
             </span>
           </v-btn>
           <v-btn text v-if="$store.state.user !== null" to="/offres">
-<!--            &#127752;-->
+            <v-img :src="require('@/assets/2682822_forecast_rainbow_spectr_weather_icon.svg')" width="24" class="mr-2"></v-img>
+<!--            rainbow 🌈 utf8 char &#127752;-->
             <span class="blue-title">
               {{ $t('app:offers') }}
             </span>
@@ -81,9 +82,10 @@
             </template>
             <v-list>
               <v-list-item to="/vos-offres">
-<!--                <v-list-item-action>-->
+                <v-list-item-action>
 <!--                  🌈-->
-<!--                </v-list-item-action>-->
+                  <v-img :src="require('@/assets/2682822_forecast_rainbow_spectr_weather_icon.svg')" width="24" class="mr-2"></v-img>
+                </v-list-item-action>
                 <v-list-item-title>
                   {{ $t('app:yourOffers') }}
                 </v-list-item-title>
@@ -145,9 +147,10 @@
               </v-list-item-content>
             </v-list-item>
             <v-list-item v-if="$store.state.user !== null">
-<!--              <v-list-item-action>-->
+              <v-list-item-action>
 <!--                🌈-->
-<!--              </v-list-item-action>-->
+                <v-img :src="require('@/assets/2682822_forecast_rainbow_spectr_weather_icon.svg')" width="24" class="mr-2"></v-img>
+              </v-list-item-action>
               <v-list-item-content>
                 <v-list-item-title>
                   <v-btn text to="/offres">
