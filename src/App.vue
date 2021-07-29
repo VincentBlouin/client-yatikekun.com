@@ -29,7 +29,7 @@
             </span>
           </v-btn>
           <v-btn text v-if="$store.state.user !== null" to="/offres">
-            <span class="mr-2">🌈</span>
+<!--            &#127752;-->
             <span class="blue-title">
               {{ $t('app:offers') }}
             </span>
@@ -81,9 +81,9 @@
             </template>
             <v-list>
               <v-list-item to="/vos-offres">
-                <v-list-item-action>
-                  🌈
-                </v-list-item-action>
+<!--                <v-list-item-action>-->
+<!--                  🌈-->
+<!--                </v-list-item-action>-->
                 <v-list-item-title>
                   {{ $t('app:yourOffers') }}
                 </v-list-item-title>
@@ -145,9 +145,9 @@
               </v-list-item-content>
             </v-list-item>
             <v-list-item v-if="$store.state.user !== null">
-              <v-list-item-action>
-                🌈
-              </v-list-item-action>
+<!--              <v-list-item-action>-->
+<!--                🌈-->
+<!--              </v-list-item-action>-->
               <v-list-item-content>
                 <v-list-item-title>
                   <v-btn text to="/offres">
