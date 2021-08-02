@@ -3,7 +3,7 @@
     <v-app class="background-color">
       <v-app-bar app flat :class="{
         'yellow-background': $route.name === 'About',
-      }" >
+      }">
         <!--        <v-toolbar-title class="pr-4">-->
         <!--          <router-link to="/about">-->
         <!--            <img-->
@@ -29,8 +29,9 @@
             </span>
           </v-btn>
           <v-btn text v-if="$store.state.user !== null" to="/offres">
-            <v-img :src="require('@/assets/2682822_forecast_rainbow_spectr_weather_icon.svg')" width="24" class="mr-2"></v-img>
-<!--            rainbow 🌈 utf8 char &#127752;-->
+            <v-img :src="require('@/assets/2682822_forecast_rainbow_spectr_weather_icon.svg')" width="24"
+                   class="mr-2"></v-img>
+            <!--            rainbow 🌈 utf8 char &#127752;-->
             <span class="blue-title">
               {{ $t('app:offers') }}
             </span>
@@ -65,6 +66,12 @@
               {{ $t('app:facebookGroup') }}
             </span>
           </v-btn>
+          <v-btn text to="/partenaires" v-if="$store.state.user === null">
+            <v-icon color="blueTitle" left>volunteer_activism</v-icon>
+            <span class="blue-title">
+              {{ $t('app:partners') }}
+            </span>
+          </v-btn>
           <v-menu
               bottom
               left
@@ -83,8 +90,9 @@
             <v-list>
               <v-list-item to="/vos-offres">
                 <v-list-item-action>
-<!--                  🌈-->
-                  <v-img :src="require('@/assets/2682822_forecast_rainbow_spectr_weather_icon.svg')" width="24" class="mr-2"></v-img>
+                  <!--                  🌈-->
+                  <v-img :src="require('@/assets/2682822_forecast_rainbow_spectr_weather_icon.svg')" width="24"
+                         class="mr-2"></v-img>
                 </v-list-item-action>
                 <v-list-item-title>
                   {{ $t('app:yourOffers') }}
@@ -148,8 +156,9 @@
             </v-list-item>
             <v-list-item v-if="$store.state.user !== null">
               <v-list-item-action>
-<!--                🌈-->
-                <v-img :src="require('@/assets/2682822_forecast_rainbow_spectr_weather_icon.svg')" width="24" class="mr-2"></v-img>
+                <!--                🌈-->
+                <v-img :src="require('@/assets/2682822_forecast_rainbow_spectr_weather_icon.svg')" width="24"
+                       class="mr-2"></v-img>
               </v-list-item-action>
               <v-list-item-content>
                 <v-list-item-title>
@@ -224,15 +233,25 @@
                 </v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item>
+            <v-list-item to="/charte">
               <v-list-item-action>
                 <v-icon>assignment</v-icon>
               </v-list-item-action>
               <v-list-item-content>
                 <v-list-item-title>
-                  <v-btn to="/charte" text class="black--text">
+                  <v-btn text class="black--text">
                     {{ $t('app:charter') }}
                   </v-btn>
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item to="/partenaires">
+              <v-list-item-action>
+                <v-icon>volunteer_activism</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>
+                  {{ $t('app:partners') }}
                 </v-list-item-title>
               </v-list-item-content>
             </v-list-item>
@@ -311,7 +330,8 @@ export default {
       informations: "Informations",
       yourOffers: "Vos offres",
       addOffer: "Ajouter offre",
-      facebookGroup: "Notre groupe"
+      facebookGroup: "Notre groupe",
+      partners: "Partenaires"
     });
     I18n.i18next.addResources("en", "app", {
       becomeMember: "Devenez membre",
@@ -324,7 +344,8 @@ export default {
       informations: "Informations",
       yourOffers: "Vos offres",
       addOffer: "Ajouter offre",
-      facebookGroup: "Notre groupe"
+      facebookGroup: "Notre groupe",
+      partners: "Partners"
     });
     return {
       drawer: false
@@ -396,13 +417,14 @@ export default {
   //    -1px  0   0 #17347c;
 }
 
-.vision-small-font{
+.vision-small-font {
   font-size: 3em;
 }
 
-.vision-bigger-font{
+.vision-bigger-font {
   font-size: 6em;
 }
+
 .vision-font {
   font-family: 'Otomanopee One', sans-serif !important;
   letter-spacing: 3px;
