@@ -118,6 +118,16 @@
                   {{ $t('app:informations') }}
                 </v-list-item-title>
               </v-list-item>
+              <v-list-item to="/partenaires">
+                <v-list-item-action>
+                  <v-icon>volunteer_activism</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    {{ $t('app:partners') }}
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
               <v-list-item @click="logout">
                 <v-list-item-action>
                   <v-icon>exit_to_app</v-icon>
