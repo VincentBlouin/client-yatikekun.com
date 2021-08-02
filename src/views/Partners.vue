@@ -53,10 +53,10 @@ export default {
   },
   data: function () {
     I18n.i18next.addResources("fr", "partner", {
-      title: "Partenaires au projet"
+      title: "Partenaires"
     });
     I18n.i18next.addResources("en", "partner", {
-      title: "Partners to the project "
+      title: "Partners"
     });
     return {};
   }
