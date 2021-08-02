@@ -458,4 +458,8 @@ export default {
   font-size: 34px;
 }
 
+.cursor-hand{
+  cursor: pointer;
+}
+
 </style>

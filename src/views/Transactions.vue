@@ -28,11 +28,10 @@
           <tr
               v-for="(transaction, index) in transactions"
               :key="transaction.id"
-              class="text-left"
+              class="text-left cursor-hand"
               @click="$router.push('/consulter-offre/' + transaction.OfferId)"
           >
-            <td>
-              {{ transaction.details }}
+            <td v-html="transaction.details">
             </td>
             <td>
               {{ transaction.formattedDate }}
