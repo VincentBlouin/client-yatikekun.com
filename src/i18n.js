@@ -43,6 +43,7 @@ export default {
             resources: {
                 en: {
                     translation: {
+                        nones: "None",
                         member: "Membre",
                         admin: "Administrateur",
                         disabled: "Désactivé",
@@ -94,6 +95,7 @@ export default {
                 },
                 fr: {
                     translation: {
+                        nones: "Aucunes",
                         member: "Membre",
                         admin: "Administrateur",
                         disabled: "Désactivé",

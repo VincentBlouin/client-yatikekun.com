@@ -27,6 +27,12 @@ export default {
         );
         return response.data;
     },
+    getAllPendingOffers: async function (userId) {
+        const response = await Service.api().get(
+            '/transaction/pending/user/' + userId
+        );
+        return response.data || [];
+    },
     removeTransaction: async function (transactionId) {
         return Service.api().delete(
             '/transaction/' + transactionId

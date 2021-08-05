@@ -72,6 +72,7 @@
               {{ $t('app:partners') }}
             </span>
           </v-btn>
+          <NotificationsMenu></NotificationsMenu>
           <v-menu
               bottom
               left
@@ -139,6 +140,7 @@
             </v-list>
           </v-menu>
         </v-toolbar-items>
+        <NotificationsMenu v-if="$vuetify.breakpoint.smAndDown"></NotificationsMenu>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="black--text"
                             v-if="$vuetify.breakpoint.smAndDown"></v-app-bar-nav-icon>
         <v-navigation-drawer
@@ -310,6 +312,9 @@ import VueClipboard from 'vue-clipboard2'
 Vue.use(VueClipboard);
 
 export default {
+  components: {
+    NotificationsMenu: () => import('@/components/NotificationsMenu.vue')
+  },
   mounted: async function () {
     await this.$store.dispatch('setLocale', "fr");
     this.$vuetify.lang.current = this.$store.state.locale;
@@ -458,7 +463,7 @@ export default {
   font-size: 34px;
 }
 
-.cursor-hand{
+.cursor-hand {
   cursor: pointer;
 }
 
