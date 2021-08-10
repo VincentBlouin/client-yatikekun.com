@@ -180,7 +180,7 @@ export default {
       if (this.isChooseAnotherUserFlow) {
         const response = await MemberService.list();
         this.members = response.data.filter((member) => {
-          return member.status !== 'disabled' && member.email.indexOf("@tfbnw.net") === -1;
+          return member.status !== 'disabled' && member.uuid !== "30b2c42a-96b2-48b2-b21c-534ab5e613aa";
         }).map((member) => {
           member.fullname = member.firstname + " " + member.lastname;
           member.disabled = member.uuid === this.$store.state.user.uuid;
@@ -207,6 +207,7 @@ export default {
       this.hasConfirmed = true;
       await this.$nextTick();
       this.showConfirmMessage = true;
+      this.$emit('transactionAdded');
     },
     membersFilter: function (member, queryText) {
       const firstname = member.firstname.toLowerCase();

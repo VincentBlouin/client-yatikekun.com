@@ -100,7 +100,7 @@
             </td>
             <td>{{ transaction.balance }}</td>
             <td v-if="$store.state.user.status === 'admin' && index !== transactions.length - 1">
-              <v-icon @click="removeTransaction(transaction.id)">delete</v-icon>
+              <v-icon @click.stop="removeTransaction(transaction.id)">delete</v-icon>
             </td>
           </tr>
           </tbody>
@@ -108,7 +108,24 @@
       </v-simple-table>
     </v-card>
     <NewTransaction ref="newTransaction" :giverInit="isGiverFlow ? this.$store.state.user: null"
-                    :receiverInit="isGiverFlow ? null : this.$store.state.user"></NewTransaction>
+                    :receiverInit="isGiverFlow ? null : this.$store.state.user" @transactionAdded="setupData"></NewTransaction>
+    <v-dialog v-model="confirmRemoveTransactionDialog" width="600">
+      <v-card>
+        <v-card-title>
+          {{ $t('transactions:confirmDelete') }}
+          <v-spacer></v-spacer>
+          <v-icon @click="confirmRemoveTransactionDialog = false">close</v-icon>
+        </v-card-title>
+        <v-card-actions>
+          <v-btn color="primary" @click="confirmRemoveTransaction">
+            <v-icon left>delete</v-icon>
+            {{ $t('confirm') }}
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn @click="confirmRemoveTransactionDialog = false">{{$t('close')}}</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </Page>
 </template>
 <script>
@@ -144,7 +161,8 @@ export default {
       serviceReceived3: "un service",
       serviceGiven1: "Vous avez ",
       serviceGiven2: "rendu",
-      serviceGiven3: "un service"
+      serviceGiven3: "un service",
+      confirmDelete: "Voulez-vous vraiment supprimer cette transaction ?"
     });
     I18n.i18next.addResources("en", "transactions", {
       title: "Transactions",
@@ -162,7 +180,8 @@ export default {
       serviceReceived3: "a service",
       serviceGiven1: "You",
       serviceGiven2: "gave",
-      serviceGiven3: "a service"
+      serviceGiven3: "a service",
+      confirmDelete: "Voulez-vous vraiment supprimer cette transaction ?"
     });
     return {
       transactions: [],
@@ -170,7 +189,9 @@ export default {
       addStyle: "",
       addBtn: false,
       receiverCustom: null,
-      isGiverFlow: false
+      isGiverFlow: false,
+      confirmRemoveTransactionDialog: false,
+      transactionIdToRemove: null
     };
   },
   methods: {
@@ -250,8 +271,13 @@ export default {
           });
       this.isLoading = false;
     },
-    removeTransaction: async function (transactionId) {
-      await TransactionService.removeTransaction(transactionId);
+    removeTransaction: function (transactionId) {
+      this.confirmRemoveTransactionDialog = true;
+      this.transactionIdToRemove = transactionId;
+    },
+    confirmRemoveTransaction: async function () {
+      await TransactionService.removeTransaction(this.transactionIdToRemove);
+      this.confirmRemoveTransactionDialog = false;
       await this.setupData();
     }
   }
