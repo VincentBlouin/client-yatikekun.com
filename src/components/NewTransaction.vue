@@ -180,7 +180,7 @@ export default {
       if (this.isChooseAnotherUserFlow) {
         const response = await MemberService.list();
         this.members = response.data.filter((member) => {
-          return member.status !== 'disabled' && member.email !== "test@facebook.com";
+          return member.status !== 'disabled' && member.email.indexOf("@tfbnw.net") === -1;
         }).map((member) => {
           member.fullname = member.firstname + " " + member.lastname;
           member.disabled = member.uuid === this.$store.state.user.uuid;
