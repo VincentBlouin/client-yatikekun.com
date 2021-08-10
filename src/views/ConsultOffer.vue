@@ -234,7 +234,9 @@
           </v-card-text>
         </v-card>
       </v-dialog>
-      <NewTransaction :offer="offer" ref="newTransaction"></NewTransaction>
+      <NewTransaction :offerId="offer.id" :giverInit="isOwner ? $store.state.user : offer.User"
+                      :receiverInit="isOwner ? null : $store.state.user" :detailsInit="offer.title_fr"
+                      ref="newTransaction"></NewTransaction>
       <v-bottom-sheet
           v-model="pendingTransactionSheet"
           v-if="pendingTransaction !== null && pendingTransaction.length"
@@ -273,7 +275,7 @@ export default {
   },
   async mounted() {
     this.offer.UserId = this.$store.state.user.id;
-    this.offer.id = this.$route.params.offerId;
+    this.offer.id = parseInt(this.$route.params.offerId);
     this.isLoading = true;
     const response = await OfferService.get(this.offer);
     this.offer = Offer.format(response.data);

@@ -448,6 +448,9 @@ export default {
 .yellow-background {
   background-color: #fcff2a59 !important;
 }
+.primary-color-background{
+  background-color: #177C72 !important;
+}
 
 .background-color {
   //background-color: #fcff2a59 !important;

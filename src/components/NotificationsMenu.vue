@@ -27,7 +27,7 @@
         {{ $t('nones') }}
       </div>
       <v-list-item v-for="pendingTransaction in pendingTransactions" :key="pendingTransaction.id"
-                   :to="'/consulter-offre/' + pendingTransaction.OfferId">
+                   :to="'/transaction/' + pendingTransaction.id">
         <v-list-item-content>
           <v-list-item-title v-html="pendingTransaction.details">
           </v-list-item-title>

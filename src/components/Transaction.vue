@@ -6,13 +6,18 @@
           <p>
             <span class="font-weight-bold">
               <span class="font-weight-bold">
-                {{ giver.firstname }}
-                {{ giver.lastname }}
+                <span v-if="giver === null">
+                  ...
+                </span>
+                <span v-else>
+                  {{ giver.firstname }}
+                  {{ giver.lastname }}
+                </span>
               </span>
             </span>
             {{ $t("transaction:performedService") }}
             <span class="font-weight-bold">
-              <span v-if="receiver.uuid === giver.uuid"> ... </span>
+              <span v-if="receiver === null"> ... </span>
               <span v-else>
                 {{ receiver.firstname }}
                 {{ receiver.lastname }}
@@ -29,35 +34,35 @@
         <v-card-actions class="pb-4 pt-0" v-if="!preventShowActions">
           <v-spacer></v-spacer>
           <v-btn
-            class="ml-4"
-            disabled
-            v-if="initiator.uuid === $store.state.user.uuid"
+              class="ml-4"
+              disabled
+              v-if="initiator.uuid === $store.state.user.uuid"
           >
             {{ $t("transaction:pendingTransaction") }}
           </v-btn>
           <v-btn
-            @click="confirm"
-            color="primary"
-            class="ml-4"
-            v-else
-            :loading="confirmLoading"
-            :disabled="confirmLoading || hasConfirmed"
+              @click="confirm"
+              color="primary"
+              class="ml-4"
+              v-else
+              :loading="confirmLoading"
+              :disabled="confirmLoading || hasConfirmed"
           >
             {{ $t("confirm") }}
           </v-btn>
           <v-spacer></v-spacer>
           <v-btn
-            @click="$emit('close')"
-            right
-            class="mr-4"
-            v-if="$vuetify.breakpoint.mdAndUp"
+              @click="$emit('close')"
+              right
+              class="mr-4"
+              v-if="$vuetify.breakpoint.mdAndUp"
           >
             {{ $t("close") }}
           </v-btn>
           <v-spacer v-if="$vuetify.breakpoint.mdAndUp"></v-spacer>
         </v-card-actions>
         <v-card-actions
-          v-if="$vuetify.breakpoint.smAndDown && !preventShowActions"
+            v-if="$vuetify.breakpoint.smAndDown && !preventShowActions"
         >
           <v-spacer></v-spacer>
           <v-btn @click="$emit('close')" right class="mr-4">
@@ -71,11 +76,11 @@
       {{ $t("transaction:confirmed") }}
       <template v-slot:action="{ attrs }">
         <v-btn
-          color="white"
-          text
-          icon
-          v-bind="attrs"
-          @click="confirmSuccess = false"
+            color="white"
+            text
+            icon
+            v-bind="attrs"
+            @click="confirmSuccess = false"
         >
           <v-icon>close</v-icon>
         </v-btn>
@@ -87,6 +92,7 @@
 import I18n from "@/i18n";
 import Transaction from "@/Transaction";
 import TransactionService from "@/service/TransactionService";
+
 export default {
   components: {},
   props: [
@@ -98,7 +104,8 @@ export default {
     "flatCard",
     "preventShowActions",
   ],
-  async mounted() {},
+  async mounted() {
+  },
   data: function () {
     I18n.i18next.addResources("fr", "transaction", {
       performedService: "a rendu le service à",

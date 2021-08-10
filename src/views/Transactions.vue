@@ -4,6 +4,41 @@
       <v-card-title class="logo-font text-h4">
         {{ $t("transactions:title") }}
       </v-card-title>
+      <v-speed-dial
+          fixed
+          bottom
+          :style="addStyle"
+          transition="scale-transition"
+          direction="top"
+          v-model="addBtn"
+      >
+        <template v-slot:activator>
+          <v-btn
+              color="primary"
+              fab
+              dark
+              right
+              x-large
+          >
+            <v-icon v-if="addBtn">close</v-icon>
+            <v-icon v-else>add</v-icon>
+          </v-btn>
+        </template>
+        <v-btn color="primary" rounded @click="newTransactionAsGiver()">
+          {{ $t('transactions:serviceGiven1') }}
+          <strong class="ml-1 mr-1">
+            {{ $t('transactions:serviceGiven2') }}
+          </strong>
+          {{ $t('transactions:serviceGiven3') }}
+        </v-btn>
+        <v-btn color="primary" rounded class="mb-4" @click="newTransactionAsReceiver()">
+          {{ $t('transactions:serviceReceived1') }}
+          <strong class="ml-1 mr-1">
+            {{ $t('transactions:serviceReceived2') }}
+          </strong>
+          {{ $t('transactions:serviceReceived3') }}
+        </v-btn>
+      </v-speed-dial>
       <v-simple-table>
         <template v-slot:default>
           <thead>
@@ -29,7 +64,7 @@
               v-for="(transaction, index) in transactions"
               :key="transaction.id"
               class="text-left cursor-hand"
-              @click="$router.push('/consulter-offre/' + transaction.OfferId)"
+              @click="$router.push('/transaction/' + transaction.id)"
           >
             <td v-html="transaction.details">
             </td>
@@ -72,6 +107,8 @@
         </template>
       </v-simple-table>
     </v-card>
+    <NewTransaction ref="newTransaction" :giverInit="isGiverFlow ? this.$store.state.user: null"
+                    :receiverInit="isGiverFlow ? null : this.$store.state.user"></NewTransaction>
   </Page>
 </template>
 <script>
@@ -82,10 +119,12 @@ import {fr} from 'date-fns/locale'
 
 export default {
   components: {
-    Page: () => import('@/components/Page')
+    Page: () => import('@/components/Page'),
+    NewTransaction: () => import("@/components/NewTransaction"),
   },
   async mounted() {
     window.scrollTo(0, 0);
+    this.addStyle = this.$vuetify.breakpoint.mdAndUp ? "left:72%" : "left:40%";
     await this.setupData();
   },
   data: function () {
@@ -100,6 +139,12 @@ export default {
       status: "Statut",
       confirmed: "Confirmée",
       pending: "En attente",
+      serviceReceived1: "Vous avez",
+      serviceReceived2: "reçu",
+      serviceReceived3: "un service",
+      serviceGiven1: "Vous avez ",
+      serviceGiven2: "rendu",
+      serviceGiven3: "un service"
     });
     I18n.i18next.addResources("en", "transactions", {
       title: "Transactions",
@@ -112,12 +157,31 @@ export default {
       status: "Statut",
       confirmed: "Confirmée",
       pending: "En attente",
+      serviceReceived1: "You",
+      serviceReceived2: "received",
+      serviceReceived3: "a service",
+      serviceGiven1: "You",
+      serviceGiven2: "gave",
+      serviceGiven3: "a service"
     });
     return {
       transactions: [],
+      newTransactionOffer: {},
+      addStyle: "",
+      addBtn: false,
+      receiverCustom: null,
+      isGiverFlow: false
     };
   },
   methods: {
+    newTransactionAsGiver: function () {
+      this.isGiverFlow = true;
+      this.$refs.newTransaction.enter();
+    },
+    newTransactionAsReceiver: function () {
+      this.isGiverFlow = false;
+      this.$refs.newTransaction.enter();
+    },
     setupData: async function () {
       this.isLoading = true;
       let response = await TransactionService.listForUserId(

@@ -5,93 +5,102 @@
       width="700"
       :fullscreen="$vuetify.breakpoint.smAndDown"
   >
-    <v-card>
-      <v-card-title>
-        <v-spacer></v-spacer>
-        <v-btn icon @click="dialog = false">
-          <v-icon>close</v-icon>
-        </v-btn>
-      </v-card-title>
-      <v-card-text
-          class="text-body-1 vh-center"
-          v-if="isOwner && !hasConfirmed"
-      >
-        <v-autocomplete
-            :items="members"
-            :filter="membersFilter"
-            item-text="fullname"
-            v-model="userOfTransaction"
-            :label="$t('newTransaction:chooseUser')"
-            class="members-autocomplete"
-            :menu-props="membersAutocompleteMenuProps"
-            return-object
-            :no-data-text="$t('noSearchResults')"
-        ></v-autocomplete>
-      </v-card-text>
-      <v-card-text v-if="!hasConfirmed">
-        <v-card>
-          <v-card-title class="vh-center">
-            {{ $t("newTransaction:durationTitle") }}
-          </v-card-title>
-          <v-card-subtitle>
-            {{ $t("newTransaction:durationSubtitle") }}
-          </v-card-subtitle>
-          <v-card-text>
-            <v-time-picker
-                format="24hr"
-                :allowed-minutes="allowedMinutes"
-                v-model="timePickerQuantity"
-            ></v-time-picker>
-          </v-card-text>
-        </v-card>
-      </v-card-text>
-      <Transaction
-          :quantity="quantity"
-          :giver="giver"
-          :receiver="receiver"
-          :initiator="$store.state.user"
-          :preventShowActions="true"
-      ></Transaction>
-      <v-scale-transition>
-        <v-alert
-            v-if="showConfirmMessage"
-            type="success"
-            icon="email"
-            color="primary"
-            class="body-1"
+    <v-form ref="newTransactionForm">
+      <v-card>
+        <v-card-title>
+          <v-spacer></v-spacer>
+          <v-btn icon @click="dialog = false">
+            <v-icon>close</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-card-text v-if="!hasConfirmed">
+          <v-text-field v-model="details"
+                        :placeholder="$t('newTransaction:detailsPlaceholder')"
+                        :rules="[Rules.required]"
+                        required
+          ></v-text-field>
+        </v-card-text>
+        <v-card-text
+            class="text-body-1 vh-center"
+            v-if="isChooseAnotherUserFlow && !hasConfirmed"
         >
-          {{ $t("newTransaction:confirmed1") }}
-          {{ otherUser.firstname }} {{ otherUser.lastname }}
-          {{ $t("newTransaction:confirmed2") }}.
-          {{ otherUser.firstname }}
-          {{ $t("newTransaction:confirmed3") }}.
-        </v-alert>
-      </v-scale-transition>
-      <v-card-actions>
-        <v-btn
-            color="primary"
-            @click="addTransaction"
-            :disabled="
-            (isOwner && userOfTransaction === null) ||
+          <v-autocomplete
+              :items="members"
+              :filter="membersFilter"
+              item-text="fullname"
+              v-model="userOfTransaction"
+              :label="$t('newTransaction:chooseUser')"
+              class="members-autocomplete"
+              :menu-props="membersAutocompleteMenuProps"
+              return-object
+              :no-data-text="$t('noSearchResults')"
+          ></v-autocomplete>
+        </v-card-text>
+        <v-card-text v-if="!hasConfirmed">
+          <v-card>
+            <v-card-title class="vh-center">
+              {{ $t("newTransaction:durationTitle") }}
+            </v-card-title>
+            <v-card-subtitle>
+              {{ $t("newTransaction:durationSubtitle") }}
+            </v-card-subtitle>
+            <v-card-text>
+              <v-time-picker
+                  format="24hr"
+                  :allowed-minutes="allowedMinutes"
+                  v-model="timePickerQuantity"
+              ></v-time-picker>
+            </v-card-text>
+          </v-card>
+        </v-card-text>
+        <Transaction
+            :quantity="quantity"
+            :giver="giver"
+            :receiver="receiver"
+            :initiator="$store.state.user"
+            :preventShowActions="true"
+        ></Transaction>
+        <v-scale-transition>
+          <v-alert
+              v-if="showConfirmMessage"
+              type="success"
+              icon="email"
+              color="primary"
+              class="body-1"
+          >
+            {{ $t("newTransaction:confirmed1") }}
+            {{ otherUser.firstname }} {{ otherUser.lastname }}
+            {{ $t("newTransaction:confirmed2") }}.
+            {{ otherUser.firstname }}
+            {{ $t("newTransaction:confirmed3") }}.
+          </v-alert>
+        </v-scale-transition>
+        <v-card-actions>
+          <v-btn
+              color="primary"
+              @click="addTransaction"
+              :disabled="
+            (isChooseAnotherUserFlow && userOfTransaction === null) ||
             timePickerQuantity === '00:00' ||
             confirmLoading ||
             hasConfirmed
           "
-            :loading="confirmLoading"
-        >
-          {{ $t("confirm") }}
-        </v-btn>
-        <v-spacer></v-spacer>
-        <v-btn text @click="dialog = false">
+              :loading="confirmLoading"
+          >
+            {{ $t("confirm") }}
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn text @click="dialog = false">
           <span v-if="hasConfirmed">
             {{ $t("finish") }}
           </span>
-          <span v-else>
+            <span v-else>
             {{ $t("cancel") }}
           </span>
-        </v-btn>
-      </v-card-actions>
-    </v-card>
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-form>
   </v-dialog>
 </template>
 <script>
@@ -99,12 +108,27 @@ import I18n from "@/i18n";
 import MemberService from "@/service/MemberService";
 import Transaction from "@/Transaction";
 import TransactionService from "@/service/TransactionService";
+import Rules from "@/Rules";
 
 export default {
   components: {
     Transaction: () => import("@/components/Transaction"),
   },
-  props: ["offer"],
+  props: {
+    offerId: Number,
+    detailsInit: {
+      type: String,
+      default: ""
+    },
+    receiverInit: {
+      type: Object,
+      default: null
+    },
+    giverInit: {
+      type: Object,
+      default: null
+    }
+  },
   async mounted() {
   },
   data: function () {
@@ -115,6 +139,7 @@ export default {
       confirmed1: "Un courriel a été envoyé à",
       confirmed2: "pour qu'il/elle confirme la transaction",
       confirmed3: "peut aussi confirmer la transaction en visitant l'offre",
+      detailsPlaceholder: "Détails"
     });
     I18n.i18next.addResources("en", "newTransaction", {
       chooseUser: "L'autre usager dans la transaction",
@@ -123,15 +148,18 @@ export default {
       confirmed1: "Un courriel a été envoyé à",
       confirmed2: "pour qu'il/elle confirme la transaction",
       confirmed3: "peut aussi confirmer la transaction en visitant l'offre",
+      detailsPlaceholder: "Details"
     });
     return {
+      Rules: Rules,
       dialog: false,
-      isOwner: false,
       userOfTransaction: null,
       confirmLoading: false,
       hasConfirmed: false,
+      isChooseAnotherUserFlow: false,
       showConfirmMessage: false,
       members: [],
+      details: "",
       timePickerQuantity: "00:00",
       allowedMinutes: [0, 15, 30, 45],
       allowedHours: [0, 1, 2, 3, 4, 5, 6],
@@ -147,8 +175,9 @@ export default {
       this.confirmLoading = false;
       this.hasConfirmed = false;
       this.showConfirmMessage = false;
-      this.isOwner = this.offer.UserId === this.$store.state.user.id;
-      if (this.isOwner) {
+      this.details = this.detailsInit;
+      this.isChooseAnotherUserFlow = this.giverInit === null || this.receiverInit === null;
+      if (this.isChooseAnotherUserFlow) {
         const response = await MemberService.list();
         this.members = response.data.filter((member) => {
           return member.status !== 'disabled' && member.email !== "test@facebook.com";
@@ -161,17 +190,18 @@ export default {
       this.dialog = true;
     },
     addTransaction: async function () {
+      if (!this.$refs.newTransactionForm.validate()) {
+        this.$refs.newTransactionForm.$el.scrollIntoView({behavior: 'smooth'})
+        return;
+      }
       this.confirmLoading = true;
       await TransactionService.add({
         amount: this.quantity,
-        details: this.offer.title_fr,
+        details: this.details,
         InitiatorId: this.$store.state.user.id,
-        GiverId: this.offer.UserId,
-        ReceiverUuid:
-            this.userOfTransaction === null
-                ? this.$store.state.user.uuid
-                : this.userOfTransaction.uuid,
-        OfferId: this.offer.id,
+        GiverUuid: this.giver.uuid,
+        ReceiverUuid: this.receiver.uuid,
+        OfferId: this.offerId,
       });
       this.confirmLoading = false;
       this.hasConfirmed = true;
@@ -192,15 +222,19 @@ export default {
     quantity: function () {
       return Transaction.timePickerToQuantity(this.timePickerQuantity);
     },
-    receiver: function () {
-      return this.userOfTransaction === null
-          ? this.$store.state.user
-          : this.userOfTransaction;
-    },
     giver: function () {
-      return this.offer.User;
+      return this.giverInit === null ? this.userOfTransaction : this.giverInit;
+    },
+    receiver: function () {
+      return this.receiverInit === null ? this.userOfTransaction : this.receiverInit;
     },
     otherUser: function () {
+      if (this.giver === null) {
+        return this.receiver;
+      }
+      if (this.receiver === null) {
+        return this.giver;
+      }
       return this.receiver.uuid === this.$store.state.user.uuid
           ? this.giver
           : this.receiver;
