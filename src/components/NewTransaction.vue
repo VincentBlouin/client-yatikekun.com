@@ -59,6 +59,7 @@
             :receiver="receiver"
             :initiator="$store.state.user"
             :preventShowActions="true"
+            status="PENDING"
         ></Transaction>
         <v-scale-transition>
           <v-alert

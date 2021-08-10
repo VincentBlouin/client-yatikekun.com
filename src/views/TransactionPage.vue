@@ -14,6 +14,7 @@
             :transactionId="transaction.id"
             :flatCard="true"
             @close="$router.push('/transactions')"
+            :status="transaction.status"
         ></Transaction>
       </v-card-text>
     </v-card>

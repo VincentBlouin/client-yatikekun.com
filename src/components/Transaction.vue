@@ -36,7 +36,7 @@
           <v-btn
               class="ml-4"
               disabled
-              v-if="initiator.uuid === $store.state.user.uuid"
+              v-if="status === 'PENDING' && initiator.uuid === $store.state.user.uuid"
           >
             {{ $t("transaction:pendingTransaction") }}
           </v-btn>
@@ -44,7 +44,7 @@
               @click="confirm"
               color="primary"
               class="ml-4"
-              v-else
+              v-if="status === 'PENDING' && initiator.uuid !== $store.state.user.uuid"
               :loading="confirmLoading"
               :disabled="confirmLoading || hasConfirmed"
           >
@@ -103,6 +103,7 @@ export default {
     "transactionId",
     "flatCard",
     "preventShowActions",
+    "status"
   ],
   async mounted() {
   },
