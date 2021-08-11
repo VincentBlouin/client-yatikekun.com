@@ -4,18 +4,18 @@
       <v-app-bar app flat :class="{
         'yellow-background': $route.name === 'About',
       }">
-        <!--        <v-toolbar-title class="pr-4">-->
-        <!--          <router-link to="/about">-->
-        <!--            <img-->
-        <!--                height="55"-->
-        <!--                :src="require('@/assets/logo_sel_de_mer_gros.png')"-->
-        <!--            >-->
-        <!--          </router-link>-->
-        <!--        </v-toolbar-title>-->
         <v-toolbar-title class="text-h5 pt-2 pb-2">
           <router-link to="/a-propos" class="logo-font blue-title"
                        style="font-size: 31px;">
             PartageHeure.com
+          </router-link>
+        </v-toolbar-title>
+        <v-toolbar-title class="ml-4 mt-2">
+          <router-link to="/about">
+            <img
+                height="55"
+                :src="require('@/assets/logo-barre-partageheure-bleu.png')"
+            >
           </router-link>
         </v-toolbar-title>
         <v-spacer></v-spacer>
