@@ -11,7 +11,7 @@
           </router-link>
         </v-toolbar-title>
         <v-toolbar-title class="ml-4 mt-2">
-          <router-link to="/about">
+          <router-link to="/a-propos">
             <img
                 height="55"
                 :src="require('@/assets/logo-barre-partageheure-bleu.png')"
