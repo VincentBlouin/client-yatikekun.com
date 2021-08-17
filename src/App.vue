@@ -8,7 +8,7 @@
           <router-link to="/a-propos">
             <img
                 height="55"
-                :src="require('@/assets/logo-barre-partageheure-bleu.png')"
+                :src="require('@/assets/logo-barre-partageheure-incline-gauche-bleu.png')"
             >
           </router-link>
         </v-toolbar-title>

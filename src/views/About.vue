@@ -60,7 +60,7 @@
                 </v-list-item-subtitle>
                 <v-list-item-subtitle class="text-subtitle-1 text-md-h6 font-weight-regular">
                   {{ $t('about:plusHelpRequest') }}
-                  <a href="https://www.facebook.com/seldemer.gratis">
+                  <a href="https://www.facebook.com/groups/578440053119292">
                     <span class="mr-2">{{ $t('about:plusHelpRequestFacebook') }}</span>
                     <img :src="require('@/assets/f_logo_RGB-Blue_58.png')" height="20" style="margin-bottom:-3px;">
                   </a>
