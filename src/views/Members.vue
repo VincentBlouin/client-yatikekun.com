@@ -14,6 +14,7 @@
       </v-card-actions>
       <v-card-title class="logo-font text-h4">
         <v-spacer></v-spacer>
+        <v-icon large class="mr-6">people</v-icon>
         {{ $t('members:title') }}
         <v-spacer></v-spacer>
       </v-card-title>

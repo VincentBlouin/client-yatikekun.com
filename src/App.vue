@@ -20,14 +20,6 @@
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down" v-if="$vuetify.breakpoint.mdAndUp">
-          <v-btn text
-                 v-if="$store.state.user !== null && $store.state.user.status === 'admin'"
-                 to="/membres">
-            <v-icon left color="blueTitle">people</v-icon>
-            <span class="blue-title">
-                  {{ $t('app:members') }}
-            </span>
-          </v-btn>
           <v-btn text v-if="$store.state.user !== null" to="/offres">
             <v-img :src="require('@/assets/2682822_forecast_rainbow_spectr_weather_icon.svg')" width="24"
                    class="mr-2"></v-img>
@@ -107,6 +99,27 @@
                   {{ $t('app:addOffer') }}
                 </v-list-item-title>
               </v-list-item>
+              <v-divider v-if="isAdmin"></v-divider>
+              <v-subheader v-if="isAdmin">
+                Administration
+              </v-subheader>
+              <v-list-item to="/membres" v-if="isAdmin">
+                <v-list-item-action>
+                  <v-icon>people</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                  {{ $t('app:members') }}
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item to="/organisations" v-if="isAdmin">
+                <v-list-item-action>
+                  <v-icon>business</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                  {{ $t('app:organisations') }}
+                </v-list-item-content>
+              </v-list-item>
+              <v-divider></v-divider>
               <v-list-item :to="'/membre/'+ $store.state.user.uuid">
                 <v-list-item-avatar>
                   <v-avatar color="primary" dark size="35">
@@ -342,6 +355,7 @@ export default {
       offers: "Offres",
       yourTransactions: "Transactions",
       members: "Membres",
+      organisations: "Organisations",
       informations: "Informations",
       yourOffers: "Vos offres",
       addOffer: "Ajouter offre",
@@ -356,6 +370,7 @@ export default {
       offers: "Offres",
       yourTransactions: "Transactions",
       members: "Membres",
+      organisations: "Organisations",
       informations: "Informations",
       yourOffers: "Vos offres",
       addOffer: "Ajouter offre",
@@ -370,6 +385,9 @@ export default {
     initials: function () {
       const fullname = this.$store.state.user.firstname + " " + this.$store.state.user.lastname;
       return fullname.split(" ").map((n) => n[0]).join("");
+    },
+    isAdmin: function () {
+      return this.$store.state.user !== null && this.$store.state.user.status === 'admin';
     }
   }
 }
@@ -448,7 +466,8 @@ export default {
 .yellow-background {
   background-color: #fcff2a59 !important;
 }
-.primary-color-background{
+
+.primary-color-background {
   background-color: #177C72 !important;
 }
 
