@@ -90,6 +90,24 @@
               :disabled="$store.state.user.status !== 'admin'"
           >
           </v-select>
+          <v-select
+              v-model="member.OrganisationId"
+              :items="organisations"
+              item-text="name"
+              item-value="id"
+              :label="$t('member:organisation')"
+              clearable
+              v-if="$store.state.user.status === 'admin'"
+          ></v-select>
+          <v-select
+              v-model="member.AdminUserId"
+              :items="admins"
+              item-text="fullname"
+              item-value="id"
+              :label="$t('member:associatedAdministrator')"
+              clearable
+              v-if="$store.state.user.status === 'admin'"
+          ></v-select>
         </v-form>
       </v-card-text>
       <v-card-text>
@@ -181,6 +199,7 @@ import MemberService from "@/service/MemberService";
 import Regions from "@/Regions";
 import Genders from "@/Genders";
 import Rules from "@/Rules";
+import OrganisationService from "@/service/OrganisationService";
 
 export default {
   components: {
@@ -191,8 +210,19 @@ export default {
     if (!this.member.uuid) {
       return;
     }
-    const response = await MemberService.get(this.member);
+    let response = await MemberService.get(this.member);
     this.member = response.data;
+    if (this.$store.state.user.status === 'admin') {
+      response = await OrganisationService.list();
+      this.organisations = response.data;
+      response = await MemberService.list();
+      this.admins = response.data.filter((member) => {
+        return member.status === 'admin';
+      }).map((member) => {
+        member.fullname = member.firstname + " " + member.lastname;
+        return member;
+      })
+    }
     this.resetPasswordUrl = null;
     this.showRegisteredMessage = false;
   },
@@ -216,7 +246,9 @@ export default {
       registered2:
           "Vous pouvez envoyer le lien au membre ou définir le mot de passe maintenant avec lui.",
       linkCopied: "lien copié",
-      status: "Statut"
+      status: "Statut",
+      organisation: "Organisation associée",
+      associatedAdministrator: "Administrateur associé"
     });
     I18n.i18next.addResources("en", "member", {
       title: "Nouveau membre",
@@ -237,7 +269,9 @@ export default {
       registered2:
           "Vous pouvez envoyer le lien au membre ou le changer maintenant avec lui.",
       linkCopied: "lien copié",
-      status: "Statut"
+      status: "Statut",
+      organisation: "Organisation associée",
+      associatedAdministrator: "Administrateur associé"
     });
     return {
       submitLoading: false,
@@ -248,6 +282,8 @@ export default {
       genders: Genders.get(),
       isFormValid: false,
       rules: Rules,
+      organisations: [],
+      admins: [],
       modifySuccess: false,
       resetPasswordUrl: null,
       showRegisteredMessage: false,
