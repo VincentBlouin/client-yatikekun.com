@@ -16,7 +16,8 @@
           <router-link to="/a-propos"
                        class="logo-font blue-title"
                        :class="{
-                          'logo-mobile-font-size': $vuetify.breakpoint.smAndDown,
+                          'logo-sm-font-size': $vuetify.breakpoint.smOnly,
+                          'logo-xs-font-size': $vuetify.breakpoint.xsOnly,
                           'logo-font-size': $vuetify.breakpoint.mdAndUp
                        }"
           >
@@ -501,7 +502,11 @@ export default {
   cursor: pointer;
 }
 
-.logo-mobile-font-size {
+.logo-xs-font-size {
+  font-size: 18px;
+}
+
+.logo-sm-font-size {
   font-size: 23px;
 }
 
