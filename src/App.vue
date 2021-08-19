@@ -13,8 +13,13 @@
           </router-link>
         </v-toolbar-title>
         <v-toolbar-title class="text-h5 pt-2 pb-2">
-          <router-link to="/a-propos" class="logo-font blue-title"
-                       style="font-size: 31px;">
+          <router-link to="/a-propos"
+                       class="logo-font blue-title"
+                       :class="{
+                          'logo-mobile-font-size': $vuetify.breakpoint.smAndDown,
+                          'logo-font-size': $vuetify.breakpoint.mdAndUp
+                       }"
+          >
             PartageHeure.com
           </router-link>
         </v-toolbar-title>
@@ -489,4 +494,11 @@ export default {
   cursor: pointer;
 }
 
+.logo-mobile-font-size {
+  font-size: 25px;
+}
+
+.logo-font-size {
+  font-size: 31px;
+}
 </style>
