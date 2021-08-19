@@ -143,7 +143,7 @@
                 </v-list-item-action>
                 <v-list-item-content>
                   <v-list-item-title>
-                    {{ $t('app:partners') }}
+                    <v-btn text>{{ $t('app:partners') }}</v-btn>
                   </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
@@ -197,6 +197,13 @@
                   </v-btn>
                 </v-list-item-title>
               </v-list-item-content>
+            </v-list-item>
+            <v-list-item to="/vos-offres" v-if="$store.state.user !== null">
+              <v-list-item-action>
+              </v-list-item-action>
+              <v-list-item-title>
+                <v-btn text>{{ $t('app:yourOffers') }}</v-btn>
+              </v-list-item-title>
             </v-list-item>
             <v-list-item to="/offre">
               <v-list-item-action>
@@ -281,7 +288,7 @@
               </v-list-item-action>
               <v-list-item-content>
                 <v-list-item-title>
-                  {{ $t('app:partners') }}
+                  <v-btn text>{{ $t('app:partners') }}</v-btn>
                 </v-list-item-title>
               </v-list-item-content>
             </v-list-item>
