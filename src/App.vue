@@ -495,7 +495,7 @@ export default {
 }
 
 .logo-mobile-font-size {
-  font-size: 25px;
+  font-size: 23px;
 }
 
 .logo-font-size {
