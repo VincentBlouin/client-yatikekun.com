@@ -16,9 +16,9 @@ export default {
             }
         })
     },
-    // create: function (member) {
-    //     return Service.api().post('/member', member);
-    // },
+    create: function (organisation) {
+        return Service.api().post('/organisation', organisation);
+    },
     update: function (organisation) {
         return Service.api().put('/organisation/' + organisation.id, organisation)
     }

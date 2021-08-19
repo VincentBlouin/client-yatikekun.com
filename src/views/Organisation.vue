@@ -5,6 +5,11 @@
         <v-icon class="mr-4">business</v-icon>
         Organisation
       </v-card-title>
+      <v-card-text class="text-left">
+        <router-link to="/organisations">
+          {{$t('organisation:seeAll')}}
+        </router-link>
+      </v-card-text>
       <v-card-text class="text-center pb-0">
         <v-form ref="organisationForm" v-model="isFormValid">
           <v-text-field
@@ -27,7 +32,8 @@
                   color="transparent"
                   v-if="isImageLoading"
               ></v-skeleton-loader>
-              <img :src="organisation.customImageUrl" width="200px" v-else/>
+              <img :src="organisation.customImageUrl" width="200px"
+                   v-if="!isImageLoading && organisation.customImageUrl"/>
             </v-col>
           </v-row>
           <v-file-input
@@ -92,8 +98,12 @@ export default {
     Page: () => import('@/components/Page')
   },
   async mounted() {
-    const response = await OrganisationService.get(this.$route.params.organisationId);
-    this.organisation = response.data;
+    if (this.$route.params.organisationId) {
+      const response = await OrganisationService.get(this.$route.params.organisationId);
+      this.organisation = response.data;
+    } else {
+      this.organisation = {};
+    }
     this.rebuildImageUrl();
     this.isImageLoading = false;
   },
@@ -103,14 +113,18 @@ export default {
       name: "Nom",
       url: "URL",
       image: "Logo",
-      modified: "Organisation modifiée avec succès"
+      modified: "Organisation modifiée avec succès",
+      addOrganisation: "Ajouter l'organisation",
+      seeAll: "Toutes les organisations"
     });
     I18n.i18next.addResources("en", "organisation", {
       title: "Nouvelle Organisation",
       name: "Nom",
       url: "URL",
       image: "Logo",
-      modified: "Organisation modifiée avec succès"
+      modified: "Organisation modifiée avec succès",
+      addOrganisation: "Ajouter l'organisation",
+      seeAll: "Toutes les organisations"
     });
     return {
       submitLoading: false,
@@ -124,6 +138,9 @@ export default {
   },
   methods: {
     rebuildImageUrl: function () {
+      if (this.organisation.customImage === undefined) {
+        return;
+      }
       this.organisation.customImageUrl = Images.getCustomBase64Url(this.organisation.customImage);
     },
     getSelectText: function (item) {
@@ -134,10 +151,9 @@ export default {
         return;
       }
       this.submitLoading = true;
-      this.organisation.AdminUserId = this.$store.state.user.id;
-      this.organisation.locale = "fr";
       await OrganisationService.create(this.organisation);
       this.submitLoading = false;
+      this.$router.push('/organisations');
     },
     modifyOrganisation: async function () {
       this.submitLoading = true;

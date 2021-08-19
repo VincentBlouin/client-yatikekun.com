@@ -51,8 +51,13 @@ const routes = [
         component: () => import('../views/Organisations.vue')
     },
     {
+        path: '/organisation',
+        name: 'OrganisationNew',
+        component: () => import('../views/Organisation.vue')
+    },
+    {
         path: '/organisation/:organisationId',
-        name: 'Organisation',
+        name: 'OrganisationModify',
         component: () => import('../views/Organisation.vue')
     },
     {

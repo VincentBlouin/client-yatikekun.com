@@ -20,9 +20,9 @@
       </v-card-title>
       <v-card-text class="vh-center">
         <v-list class="pt-0">
-          <v-list-item v-for="organisation in organisations" :key="organisation.id" class="text-left"
+          <v-list-item v-for="organisation in organisations" :key="organisation.id" class="text-left pt-3 pb-3"
                        :to="'/organisation/'+organisation.id">
-            <img :src="organisation.customImageUrl" v-if="organisation.customImage" width="55" class="mr-6">
+            <img :src="organisation.customImageUrl" v-if="organisation.customImage" width="100" class="mr-6">
             <v-list-item-content>
               <v-list-item-title class="text-h6 font-weight-regular">
                 {{ organisation.name }}
