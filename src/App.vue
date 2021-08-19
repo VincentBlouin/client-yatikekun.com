@@ -64,7 +64,7 @@
               {{ $t('app:partners') }}
             </span>
           </v-btn>
-          <NotificationsMenu></NotificationsMenu>
+          <NotificationsMenu v-if="$store.state.user !== null"></NotificationsMenu>
           <v-menu
               bottom
               left

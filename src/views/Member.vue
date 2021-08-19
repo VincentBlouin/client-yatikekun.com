@@ -207,11 +207,14 @@ export default {
   },
   async mounted() {
     this.member.uuid = this.$route.params.memberId;
-    if (!this.member.uuid) {
-      return;
+    let response;
+    if (this.member.uuid === undefined) {
+      this.member.AdminUserId = this.$store.state.user.id;
+      this.member.OrganisationId = this.$store.state.user.OrganisationId;
+    } else {
+      response = await MemberService.get(this.member);
+      this.member = response.data;
     }
-    let response = await MemberService.get(this.member);
-    this.member = response.data;
     if (this.$store.state.user.status === 'admin') {
       response = await OrganisationService.list();
       this.organisations = response.data;
@@ -221,7 +224,7 @@ export default {
       }).map((member) => {
         member.fullname = member.firstname + " " + member.lastname;
         return member;
-      })
+      });
     }
     this.resetPasswordUrl = null;
     this.showRegisteredMessage = false;
@@ -311,7 +314,6 @@ export default {
         return;
       }
       this.submitLoading = true;
-      this.member.AdminUserId = this.$store.state.user.id;
       this.member.locale = "fr";
       const response = await MemberService.create(this.member);
       const passwordToken = response.data.passwordToken;
@@ -344,7 +346,7 @@ export default {
   },
   computed: {
     isCreate: function () {
-      return this.member.id === undefined;
+      return this.$route.params.memberId === undefined;
     },
   },
 };
