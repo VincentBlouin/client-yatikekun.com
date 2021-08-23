@@ -2,6 +2,23 @@
   <Page>
     <v-card flat class="">
       <v-card-text class="text-center pb-0">
+        <v-alert
+            border="bottom"
+            colored-border
+            color="primary"
+            type="warning"
+            elevation="2"
+        >
+          {{ $t('member:memberOfHg') }}
+          <div>
+            <v-btn target="_blank"
+                   text
+                   href="https://docs.google.com/forms/d/e/1FAIpQLSf0Z1IH1lYZ8sL-4umROhOXSJ83NIAzIbIAWAlMvGaE7mM7eg/viewform?vc=0&c=0&w=1&flr=0">
+              <v-icon color="primary" left>article</v-icon>
+              {{ $t('member:memberForm') }}
+            </v-btn>
+          </div>
+        </v-alert>
         <v-form ref="memberForm" v-model="isFormValid">
           <v-text-field
               v-model="member.firstname"
@@ -254,7 +271,9 @@ export default {
       linkCopied: "lien copié",
       status: "Statut",
       organisation: "Organisation associée",
-      associatedAdministrator: "Administrateur associé"
+      associatedAdministrator: "Administrateur associé",
+      memberOfHg: "Les membres du PartageHeure doivent être membre de la coopérative Horizons Gaspésiens",
+      memberForm: "Formulaire d'adhésion"
     });
     I18n.i18next.addResources("en", "member", {
       title: "Nouveau membre",
@@ -278,7 +297,9 @@ export default {
       linkCopied: "lien copié",
       status: "Statut",
       organisation: "Organisation associée",
-      associatedAdministrator: "Administrateur associé"
+      associatedAdministrator: "Administrateur associé",
+      memberOfHg: "Les membres du PartageHeure doivent être membre de la coopérative Horizons Gaspésiens",
+      memberForm: "Formulaire d'adhésion"
     });
     return {
       submitLoading: false,
