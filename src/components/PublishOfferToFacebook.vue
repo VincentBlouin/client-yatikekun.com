@@ -4,6 +4,8 @@
         @click="publishToFacebookGroup()"
         color="facebook"
         dark
+        :loading="loading"
+        :disabled="loading"
     >
       <v-icon left dark>facebook</v-icon>
       {{ $t('facebook:publish') }}
@@ -50,8 +52,12 @@ export default {
       reallyPublish: "Vraiment publier votre offre sur le groupe des membres?"
     });
     return {
-      confirmPublishDialog: false
+      confirmPublishDialog: false,
+      loading: false
     }
+  },
+  mounted: function () {
+    this.loading = false;
   },
   created: function () {
     // console.log("created 1")
@@ -85,6 +91,7 @@ export default {
     },
     confirmPublishToFacebookGroup: async function () {
       this.confirmPublishDialog = false;
+      this.loading = true;
       // console.log('facebook publish 1')
       window.FB.getLoginStatus(async (response) => {
         // console.log('facebook publish 2')
@@ -111,6 +118,7 @@ export default {
             }
           });
         }
+        this.loading = false;
       }, {scope: 'publish_actions, user_groups, publish_to_groups'});
       // console.log('facebook publish 6')
     },
