@@ -166,7 +166,7 @@
             type="success"
             class="text-h6"
         >
-          {{$t('offer:success')}}
+          {{ $t('offer:success') }}
         </v-alert>
         <v-card-text>
           <v-row class="mt-4 pt-8 vh-center">
@@ -176,14 +176,16 @@
           </v-row>
         </v-card-text>
         <v-card-actions class="vh-center">
-          <v-btn
-              @click="publishToFacebookGroup()"
-              color="facebook"
-              dark
-          >
-            <v-icon left dark>facebook</v-icon>
-            {{ $t('offer:publish') }}
-          </v-btn>
+          <PublishOfferToFacebook
+              :skipConfirmation="true"
+              @publishedToFacebook="goToOffers()"
+              @errorPublishedToFacebook="goToOffers()"
+              :offerDescription="offer.description"
+              :userSubRegion="$store.state.user.subRegion"
+              :offerId="offer.id"
+              :offerImage="offer.image"
+              :offerCustomImage="offer.customImage"
+          ></PublishOfferToFacebook>
         </v-card-actions>
         <v-card-actions class="vh-center">
           <v-btn
@@ -230,11 +232,9 @@ const STATUS_SAVING_UPLOAD = 1
 const STATUS_SUCCESS_UPLOAD = 2
 const STATUS_FAILED_UPLOAD = 3
 
-const facebookAppId = process.env.VUE_APP_FACEBOOK_APP_ID;
-const facebookGroupId = process.env.VUE_APP_FACEBOOK_GROUP_ID;
-
 export default {
   components: {
+    PublishOfferToFacebook: () => import('@/components/PublishOfferToFacebook'),
     OfferCard: () => import('@/views/OfferCard'),
   },
   async mounted() {
@@ -245,28 +245,6 @@ export default {
     }
     const response = await OfferService.get(this.offer);
     this.offer = Offer.format(response.data, true);
-  },
-  created: function () {
-    // console.log("created 1")
-    window.fbAsyncInit = function () {
-      // console.log("created 2")
-      // console.log("facebook app id " + facebookAppId)
-      window.FB.init({
-        appId: facebookAppId,
-        autoLogAppEvents: true,
-        xfbml: true,
-        version: 'v10.0'
-      });
-    };
-    (function () {
-      // console.log("created 3")
-      let e = document.createElement('script');
-      e.async = true;
-      // console.log("created 4")
-      e.src = document.location.protocol +
-          '//connect.facebook.net/fr_CA/all.js#xfbml=1&version=v10.0';
-      document.getElementById('fb-root').appendChild(e);
-    }());
   },
   data: function () {
     I18n.i18next.addResources("fr", "offer", {
@@ -284,9 +262,8 @@ export default {
       offerModified: "Votre offre a été modifiée",
       experience: "Expérience",
       additionalFees: "Frais additionels",
-      publish: "Publier votre offre sur le groupe des membres",
       removeOffer: "Vraiment effacer cette offre?",
-      success:"Votre offre a été ajoutée, merci !"
+      success: "Votre offre a été ajoutée, merci !"
     });
     I18n.i18next.addResources("en", "offer", {
       title: "Nouvelle offre",
@@ -303,9 +280,8 @@ export default {
       offerModified: "Votre offre a été modifiée",
       experience: "Expérience",
       additionalFees: "Frais additionels",
-      publish: "Publier votre offre sur le groupe des membres",
       removeOffer: "Vraiment effacer cette offre?",
-      success:"Votre offre a été ajoutée, merci !"
+      success: "Votre offre a été ajoutée, merci !"
     });
     /*
       concat is to avoid re-adding uploadImage
@@ -335,6 +311,9 @@ export default {
     }
   },
   methods: {
+    goToOffers: async function () {
+      await this.$router.push("/offres");
+    },
     remove: async function () {
       LoadingFlow.enter();
       await OfferService.remove(this.offer.id);
@@ -354,43 +333,6 @@ export default {
       this.offer.id = response.data.id;
       this.publishToFacebookDialog = true;
       this.submitLoading = false;
-    },
-    publishToFacebookGroup: async function () {
-      // console.log('facebook publish 1')
-      window.FB.getLoginStatus(async (response) => {
-        // console.log('facebook publish 2')
-        // console.log(response.status);
-        // console.log(response.session);
-        if (response.status === 'connected') {
-          // console.log('facebook publish 3')
-          await this.publishToFacebookGroupUsingAccessToken(
-              response.authResponse.accessToken
-          );
-          await this.$router.push("/offres");
-        } else {
-          window.FB.login(async (response) => {
-            if (response.authResponse) {
-              // console.log("facebook login 1");
-              await this.publishToFacebookGroupUsingAccessToken(
-                  response.authResponse.accessToken
-              );
-              await this.$router.push("/offres");
-            } else {
-              // not auth / cancelled the login!
-              // console.log("refused to login 2");
-              await this.$router.push("/offres");
-            }
-          });
-        }
-      }, {scope: 'publish_actions, user_groups, publish_to_groups'});
-      // console.log('facebook publish 6')
-    },
-    publishToFacebookGroupUsingAccessToken: async function (accessToken) {
-      return window.FB.api('/v10.0/' + facebookGroupId + '/photos', 'post', {
-        caption: this.offer.description + " (" + this.$t(this.$store.state.user.subRegion) + ")" + " https://www.partageheure.com/consulter-offre/" + this.offer.id,
-        url: OfferService.getMediumImageUrl(this.offer),
-        accessToken: accessToken
-      });
     },
     modifyOffer: async function () {
       this.submitLoading = true;

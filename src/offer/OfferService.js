@@ -20,8 +20,8 @@ export default {
         }
         return Service.baseUrl() + '/offer/image/' + offer.customImage.fileName
     },
-    getMediumImageUrl: function (offer) {
-        let fileName = offer.image ? offer.image.name + ".jpg" : offer.customImage.fileName;
+    getMediumImageUrl: function (offerImage, offerCustomImage) {
+        let fileName = offerImage ? offerImage.name + ".jpg" : offerCustomImage.fileName;
         return Service.baseUrl() + '/offer/image/' + fileName + '/medium'
     },
     getOfferImageById: async function (offerId) {

@@ -87,6 +87,18 @@
           {{ $t("modify") }}
         </v-btn>
       </v-card-actions>
+      <v-card-actions v-if="isOwner" class="vh-center">
+        <PublishOfferToFacebook
+            :skipConfirmation="false"
+            @publishedToFacebook="successPublishFacebook = true;"
+            @errorPublishedToFacebook="errorPublishFacebook = true;"
+            :offerDescription="offer.description"
+            :userSubRegion="$store.state.user.subRegion"
+            :offerId="offer.id"
+            :offerImage="offer.image"
+            :offerCustomImage="offer.customImage"
+        ></PublishOfferToFacebook>
+      </v-card-actions>
       <v-card-text class="">
         <v-row justify="center" class="h-center">
           <v-col cols="12"
@@ -259,6 +271,48 @@
         </v-sheet>
       </v-bottom-sheet>
     </v-card>
+    <v-snackbar
+        v-model="successPublishFacebook"
+        bottom
+        color="primary"
+        dark
+        :timeout="14000"
+    >
+      <v-icon left color="white">facebook</v-icon>
+      {{ $t("consult:publishToFacebookSuccess") }}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+            color="white"
+            text
+            icon
+            v-bind="attrs"
+            @click="successPublishFacebook = false"
+        >
+          <v-icon>close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <v-snackbar
+        v-model="errorPublishFacebook"
+        bottom
+        outlined
+        color="error"
+        :timeout="14000"
+    >
+      <v-icon left color="error">error</v-icon>
+      {{ $t("consult:publishToFacebookError") }}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+            color="black"
+            text
+            icon
+            v-bind="attrs"
+            @click="errorPublishFacebook = false"
+        >
+          <v-icon>close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 <script>
@@ -273,6 +327,7 @@ export default {
   components: {
     Transaction: () => import("@/components/Transaction"),
     NewTransaction: () => import("@/components/NewTransaction"),
+    PublishOfferToFacebook: () => import('@/components/PublishOfferToFacebook'),
   },
   async mounted() {
     this.offer.UserId = this.$store.state.user.id;
@@ -299,6 +354,8 @@ export default {
       notMentioned: "Pas mentionné",
       billedQuantity: "La quantité de temps facturé est de",
       pendingTransaction: "Transaction en attente",
+      publishToFacebookSuccess: "Votre offre a été publié dans le groupe des membres",
+      publishToFacebookError: "Il y a eu une erreur dans la publication de votre offre dans le groupe facebook"
     });
     I18n.i18next.addResources("en", "consult", {
       contact: "Contacter",
@@ -308,6 +365,8 @@ export default {
       notMentioned: "Pas mentionné",
       billedQuantity: "La quantité de temps facturé est de",
       pendingTransaction: "Transaction en attente",
+      publishToFacebookSuccess: "Votre offre a été publié dans le groupe des membres",
+      publishToFacebookError: "Il y a eu une erreur dans la publication de votre offre dans le groupe facebook"
     });
     /*
       concat is to avoid re-adding uploadImage
@@ -329,6 +388,8 @@ export default {
       isOwner: false,
       pendingTransaction: null,
       pendingTransactionSheet: false,
+      successPublishFacebook: false,
+      errorPublishFacebook: false
     };
   },
   methods: {
