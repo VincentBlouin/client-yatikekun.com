@@ -44,7 +44,7 @@
             <v-card-subtitle>
               {{ $t("newTransaction:durationSubtitle") }}
             </v-card-subtitle>
-            <v-card-text>
+            <v-card-text class="vh-center">
               <v-time-picker
                   format="24hr"
                   :allowed-minutes="allowedMinutes"
