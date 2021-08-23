@@ -31,5 +31,11 @@ export default {
         }
         const val = parseFloat(value);
         return isNaN(val);
+    },
+    noSpace: function (value) {
+        if (!value) {
+            return true;
+        }
+        return value.indexOf(" ") === -1 || I18n.i18next.t('noSpace');
     }
 }

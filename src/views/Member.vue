@@ -27,7 +27,9 @@
               :label="$t('member:facebookId')"
               prepend-icon="facebook"
               required
-              :rules="[]"
+              :rules="[rules.noSpace]"
+              :hint="$t('member:messenger')"
+              persistent-hint
           ></v-text-field>
           <v-text-field
               v-model="member.region"
@@ -236,7 +238,8 @@ export default {
       firstname: "Prénom",
       lastname: "Nom",
       email: "Courriel",
-      facebookId: "Identifiant Facebook",
+      facebookId: "URL de votre profil facebook",
+      messenger: "Pour reçevoir des messages par messenger",
       region: "Région",
       subRegion: "Sous région",
       phone1: "Téléphone 1",
@@ -259,7 +262,8 @@ export default {
       firstname: "Prénom",
       lastname: "Nom",
       email: "Courriel",
-      facebookId: "Identifiant Facebook",
+      facebookId: "URL de votre profil facebook",
+      messenger: "Pour reçevoir des messages par messenger",
       region: "Région",
       subRegion: "Sous région",
       phone1: "Téléphone 1",

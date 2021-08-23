@@ -13,6 +13,19 @@ export default {
         if (isForEdition) {
             return offer;
         }
+        if (offer.User && offer.User.facebookId && offer.User.facebookId.indexOf(" ") === -1) {
+            const facebookId = offer.User.facebookId
+            if (facebookId.indexOf("facebook.com") > -1) {
+                const urlParts = facebookId.split("/");
+                let lastPart = urlParts[urlParts.length - 1];
+                if (lastPart === "") {
+                    lastPart = urlParts[urlParts.length - 2];
+                }
+                offer.User.facebookUsername = lastPart;
+            } else {
+                offer.User.facebookUsername = facebookId;
+            }
+        }
         const linkifyOptions = {
             target: {
                 url: '_blank'

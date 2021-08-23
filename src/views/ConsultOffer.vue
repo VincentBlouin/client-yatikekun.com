@@ -200,7 +200,8 @@
                 </v-list-item-content>
               </v-list-item>
               <v-list-item
-                  :href="'https://m.me/' + offer.User.facebookId"
+                  :href="'https://m.me/' + offer.User.facebookUsername"
+                  :disabled="offer.User.facebookUsername === undefined"
                   target="_blank"
               >
                 <v-list-item-action>
