@@ -17,7 +17,8 @@
         </v-card-title>
         <v-card-actions>
           <v-btn @click="confirmPublishToFacebookGroup()" color="primary">
-            <v-icon left>facebook</v-icon>{{ $t('confirm') }}
+            <v-icon left>facebook</v-icon>
+            {{ $t('confirm') }}
           </v-btn>
           <v-spacer></v-spacer>
           <v-btn text @click="confirmPublishDialog=false">
@@ -38,7 +39,7 @@ const facebookGroupId = process.env.VUE_APP_FACEBOOK_GROUP_ID;
 
 export default {
   name: "PublishOfferToFacebook",
-  props: ['skipConfirmation', 'offerDescription', 'userSubRegion', 'offerImage', 'offerCustomImage'],
+  props: ['skipConfirmation', 'offerDescription', 'userSubRegion', 'offerId', 'offerImage', 'offerCustomImage'],
   data: function () {
     I18n.i18next.addResources("fr", "facebook", {
       publish: "Publier dans le groupe",
