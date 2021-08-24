@@ -122,7 +122,7 @@
             {{ $t('offer:modifyOffer') }}
           </v-btn>
           <v-spacer></v-spacer>
-          <v-btn @click="removeDialog=true" text color="primary">
+          <v-btn @click="removeDialog=true" text color="primary" v-if="!isCreate">
             <v-icon left>delete</v-icon>
             {{ $t('remove') }}
           </v-btn>
