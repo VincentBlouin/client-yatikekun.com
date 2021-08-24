@@ -262,7 +262,7 @@
             </v-list>
           </v-card-text>
           <v-card-actions
-              v-if="offer.User.facebookUsername === undefined || !offer.User.contactByMessenger || !offer.User.contactByEmail || !offer.User.contactByPhone"
+              v-if="!offer.User.contactByMessenger || !offer.User.contactByEmail || !offer.User.contactByPhone"
               class="subtitle-1 grey--text"
           >
             {{ $t('consult:preferNoContact') }}
