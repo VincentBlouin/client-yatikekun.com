@@ -32,22 +32,39 @@
               required
               :rules="[rules.required]"
           ></v-text-field>
-          <v-text-field
-              v-model="member.email"
-              :label="$t('member:email')"
-              prepend-icon="email"
-              required
-              :rules="[rules.required, rules.email]"
-          ></v-text-field>
-          <v-text-field
-              v-model="member.facebookId"
-              :label="$t('member:facebookId')"
-              prepend-icon="facebook"
-              required
-              :rules="[rules.noSpace]"
-              :hint="$t('member:messenger')"
-              persistent-hint
-          ></v-text-field>
+          <v-card>
+            <v-card-text>
+              <v-text-field
+                  v-model="member.email"
+                  :label="$t('member:email')"
+                  prepend-icon="email"
+                  required
+                  :rules="[rules.required, rules.email]"
+              ></v-text-field>
+              <v-checkbox
+                  v-model="member.contactByEmail"
+                  :label="$t('member:contactByEmail')"
+              ></v-checkbox>
+            </v-card-text>
+          </v-card>
+          <v-card class="mt-4 mb-4">
+            <v-card-text>
+              <v-text-field
+                  v-model="member.facebookId"
+                  :label="$t('member:facebookId')"
+                  prepend-icon="facebook"
+                  required
+                  :rules="[rules.noSpace]"
+                  :hint="$t('member:messenger')"
+                  persistent-hint
+              ></v-text-field>
+              <v-checkbox
+                  v-model="member.contactByMessenger"
+                  :label="$t('member:contactByMessenger')"
+              ></v-checkbox>
+            </v-card-text>
+          </v-card>
+
           <v-text-field
               v-model="member.region"
               :label="$t('member:region')"
@@ -68,18 +85,26 @@
               {{ $t(item.value) }}
             </template>
           </v-select>
-          <v-text-field
-              v-model="member.phone1"
-              :label="$t('member:phone1')"
-              prepend-icon="phone"
-              required
-              :rules="[rules.required]"
-          ></v-text-field>
-          <v-text-field
-              v-model="member.phone2"
-              :label="$t('member:phone2')"
-              prepend-icon="phone"
-          ></v-text-field>
+          <v-card class="mt-4 mb-4">
+            <v-card-text>
+              <v-text-field
+                  v-model="member.phone1"
+                  :label="$t('member:phone1')"
+                  prepend-icon="phone"
+                  required
+                  :rules="[rules.required]"
+              ></v-text-field>
+              <v-text-field
+                  v-model="member.phone2"
+                  :label="$t('member:phone2')"
+                  prepend-icon="phone"
+              ></v-text-field>
+              <v-checkbox
+                  v-model="member.contactByPhone"
+                  :label="$t('member:contactByPhone')"
+              ></v-checkbox>
+            </v-card-text>
+          </v-card>
           <v-select
               :items="genders"
               v-model="member.gender"
@@ -234,6 +259,15 @@ export default {
       response = await MemberService.get(this.member);
       this.member = response.data;
     }
+    if (this.member.contactByEmail === undefined) {
+      this.member.contactByEmail = true;
+    }
+    if (this.member.contactByMessenger === undefined) {
+      this.member.contactByMessenger = true;
+    }
+    if (this.member.contactByPhone === undefined) {
+      this.member.contactByPhone = true;
+    }
     if (this.$store.state.user.status === 'admin') {
       response = await OrganisationService.list();
       this.organisations = response.data;
@@ -256,7 +290,7 @@ export default {
       lastname: "Nom",
       email: "Courriel",
       facebookId: "URL de votre profil facebook",
-      messenger: "Pour reçevoir des messages par messenger",
+      messenger: "Pour que les membres du PartageHeure puissent vous communiquer par messenger",
       region: "Région",
       subRegion: "Sous région",
       phone1: "Téléphone 1",
@@ -273,7 +307,10 @@ export default {
       organisation: "Organisation associée",
       associatedAdministrator: "Administrateur associé",
       memberOfHg: "Les membres du PartageHeure doivent être membre de la coopérative Horizons Gaspésiens",
-      memberForm: "Formulaire d'adhésion"
+      memberForm: "Formulaire d'adhésion",
+      contactByEmail: "Accepter que les membres vous contactent par courriel",
+      contactByMessenger: "Accepter que les membres vous contactent par messenger",
+      contactByPhone: "Accepter que les membres vous contactent par téléphone"
     });
     I18n.i18next.addResources("en", "member", {
       title: "Nouveau membre",
@@ -282,7 +319,7 @@ export default {
       lastname: "Nom",
       email: "Courriel",
       facebookId: "URL de votre profil facebook",
-      messenger: "Pour reçevoir des messages par messenger",
+      messenger: "Pour que les membres du PartageHeure puissent vous communiquer par messenger",
       region: "Région",
       subRegion: "Sous région",
       phone1: "Téléphone 1",
@@ -299,7 +336,10 @@ export default {
       organisation: "Organisation associée",
       associatedAdministrator: "Administrateur associé",
       memberOfHg: "Les membres du PartageHeure doivent être membre de la coopérative Horizons Gaspésiens",
-      memberForm: "Formulaire d'adhésion"
+      memberForm: "Formulaire d'adhésion",
+      contactByEmail: "Accepter que les membres vous contactent par courriel",
+      contactByMessenger: "Accepter que les membres vous contactent par messenger",
+      contactByPhone: "Accepter que les membres vous contactent par téléphone"
     });
     return {
       submitLoading: false,

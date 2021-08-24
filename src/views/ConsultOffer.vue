@@ -213,38 +213,60 @@
               </v-list-item>
               <v-list-item
                   :href="'https://m.me/' + offer.User.facebookUsername"
-                  :disabled="offer.User.facebookUsername === undefined"
+                  :disabled="offer.User.facebookUsername === undefined || !offer.User.contactByMessenger"
                   target="_blank"
               >
                 <v-list-item-action>
                   <v-icon>messenger</v-icon>
                 </v-list-item-action>
                 <v-list-item-content>
-                  <v-list-item-title> Messenger</v-list-item-title>
+                  <v-list-item-title>
+                    <span v-if="!offer.User.contactByMessenger">*</span>
+                    Messenger
+                  </v-list-item-title>
+                  <v-list-item-subtitle v-if="offer.User.facebookUsername">
+                     {{offer.User.facebookUsername}}
+                  </v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item :href="'mailto:' + offer.User.email">
+              <v-list-item :href="'mailto:' + offer.User.email" :disabled="!offer.User.contactByEmail">
                 <v-list-item-action>
                   <v-icon>email</v-icon>
                 </v-list-item-action>
                 <v-list-item-content>
                   <v-list-item-title>
-                    {{ offer.User.email }}
+                    <span v-if="offer.User.contactByEmail">
+                      {{ offer.User.email }}
+                    </span>
+                    <span v-else>
+                      * {{ $t('consult:email') }}
+                    </span>
                   </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item :href="'phone:' + offer.User.phone1">
+              <v-list-item :href="'phone:' + offer.User.phone1" :disabled="!offer.User.contactByPhone">
                 <v-list-item-action>
                   <v-icon>phone</v-icon>
                 </v-list-item-action>
                 <v-list-item-content>
                   <v-list-item-title>
-                    {{ offer.User.phone1 }}
+                    <span v-if="offer.User.contactByPhone">
+                      {{ offer.User.phone1 }}
+                    </span>
+                    <span v-else>
+                      * {{ $t('consult:phone') }}
+                    </span>
                   </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
           </v-card-text>
+          <v-card-actions
+              v-if="offer.User.facebookUsername === undefined || !offer.User.contactByMessenger || !offer.User.contactByEmail || !offer.User.contactByPhone"
+              class="subtitle-1 grey--text"
+          >
+            {{ $t('consult:preferNoContact') }}
+          </v-card-actions>
         </v-card>
       </v-dialog>
       <NewTransaction :offerId="offer.id" :giverInit="isOwner ? $store.state.user : offer.User"
@@ -355,7 +377,10 @@ export default {
       billedQuantity: "La quantité de temps facturé est de",
       pendingTransaction: "Transaction en attente",
       publishToFacebookSuccess: "Votre offre a été publié dans le groupe des membres",
-      publishToFacebookError: "Il y a eu une erreur dans la publication de votre offre dans le groupe facebook"
+      publishToFacebookError: "Il y a eu une erreur dans la publication de votre offre dans le groupe facebook",
+      email: "Courriel",
+      phone: "Téléphone",
+      preferNoContact: "* Préfère ne pas être contacter par ce moyen de communication"
     });
     I18n.i18next.addResources("en", "consult", {
       contact: "Contacter",
@@ -366,7 +391,10 @@ export default {
       billedQuantity: "La quantité de temps facturé est de",
       pendingTransaction: "Transaction en attente",
       publishToFacebookSuccess: "Votre offre a été publié dans le groupe des membres",
-      publishToFacebookError: "Il y a eu une erreur dans la publication de votre offre dans le groupe facebook"
+      publishToFacebookError: "Il y a eu une erreur dans la publication de votre offre dans le groupe facebook",
+      email: "Courriel",
+      phone: "Téléphone",
+      preferNoContact: "* Préfère ne pas être contacter par ce moyen de communication"
     });
     /*
       concat is to avoid re-adding uploadImage
