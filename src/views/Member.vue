@@ -44,6 +44,7 @@
               <v-checkbox
                   v-model="member.contactByEmail"
                   :label="$t('member:contactByEmail')"
+                  @change="reviewPreferredCommunication()"
               ></v-checkbox>
             </v-card-text>
           </v-card>
@@ -61,6 +62,7 @@
               <v-checkbox
                   v-model="member.contactByMessenger"
                   :label="$t('member:contactByMessenger')"
+                  @change="reviewPreferredCommunication()"
               ></v-checkbox>
             </v-card-text>
           </v-card>
@@ -102,9 +104,50 @@
               <v-checkbox
                   v-model="member.contactByPhone"
                   :label="$t('member:contactByPhone')"
+                  :hint="$t('member:contactByPhoneHint')"
+                  persistent-hint
+                  @change="reviewPreferredCommunication()"
               ></v-checkbox>
             </v-card-text>
           </v-card>
+          <v-card class="mt-4 mb-4">
+            <v-card-subtitle class="text-left">
+              {{ $t('member:communicationPreference') }}
+            </v-card-subtitle>
+            <v-card-text>
+              <v-spacer></v-spacer>
+              <v-list max-width="275">
+                <v-list-item v-for="(communicationTool, index) in preferredCommunication"
+                             :key="communicationTool.value" :disabled="communicationTool.index === -1">
+                  <v-list-item-action>
+                    <v-icon :disabled="index === 0 || communicationTool.index === -1"
+                            @click="moveCommunicationUp(communicationTool.value, communicationTool.index)">
+                      arrow_circle_up
+                    </v-icon>
+                  </v-list-item-action>
+                  <v-list-item-title class="text-left">
+                    <v-icon left :disabled="communicationTool.index === -1">
+                      {{ communicationIcon[communicationTool.value] }}
+                    </v-icon>
+                    {{ $t(communicationTool.value) }}
+                  </v-list-item-title>
+                  <v-list-item-action>
+                    <v-icon
+                        :disabled="index === preferredCommunication.length - 1 || communicationTool.index === -1 || preferredCommunication[index + 1].index === -1"
+                        @click="moveCommunicationDown(communicationTool.value, communicationTool.index)">
+                      arrow_circle_down
+                    </v-icon>
+                  </v-list-item-action>
+                </v-list-item>
+              </v-list>
+              <v-spacer></v-spacer>
+            </v-card-text>
+          </v-card>
+          <v-text-field
+              v-model="member.pronoun"
+              :label="$t('member:pronoun')"
+              :hint="$t('member:pronounHint')"
+          ></v-text-field>
           <v-select
               :items="genders"
               v-model="member.gender"
@@ -245,6 +288,7 @@ import Genders from "@/Genders";
 import Rules from "@/Rules";
 import OrganisationService from "@/service/OrganisationService";
 
+const communicationModes = ['Messenger', 'Email', 'Phone'];
 export default {
   components: {
     Page: () => import('@/components/Page')
@@ -268,6 +312,7 @@ export default {
     if (this.member.contactByPhone === undefined) {
       this.member.contactByPhone = true;
     }
+    this.reviewPreferredCommunication();
     if (this.$store.state.user.status === 'admin') {
       response = await OrganisationService.list();
       this.organisations = response.data;
@@ -296,6 +341,8 @@ export default {
       phone1: "Téléphone 1",
       phone2: "Téléphone 2",
       gender: "Genre",
+      pronoun: "Pronom utilisé",
+      pronounHint: "il, elle, iel par exemple",
       address: "Adresse",
       modified: "Les informations ont été enregistrées",
       registered:
@@ -310,7 +357,9 @@ export default {
       memberForm: "Formulaire d'adhésion",
       contactByEmail: "Accepter que les membres vous contactent par courriel",
       contactByMessenger: "Accepter que les membres vous contactent par messenger",
-      contactByPhone: "Accepter que les membres vous contactent par téléphone"
+      contactByPhone: "Accepter que les membres vous contactent par téléphone",
+      contactByPhoneHint: "Pensez à accepter pour que les membres qui n'ont pas internet puissent vous contacter",
+      communicationPreference: "Moyen de communication préféré"
     });
     I18n.i18next.addResources("en", "member", {
       title: "Nouveau membre",
@@ -325,6 +374,8 @@ export default {
       phone1: "Téléphone 1",
       phone2: "Téléphone 2",
       gender: "Genre",
+      pronoun: "Pronom utilisé",
+      pronounHint: "exemple: il, elle, iel",
       address: "Adresse",
       modified: "Les informations ont été enregistrées",
       registered:
@@ -339,7 +390,8 @@ export default {
       memberForm: "Formulaire d'adhésion",
       contactByEmail: "Accepter que les membres vous contactent par courriel",
       contactByMessenger: "Accepter que les membres vous contactent par messenger",
-      contactByPhone: "Accepter que les membres vous contactent par téléphone"
+      contactByPhone: "Accepter que les membres vous contactent par téléphone",
+      communicationPreference: "Moyen de communication préféré"
     });
     return {
       submitLoading: false,
@@ -367,10 +419,71 @@ export default {
         {
           value: "disabled"
         }
-      ]
+      ],
+      communicationIcon: {
+        'Email': 'email',
+        'Phone': 'phone',
+        'Messenger': 'messenger'
+      },
+      preferredCommunication: {}
     };
   },
   methods: {
+    moveCommunicationDown: function (communicationTool, communicationIndex) {
+      this.member.preferredCommunication[communicationTool] = communicationIndex + 1;
+      communicationModes.filter((otherCommunicationTool) => {
+        return otherCommunicationTool !== communicationTool;
+      }).forEach((otherCommunicationTool) => {
+        if (this.member.preferredCommunication[otherCommunicationTool] === communicationIndex + 1) {
+          this.member.preferredCommunication[otherCommunicationTool] = communicationIndex;
+        }
+      })
+      this.reviewPreferredCommunication();
+    },
+    moveCommunicationUp: function (communicationTool, communicationIndex) {
+      this.member.preferredCommunication[communicationTool] = communicationIndex - 1;
+      communicationModes.filter((otherCommunicationTool) => {
+        return otherCommunicationTool !== communicationTool;
+      }).forEach((otherCommunicationTool) => {
+        if (this.member.preferredCommunication[otherCommunicationTool] === communicationIndex - 1) {
+          this.member.preferredCommunication[otherCommunicationTool] = communicationIndex;
+        }
+      })
+      this.reviewPreferredCommunication();
+    },
+    reviewPreferredCommunication: function () {
+      if (this.member.preferredCommunication === undefined) {
+        this.member.preferredCommunication = {};
+      }
+      let lastIndex = -1;
+      communicationModes.forEach((communicationMode) => {
+        if (this.member['contactBy' + communicationMode] === false) {
+          this.member.preferredCommunication[communicationMode] = -1;
+        } else if (this.member.preferredCommunication[communicationMode] === undefined || this.member.preferredCommunication[communicationMode] === -1) {
+          this.member.preferredCommunication[communicationMode] = lastIndex + 1;
+        }
+        if (this.member.preferredCommunication[communicationMode] > lastIndex) {
+          lastIndex = this.member.preferredCommunication[communicationMode];
+        }
+        // alert(communicationMode + " " + this.member.preferredCommunication[communicationMode])
+      });
+      this.preferredCommunication = Object.keys(this.member.preferredCommunication).sort((a, b) => {
+        const aIndex = this.member.preferredCommunication[a];
+        const bIndex = this.member.preferredCommunication[b];
+        if (aIndex === -1) {
+          return bIndex > aIndex ? 1 : 0;
+        }
+        if (bIndex === -1) {
+          return aIndex > bIndex ? -1 : 0;
+        }
+        return aIndex - bIndex;
+      }).map((key) => {
+        return {
+          value: key,
+          index: this.member.preferredCommunication[key]
+        }
+      })
+    },
     getSelectText: function (item) {
       return this.$t(item.value);
     },
@@ -412,9 +525,9 @@ export default {
   computed: {
     isCreate: function () {
       return this.$route.params.memberId === undefined;
-    },
-  },
-};
+    }
+  }
+}
 </script>
 <style>
 </style>

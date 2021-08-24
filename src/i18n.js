@@ -43,6 +43,9 @@ export default {
             resources: {
                 en: {
                     translation: {
+                        Email: "Email",
+                        Phone: "Phone",
+                        Messenger: "Messenger",
                         nones: "None",
                         member: "Membre",
                         admin: "Administrateur",
@@ -96,6 +99,9 @@ export default {
                 },
                 fr: {
                     translation: {
+                        Email: "Courriel",
+                        Phone: "Téléphone",
+                        Messenger: "Messenger",
                         nones: "Aucunes",
                         member: "Membre",
                         admin: "Administrateur",

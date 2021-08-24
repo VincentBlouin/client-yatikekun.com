@@ -211,6 +211,24 @@
                   </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
+              <v-list-item>
+                <v-list-item-content>
+                  <span>
+                    <strong>
+                      {{ $t('consult:pronoun') }}
+                    </strong>
+                    {{ offer.User.pronoun }}
+                  </span>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-content>
+                  <strong>
+                    {{ $t('consult:gender') }}
+                  </strong>
+                  {{ $t(offer.User.gender) }}
+                </v-list-item-content>
+              </v-list-item>
               <v-list-item
                   :href="'https://m.me/' + offer.User.facebookUsername"
                   :disabled="offer.User.facebookUsername === undefined || !offer.User.contactByMessenger"
@@ -225,7 +243,7 @@
                     Messenger
                   </v-list-item-title>
                   <v-list-item-subtitle v-if="offer.User.facebookUsername">
-                     {{offer.User.facebookUsername}}
+                    {{ offer.User.facebookUsername }}
                   </v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
@@ -380,7 +398,9 @@ export default {
       publishToFacebookError: "Il y a eu une erreur dans la publication de votre offre dans le groupe facebook",
       email: "Courriel",
       phone: "Téléphone",
-      preferNoContact: "* Préfère ne pas être contacter par ce moyen de communication"
+      preferNoContact: "* Préfère ne pas être contacter par ce moyen de communication",
+      pronoun: "Pronom",
+      gender: "Genre"
     });
     I18n.i18next.addResources("en", "consult", {
       contact: "Contacter",
@@ -394,7 +414,9 @@ export default {
       publishToFacebookError: "Il y a eu une erreur dans la publication de votre offre dans le groupe facebook",
       email: "Courriel",
       phone: "Téléphone",
-      preferNoContact: "* Préfère ne pas être contacter par ce moyen de communication"
+      preferNoContact: "* Préfère ne pas être contacter par ce moyen de communication",
+      pronoun: "Pronom",
+      gender: "Genre"
     });
     /*
       concat is to avoid re-adding uploadImage
