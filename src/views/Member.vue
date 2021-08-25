@@ -452,7 +452,7 @@ export default {
       this.reviewPreferredCommunication();
     },
     reviewPreferredCommunication: function () {
-      if (this.member.preferredCommunication === undefined) {
+      if (this.member.preferredCommunication === undefined || this.member.preferredCommunication === null) {
         this.member.preferredCommunication = {};
       }
       let lastIndex = -1;
