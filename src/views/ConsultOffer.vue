@@ -198,7 +198,7 @@
               <v-icon>close</v-icon>
             </v-btn>
           </v-card-title>
-          <v-card-text class="text-body-1 vh-center">
+          <v-card-text class="text-body-1 vh-center mb-0 pb-0">
             <v-list class="text-left">
               <v-list-item class="font-weight-bold text-h5">
                 <v-list-item-action>
@@ -211,71 +211,52 @@
                   </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item>
-                <v-list-item-content>
-                  <span>
-                    <strong>
-                      {{ $t('consult:pronoun') }}
-                    </strong>
-                    {{ offer.User.pronoun }}
-                  </span>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-content>
-                  <strong>
-                    {{ $t('consult:gender') }}
-                  </strong>
-                  {{ $t(offer.User.gender) }}
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item
-                  :href="'https://m.me/' + offer.User.facebookUsername"
-                  :disabled="offer.User.facebookUsername === undefined || !offer.User.contactByMessenger"
-                  target="_blank"
+            </v-list>
+          </v-card-text>
+          <v-card>
+          <v-card-text class="body-1 pb-0">
+            <strong>
+              {{ $t('consult:pronoun') }}
+            </strong>
+          </v-card-text>
+          <v-card-text class="body-1 pb-0">
+            <em>
+              {{ offer.User.pronoun }}
+            </em>
+          </v-card-text>
+          <v-card-text class="body-1 pb-0">
+            <strong>
+              {{ $t('consult:gender') }}
+            </strong>
+          </v-card-text>
+          <v-card-text class="body-1">
+            {{ $t(offer.User.gender) }}
+          </v-card-text>
+          </v-card>
+          <v-card-text class="vh-center">
+            <v-list class="vh-center">
+              <v-subheader class="body-1 mb-4">
+                Moyen de communiquer en ordre de préférence
+              </v-subheader>
+              <v-list-item v-for="(communicationTool) in preferredCommunication"
+                           :key="communicationTool.value" :href="communicationToolValues[communicationTool.value].href"
+                           target="_blank"
+                           :disabled="!communicationToolValues[communicationTool.value].shouldDisplay"
+                           class="text-center"
               >
                 <v-list-item-action>
-                  <v-icon>messenger</v-icon>
+                  <v-icon>
+                    {{ communicationIcon[communicationTool.value] }}
+                  </v-icon>
                 </v-list-item-action>
-                <v-list-item-content>
-                  <v-list-item-title>
-                    <span v-if="!offer.User.contactByMessenger">*</span>
-                    Messenger
-                  </v-list-item-title>
-                  <v-list-item-subtitle v-if="offer.User.facebookUsername">
-                    {{ offer.User.facebookUsername }}
-                  </v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item :href="'mailto:' + offer.User.email" :disabled="!offer.User.contactByEmail">
-                <v-list-item-action>
-                  <v-icon>email</v-icon>
-                </v-list-item-action>
-                <v-list-item-content>
-                  <v-list-item-title>
-                    <span v-if="offer.User.contactByEmail">
-                      {{ offer.User.email }}
-                    </span>
-                    <span v-else>
-                      * {{ $t('consult:email') }}
-                    </span>
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item :href="'phone:' + offer.User.phone1" :disabled="!offer.User.contactByPhone">
-                <v-list-item-action>
-                  <v-icon>phone</v-icon>
-                </v-list-item-action>
-                <v-list-item-content>
-                  <v-list-item-title>
-                    <span v-if="offer.User.contactByPhone">
-                      {{ offer.User.phone1 }}
-                    </span>
-                    <span v-else>
-                      * {{ $t('consult:phone') }}
-                    </span>
-                  </v-list-item-title>
-                </v-list-item-content>
+                <v-list-item-title class="text-left">
+                  <span v-if="communicationToolValues[communicationTool.value].shouldDisplay">
+                    {{ communicationToolValues[communicationTool.value].value }}
+                  </span>
+                  <span v-else>
+                    * {{ communicationToolValues[communicationTool.value].noDisplayText }}
+                  </span>
+                </v-list-item-title>
               </v-list-item>
             </v-list>
           </v-card-text>
@@ -362,6 +343,7 @@ import OfferService from "@/offer/OfferService";
 import Rules from "@/Rules";
 import Offer from "@/offer/Offer";
 import TransactionService from "@/service/TransactionService";
+import PreferredCommunication from "@/PreferredCommunication";
 
 export default {
   components: {
@@ -375,6 +357,27 @@ export default {
     this.isLoading = true;
     const response = await OfferService.get(this.offer);
     this.offer = Offer.format(response.data);
+    this.preferredCommunication = PreferredCommunication.reviewForMember(this.offer.User);
+    this.communicationToolValues = {
+      Email: {
+        shouldDisplay: this.shouldDisplayValueOfCommunicationTool("Email"),
+        href: 'mailto:' + this.offer.User.email,
+        value: this.offer.User.email,
+        noDisplayText: this.$t('consult:email')
+      },
+      Phone: {
+        shouldDisplay: this.shouldDisplayValueOfCommunicationTool("Phone"),
+        href: 'phone:' + this.offer.User.phone1,
+        value: this.offer.User.phone1,
+        noDisplayText: this.$t('consult:phone')
+      },
+      Messenger: {
+        shouldDisplay: this.shouldDisplayValueOfCommunicationTool("Messenger") && this.offer.User.facebookUsername !== undefined,
+        href: 'https://m.me/' + this.offer.User.facebookUsername,
+        value: "Messenger",
+        noDisplayText: "Messenger"
+      }
+    }
     this.isLoading = false;
     this.pendingTransaction = await TransactionService.getPendingForOfferAndUserId(
         this.offer.id,
@@ -399,7 +402,7 @@ export default {
       email: "Courriel",
       phone: "Téléphone",
       preferNoContact: "* Préfère ne pas être contacter par ce moyen de communication",
-      pronoun: "Pronom",
+      pronoun: "Utilisez le pronom",
       gender: "Genre"
     });
     I18n.i18next.addResources("en", "consult", {
@@ -415,7 +418,7 @@ export default {
       email: "Courriel",
       phone: "Téléphone",
       preferNoContact: "* Préfère ne pas être contacter par ce moyen de communication",
-      pronoun: "Pronom",
+      pronoun: "Utilisez le pronom",
       gender: "Genre"
     });
     /*
@@ -439,10 +442,17 @@ export default {
       pendingTransaction: null,
       pendingTransactionSheet: false,
       successPublishFacebook: false,
-      errorPublishFacebook: false
+      errorPublishFacebook: false,
+      communicationIcon: PreferredCommunication.getCommunicationIcons(),
+      preferredCommunication: {},
+      communicationToolValues: {}
     };
   },
   methods: {
+    shouldDisplayValueOfCommunicationTool: function (communicationToolValue) {
+      const preferenceIndex = this.offer.User.preferredCommunication[communicationToolValue];
+      return preferenceIndex !== -1 && this.offer.User['contactBy' + communicationToolValue] === true;
+    },
     getCustomImageUrl: function (customImage) {
       return Images.getCustomBase64Url(customImage);
     },

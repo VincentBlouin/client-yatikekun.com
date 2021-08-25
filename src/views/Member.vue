@@ -287,6 +287,7 @@ import Regions from "@/Regions";
 import Genders from "@/Genders";
 import Rules from "@/Rules";
 import OrganisationService from "@/service/OrganisationService";
+import PreferredCommunication from "@/PreferredCommunication";
 
 const communicationModes = ['Messenger', 'Email', 'Phone'];
 export default {
@@ -420,11 +421,7 @@ export default {
           value: "disabled"
         }
       ],
-      communicationIcon: {
-        'Email': 'email',
-        'Phone': 'phone',
-        'Messenger': 'messenger'
-      },
+      communicationIcon: PreferredCommunication.getCommunicationIcons(),
       preferredCommunication: {}
     };
   },
@@ -452,37 +449,7 @@ export default {
       this.reviewPreferredCommunication();
     },
     reviewPreferredCommunication: function () {
-      if (this.member.preferredCommunication === undefined || this.member.preferredCommunication === null) {
-        this.member.preferredCommunication = {};
-      }
-      let lastIndex = -1;
-      communicationModes.forEach((communicationMode) => {
-        if (this.member['contactBy' + communicationMode] === false) {
-          this.member.preferredCommunication[communicationMode] = -1;
-        } else if (this.member.preferredCommunication[communicationMode] === undefined || this.member.preferredCommunication[communicationMode] === -1) {
-          this.member.preferredCommunication[communicationMode] = lastIndex + 1;
-        }
-        if (this.member.preferredCommunication[communicationMode] > lastIndex) {
-          lastIndex = this.member.preferredCommunication[communicationMode];
-        }
-        // alert(communicationMode + " " + this.member.preferredCommunication[communicationMode])
-      });
-      this.preferredCommunication = Object.keys(this.member.preferredCommunication).sort((a, b) => {
-        const aIndex = this.member.preferredCommunication[a];
-        const bIndex = this.member.preferredCommunication[b];
-        if (aIndex === -1) {
-          return bIndex > aIndex ? 1 : 0;
-        }
-        if (bIndex === -1) {
-          return aIndex > bIndex ? -1 : 0;
-        }
-        return aIndex - bIndex;
-      }).map((key) => {
-        return {
-          value: key,
-          index: this.member.preferredCommunication[key]
-        }
-      })
+      this.preferredCommunication = PreferredCommunication.reviewForMember(this.member);
     },
     getSelectText: function (item) {
       return this.$t(item.value);
