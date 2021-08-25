@@ -190,7 +190,7 @@
           </v-col>
         </v-row>
       </v-card-text>
-      <v-dialog v-model="contactDialog" v-if="contactDialog" width="400">
+      <v-dialog v-model="contactDialog" v-if="contactDialog" width="450">
         <v-card>
           <v-card-title>
             <v-spacer></v-spacer>
@@ -214,29 +214,29 @@
             </v-list>
           </v-card-text>
           <v-card>
-          <v-card-text class="body-1 pb-0">
-            <strong>
-              {{ $t('consult:pronoun') }}
-            </strong>
-          </v-card-text>
-          <v-card-text class="body-1 pb-0">
-            <em>
-              {{ offer.User.pronoun }}
-            </em>
-          </v-card-text>
-          <v-card-text class="body-1 pb-0">
-            <strong>
-              {{ $t('consult:gender') }}
-            </strong>
-          </v-card-text>
-          <v-card-text class="body-1">
-            {{ $t(offer.User.gender) }}
-          </v-card-text>
+            <v-card-text class="body-1 pb-0" v-if="offer.User.pronoun !== null">
+              <strong>
+                {{ $t('consult:pronoun') }}
+              </strong>
+            </v-card-text>
+            <v-card-text class="body-1 pb-0" v-if="offer.User.pronoun !== null">
+              <em>
+                {{ offer.User.pronoun }}
+              </em>
+            </v-card-text>
+            <v-card-text class="body-1 pb-0">
+              <strong>
+                {{ $t('consult:gender') }}
+              </strong>
+            </v-card-text>
+            <v-card-text class="body-1">
+              {{ $t(offer.User.gender) }}
+            </v-card-text>
           </v-card>
           <v-card-text class="vh-center">
             <v-list class="vh-center">
               <v-subheader class="body-1 mb-4">
-                Moyen de communiquer en ordre de préférence
+                {{ $t('consult:preferenceOfCommunication') }}
               </v-subheader>
               <v-list-item v-for="(communicationTool) in preferredCommunication"
                            :key="communicationTool.value" :href="communicationToolValues[communicationTool.value].href"
@@ -262,7 +262,7 @@
           </v-card-text>
           <v-card-actions
               v-if="!offer.User.contactByMessenger || !offer.User.contactByEmail || !offer.User.contactByPhone"
-              class="subtitle-1 grey--text"
+              class="subtitle-1 grey--text font-italic"
           >
             {{ $t('consult:preferNoContact') }}
           </v-card-actions>
@@ -401,9 +401,10 @@ export default {
       publishToFacebookError: "Il y a eu une erreur dans la publication de votre offre dans le groupe facebook",
       email: "Courriel",
       phone: "Téléphone",
-      preferNoContact: "* Préfère ne pas être contacter par ce moyen de communication",
+      preferNoContact: "* Préfère ne pas être contacté par ce moyen de communication",
       pronoun: "Utilisez le pronom",
-      gender: "Genre"
+      gender: "Genre",
+      preferenceOfCommunication: "Moyen de communiquer en ordre de préférence"
     });
     I18n.i18next.addResources("en", "consult", {
       contact: "Contacter",
@@ -417,9 +418,10 @@ export default {
       publishToFacebookError: "Il y a eu une erreur dans la publication de votre offre dans le groupe facebook",
       email: "Courriel",
       phone: "Téléphone",
-      preferNoContact: "* Préfère ne pas être contacter par ce moyen de communication",
+      preferNoContact: "* Préfère ne pas être contacté par ce moyen de communication",
       pronoun: "Utilisez le pronom",
-      gender: "Genre"
+      gender: "Genre",
+      preferenceOfCommunication: "Moyen de communiquer en ordre de préférence"
     });
     /*
       concat is to avoid re-adding uploadImage
