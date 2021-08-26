@@ -234,7 +234,7 @@
             </v-card-text>
           </v-card>
           <v-card-text class="vh-center">
-            <v-list class="vh-center">
+            <v-list class="">
               <v-subheader class="body-1 mb-4">
                 {{ $t('consult:preferenceOfCommunication') }}
               </v-subheader>
