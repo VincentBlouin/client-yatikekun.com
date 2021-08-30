@@ -66,16 +66,15 @@
         >
           <v-row v-if="$vuetify.breakpoint.smAndDown">
             <v-col cols="12" class="pa-0 pb-0">
-              <v-icon>attach_money</v-icon>
+              <v-icon>schedule</v-icon>
             </v-col>
             <v-col cols="12" class="pa-0 pt-1">
               {{ $t("consult:transaction") }}
             </v-col>
           </v-row>
-          <v-icon class="mr-2" v-if="$vuetify.breakpoint.mdAndUp"
-          >attach_money
-          </v-icon
-          >
+          <v-icon class="mr-2" v-if="$vuetify.breakpoint.mdAndUp">
+            schedule
+          </v-icon>
           <span v-if="$vuetify.breakpoint.mdAndUp">{{
               $t("consult:transaction")
             }}</span>

@@ -35,7 +35,7 @@
             </span>
           </v-btn>
           <v-btn text v-if="$store.state.user !== null" to="/transactions">
-            <v-icon left color="blueTitle">attach_money</v-icon>
+            <v-icon left color="blueTitle">schedule</v-icon>
             <span class="blue-title">
               {{ $t('app:yourTransactions') }}
             </span>
