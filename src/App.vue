@@ -206,7 +206,7 @@
                 <v-btn text>{{ $t('app:yourOffers') }}</v-btn>
               </v-list-item-title>
             </v-list-item>
-            <v-list-item to="/offre">
+            <v-list-item to="/offre" v-if="$store.state.user !== null">
               <v-list-item-action>
                 <v-btn
                     color="primary"
