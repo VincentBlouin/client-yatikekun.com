@@ -103,6 +103,9 @@
                 rows="2"
                 :placeholder="$t('offer:additionalFees')"
                 :rules="[rules.max255Char]"
+                :hint="$t('offer:additionalFeesHint')"
+                persistent-hint
+                class=""
             ></v-textarea>
           </v-form>
         </v-card-text>
@@ -262,6 +265,7 @@ export default {
       offerModified: "Votre offre a été modifiée",
       experience: "Expérience",
       additionalFees: "Frais additionels",
+      additionalFeesHint: "Vous pouvez indiquer que vous chargez des frais de déplacement. Nous suggérons 30 sous du kilomètre. Un autre exemple est de demander de fournir la nourriture pour un cours de cuisine etc",
       removeOffer: "Vraiment effacer cette offre?",
       success: "Votre offre a été ajoutée, merci !"
     });
@@ -280,6 +284,7 @@ export default {
       offerModified: "Votre offre a été modifiée",
       experience: "Expérience",
       additionalFees: "Frais additionels",
+      additionalFeesHint: "Vous pouvez indiquer que vous chargez des frais de déplacement. Nous suggérons 30 sous du kilomètre. Un autre exemple est de demander de fournir la nourriture pour un cours de cuisine etc",
       removeOffer: "Vraiment effacer cette offre?",
       success: "Votre offre a été ajoutée, merci !"
     });
