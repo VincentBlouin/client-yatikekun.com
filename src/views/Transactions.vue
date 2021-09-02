@@ -44,10 +44,10 @@
           <thead>
           <tr>
             <th class="text-left">
-              {{ $t("transactions:details") }}
+              Date
             </th>
             <th class="text-left">
-              Date
+              {{ $t("transactions:details") }}
             </th>
             <th class="text-left">{{ $t("transactions:gave") }}</th>
             <th class="text-left">{{ $t("transactions:received") }}</th>
@@ -66,10 +66,10 @@
               class="text-left cursor-hand"
               @click="$router.push('/transaction/' + transaction.id)"
           >
-            <td v-html="transaction.details">
-            </td>
             <td>
               {{ transaction.formattedDate }}
+            </td>
+            <td v-html="transaction.details">
             </td>
             <td
                 :class="{
