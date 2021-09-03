@@ -107,11 +107,12 @@
         </template>
       </v-simple-table>
     </v-card>
-    <NewTransaction ref="newTransaction" :giverInit="isGiverFlow ? this.$store.state.user: null"
+    <NewTransaction ref="newTransaction"
+                    :giverInit="isGiverFlow ? this.$store.state.user: null"
                     :receiverInit="isGiverFlow ? null : this.$store.state.user"
                     @transactionAdded="setupData"
     ></NewTransaction>
-    <v-dialog v-model="confirmRemoveTransactionDialog" width="600">
+    <v-dialog v-model="confirmRemoveTransactionDialog" width="650">
       <v-card>
         <v-card-title>
           {{ $t('transactions:confirmDelete') }}

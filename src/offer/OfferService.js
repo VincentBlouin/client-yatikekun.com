@@ -6,9 +6,9 @@ export default {
             "offer"
         );
     },
-    listForUserId: function (userId) {
+    listForUserUuid: function (userUuid) {
         return Service.api().get(
-            "offer/user/" + userId
+            "offer/user/" + userUuid
         );
     },
     uploadImage: function (formData) {

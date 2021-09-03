@@ -13,13 +13,6 @@
             <v-icon>close</v-icon>
           </v-btn>
         </v-card-title>
-        <v-card-text v-if="!hasConfirmed">
-          <v-text-field v-model="details"
-                        :placeholder="$t('newTransaction:detailsPlaceholder')"
-                        :rules="[Rules.required]"
-                        required
-          ></v-text-field>
-        </v-card-text>
         <v-card-text
             class="text-body-1 vh-center"
             v-if="isChooseAnotherUserFlow && !hasConfirmed"
@@ -34,7 +27,30 @@
               :menu-props="membersAutocompleteMenuProps"
               return-object
               :no-data-text="$t('noSearchResults')"
+              @change="changeOtherUser()"
           ></v-autocomplete>
+        </v-card-text>
+        <v-card-text v-if="suggestedOffers.length > 0">
+          {{ selectedOffer }}
+          <v-slide-group
+              show-arrows
+              v-model="selectedOffer"
+          >
+            <v-slide-item
+                v-for="(suggestedOffer) in suggestedOffers"
+                :key="suggestedOffer.id"
+            >
+              <OfferCard :offer="suggestedOffer" width="300" :dense="true" :customAction="true"
+                         @customAction="chooseOffer(suggestedOffer)"></OfferCard>
+            </v-slide-item>
+          </v-slide-group>
+        </v-card-text>
+        <v-card-text v-if="!hasConfirmed">
+          <v-text-field v-model="details"
+                        :placeholder="$t('newTransaction:detailsPlaceholder')"
+                        :rules="[Rules.required]"
+                        required
+          ></v-text-field>
         </v-card-text>
         <v-card-text v-if="!hasConfirmed">
           <v-card>
@@ -110,9 +126,13 @@ import MemberService from "@/service/MemberService";
 import Transaction from "@/Transaction";
 import TransactionService from "@/service/TransactionService";
 import Rules from "@/Rules";
+import OfferService from "@/offer/OfferService";
+import OfferCard from "@/views/OfferCard";
+import Offer from "@/offer/Offer"
 
 export default {
   components: {
+    OfferCard,
     Transaction: () => import("@/components/Transaction"),
   },
   props: {
@@ -164,12 +184,32 @@ export default {
       timePickerQuantity: "00:00",
       allowedMinutes: [0, 15, 30, 45],
       allowedHours: [0, 1, 2, 3, 4, 5, 6],
+      suggestedOffers: [],
+      selectedOffer: null,
+      isGiverFlow: null,
       membersAutocompleteMenuProps: {
         "content-class": "text-left",
       },
     };
   },
   methods: {
+    chooseOffer: function (offer) {
+      this.details = offer.title_fr;
+    },
+    changeOtherUser: function () {
+      if (this.isGiverFlow) {
+        return;
+      }
+      this.updateSuggestedDetails(this.userOfTransaction);
+    },
+    updateSuggestedDetails: async function (user) {
+      const response = await OfferService.listForUserUuid(user.uuid);
+      this.suggestedOffers = response.data.map((offer) => {
+        offer.User = user
+        Offer.format(offer);
+        return offer;
+      })
+    },
     enter: async function () {
       this.timePickerQuantity = "00:00";
       this.userOfTransaction = null;
@@ -187,6 +227,12 @@ export default {
           member.disabled = member.uuid === this.$store.state.user.uuid;
           return member;
         });
+      }
+      this.isGiverFlow = this.giverInit !== null && this.giverInit.uuid === this.$store.state.user.uuid;
+      if (this.isGiverFlow) {
+        await this.updateSuggestedDetails(this.$store.state.user);
+      } else {
+        this.suggestedOffers = [];
       }
       this.dialog = true;
     },

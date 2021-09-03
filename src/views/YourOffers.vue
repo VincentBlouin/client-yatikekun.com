@@ -56,7 +56,7 @@ export default {
     }
   },
   mounted: async function () {
-    let response = await OfferService.listForUserId(this.$store.state.user.id);
+    let response = await OfferService.listForUserUuid(this.$store.state.user.uuid);
     this.offers = response.data.map((offer) => {
       offer.User = this.$store.state.user;
       return Offer.format(offer);

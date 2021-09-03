@@ -1,5 +1,5 @@
 <template>
-  <v-card flat class="pl-8 pr-8" max-width="375" color="transparent">
+  <v-card flat class="pl-8 pr-8" max-width="375" color="transparent" :width="width" :max-height="maxHeight">
     <v-card-actions class="h-center pb-0" v-if="isAvailableSwitch">
       <v-spacer></v-spacer>
       <v-switch
@@ -11,7 +11,7 @@
       ></v-switch>
       <v-spacer></v-spacer>
     </v-card-actions>
-    <v-card flat class="text-center" :to="'/consulter-offre/' + offer.id" color="transparent">
+    <v-card flat class="text-center" :to="link" @click="$emit('customAction')" color="transparent">
       <v-img
           height="175"
           v-if="offer.image"
@@ -38,7 +38,20 @@ import OfferService from "@/offer/OfferService";
 
 export default {
   name: "OfferCard",
-  props: ['offer', 'isAvailableSwitch'],
+  props: ['offer', 'width', 'dense', 'customAction', 'isAvailableSwitch'],
+  data: function () {
+    return {
+      maxHeight: "auto",
+      link: null
+    };
+  },
+  mounted: function () {
+    if (this.width === null) {
+      this.width = "auto";
+    }
+    this.maxHeight = this.dense ? "350" : "auto";
+    this.link = this.customAction ? null : '/consulter-offre/' + this.offer.id
+  },
   methods: {
     getCustomImageUrl: function (customImage) {
       return Images.getCustomBase64Url(customImage);

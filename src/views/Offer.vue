@@ -105,7 +105,7 @@
                 :rules="[rules.max255Char]"
                 :hint="$t('offer:additionalFeesHint')"
                 persistent-hint
-                class=""
+                class="mb-8"
             ></v-textarea>
           </v-form>
         </v-card-text>
