@@ -11,6 +11,11 @@ export default {
             "offer/user/" + userUuid
         );
     },
+    listAvailableForUserUuid: function (userUuid) {
+        return Service.api().get(
+            "offer/available/user/" + userUuid
+        );
+    },
     uploadImage: function (formData) {
         return Service.api().post('/offer/image', formData)
     },

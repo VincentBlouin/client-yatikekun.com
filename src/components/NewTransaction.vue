@@ -203,7 +203,7 @@ export default {
       this.updateSuggestedDetails(this.userOfTransaction);
     },
     updateSuggestedDetails: async function (user) {
-      const response = await OfferService.listForUserUuid(user.uuid);
+      const response = await OfferService.listAvailableForUserUuid(user.uuid);
       this.suggestedOffers = response.data.map((offer) => {
         offer.User = user
         Offer.format(offer);
