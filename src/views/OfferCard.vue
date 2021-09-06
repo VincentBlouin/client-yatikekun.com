@@ -1,7 +1,7 @@
 <template>
   <v-card flat class="" max-width="375" color="transparent" :width="width" :max-height="maxHeight" :class="{
      'pl-8 pr-8': $vuetify.breakpoint.mdAndUp,
-     'pl-0 pr-0': $vuetify.breakpoint.smAndDown
+     'pl-8 pr-8': $vuetify.breakpoint.smAndDown
   }">
     <v-card-actions class="h-center pb-0" v-if="isAvailableSwitch">
       <v-spacer></v-spacer>
