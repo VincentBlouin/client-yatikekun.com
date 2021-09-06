@@ -5,12 +5,16 @@
         <v-icon class="mr-4">business</v-icon>
         Organisation
       </v-card-title>
-      <v-card-text class="text-left">
+      <v-card-text class="text-left" :class="{
+          'pa-0': $vuetify.breakpoint.smAndDown
+          }">
         <router-link to="/organisations">
           {{$t('organisation:seeAll')}}
         </router-link>
       </v-card-text>
-      <v-card-text class="text-center pb-0">
+      <v-card-text class="text-center pb-0" :class="{
+          'pa-0': $vuetify.breakpoint.smAndDown
+          }">
         <v-form ref="organisationForm" v-model="isFormValid">
           <v-text-field
               v-model="organisation.name"

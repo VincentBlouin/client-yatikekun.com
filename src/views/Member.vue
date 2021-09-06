@@ -1,12 +1,14 @@
 <template>
   <Page>
     <v-card flat class="">
-      <v-card-text class="text-center pb-0">
+      <v-card-text class="text-center pb-0" :class="{
+          'pa-0': $vuetify.breakpoint.smAndDown
+          }">
         <v-alert
             border="bottom"
             colored-border
             color="primary"
-            type="warning"
+            :type="$vuetify.breakpoint.smAndDown ? '' : 'warning'"
             elevation="2"
         >
           {{ $t('member:memberOfHg') }}
@@ -33,7 +35,7 @@
               :rules="[rules.required]"
           ></v-text-field>
           <v-card>
-            <v-card-text>
+            <v-card-text >
               <v-text-field
                   v-model="member.email"
                   :label="$t('member:email')"

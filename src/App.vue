@@ -125,7 +125,7 @@
                   {{ $t('app:organisations') }}
                 </v-list-item-content>
               </v-list-item>
-              <v-divider></v-divider>
+              <v-divider v-if="isAdmin"></v-divider>
               <v-list-item :to="'/membre/'+ $store.state.user.uuid">
                 <v-list-item-avatar>
                   <v-avatar color="primary" dark size="35">
@@ -173,18 +173,6 @@
             light
         >
           <v-list>
-            <v-list-item v-if="$store.state.user !== null && $store.state.user.status === 'admin'">
-              <v-list-item-action>
-                <v-icon>people</v-icon>
-              </v-list-item-action>
-              <v-list-item-content>
-                <v-list-item-title>
-                  <v-btn text to="/membres">
-                    {{ $t('app:members') }}
-                  </v-btn>
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
             <v-list-item v-if="$store.state.user !== null">
               <v-list-item-action>
                 <!--                🌈-->
@@ -237,6 +225,27 @@
                 </v-list-item-title>
               </v-list-item-content>
             </v-list-item>
+            <v-divider v-if="isAdmin"></v-divider>
+            <v-subheader v-if="isAdmin">
+              Administration
+            </v-subheader>
+            <v-list-item to="/membres" v-if="isAdmin">
+              <v-list-item-action>
+                <v-icon>people</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                {{ $t('app:members') }}
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item to="/organisations" v-if="isAdmin">
+              <v-list-item-action>
+                <v-icon>business</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                {{ $t('app:organisations') }}
+              </v-list-item-content>
+            </v-list-item>
+            <v-divider v-if="isAdmin"></v-divider>
             <v-list-item v-if="$store.state.user !== null" href="https://www.facebook.com/groups/578440053119292">
               <v-list-item-action>
                 <v-icon color="facebook">facebook</v-icon>
