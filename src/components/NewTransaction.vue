@@ -30,8 +30,9 @@
               @change="changeOtherUser()"
           ></v-autocomplete>
         </v-card-text>
-        <v-card-text v-if="suggestedOffers.length > 0 && !isSpecificOfferFlow">
-          {{ selectedOffer }}
+        <v-card-text v-if="suggestedOffers.length > 0 && !isSpecificOfferFlow" :class="{
+          'pa-0': $vuetify.breakpoint.smAndDown
+          }">
           <v-slide-group
               show-arrows
               v-model="selectedOffer"
@@ -52,7 +53,10 @@
                         required
           ></v-text-field>
         </v-card-text>
-        <v-card-text v-if="!hasConfirmed">
+        <v-card-text v-if="!hasConfirmed" :class="{
+          'pa-0': $vuetify.breakpoint.smAndDown
+          }">
+
           <v-card>
             <v-card-title class="vh-center">
               {{ $t("newTransaction:durationTitle") }}

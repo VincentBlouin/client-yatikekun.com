@@ -1,6 +1,9 @@
 <template>
   <v-card :flat="flatCard">
-    <v-card-text class="">
+    <v-card-text :class="{
+          'pa-0': $vuetify.breakpoint.smAndDown
+          }"
+    >
       <v-card width="100%" :flat="flatCard">
         <v-card-text class="text-h6 font-weight-regular">
           <p>
