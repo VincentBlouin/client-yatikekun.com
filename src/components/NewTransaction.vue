@@ -30,7 +30,7 @@
               @change="changeOtherUser()"
           ></v-autocomplete>
         </v-card-text>
-        <v-card-text v-if="suggestedOffers.length > 0">
+        <v-card-text v-if="suggestedOffers.length > 0 && !isSpecificOfferFlow">
           {{ selectedOffer }}
           <v-slide-group
               show-arrows
@@ -187,6 +187,7 @@ export default {
       suggestedOffers: [],
       selectedOffer: null,
       isGiverFlow: null,
+      isSpecificOfferFlow: false,
       membersAutocompleteMenuProps: {
         "content-class": "text-left",
       },
@@ -234,6 +235,7 @@ export default {
       } else {
         this.suggestedOffers = [];
       }
+      this.isSpecificOfferFlow = this.offerId !== undefined && this.offerId !== null;
       this.dialog = true;
     },
     addTransaction: async function () {
