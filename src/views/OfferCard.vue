@@ -1,5 +1,5 @@
 <template>
-  <v-card flat class="" max-width="375" color="transparent" :width="width" :max-height="maxHeight" :class="{
+  <v-card flat class="pl-8 pr-8" max-width="375" color="transparent" :width="width" :max-height="maxHeight" :class="{
      'pl-8 pr-8': $vuetify.breakpoint.mdAndUp,
      'pl-8 pr-8': $vuetify.breakpoint.smAndDown
   }">
