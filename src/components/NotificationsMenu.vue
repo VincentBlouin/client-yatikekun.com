@@ -69,7 +69,9 @@ export default {
     const pendingOffers = await TransactionService.getAllPendingOffers(
         this.$store.state.user.id
     );
-    this.pendingTransactions = pendingOffers.map((transaction) => {
+    this.pendingTransactions = pendingOffers.filter((transaction) => {
+      return transaction.InitiatorId !== this.$store.state.user.id;
+    }).map((transaction) => {
       if (transaction.giver) {
         transaction.giverFullname =
             transaction.giver.firstname + " " + transaction.giver.lastname;

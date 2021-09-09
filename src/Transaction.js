@@ -12,9 +12,9 @@ const Transaction = {
         if (minutes === 0) {
             minutes = "00";
         }
-        if(hours === 0){
+        if (hours === 0 && minutes.indexOf("00") === -1) {
             return minutes + "m"
-        }else{
+        } else {
             return hours + "h" + minutes;
         }
     },
