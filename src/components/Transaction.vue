@@ -27,6 +27,20 @@
               </span>
             </span>
           </p>
+          <p v-if="nbParticipants > 1">
+            <span class="font-weight-bold">
+              {{ nbParticipants }}
+            </span>
+            participants
+          </p>
+          <p v-if="nbParticipants > 1">
+            {{ $t("transaction:serviceDuration") }}
+            <span class="font-weight-bold">
+              {{ serviceDurationFormatted }}
+            </span>
+            <br>
+            <small class="font-italic">{{ $t("transaction:multiplied") }}</small>
+          </p>
           <p>
             {{ $t("transaction:billedQuantity") }}
             <span class="font-weight-bold">
@@ -100,6 +114,8 @@ export default {
   components: {},
   props: [
     "quantity",
+    "serviceDuration",
+    "nbParticipants",
     "giver",
     "receiver",
     "initiator",
@@ -114,18 +130,20 @@ export default {
     I18n.i18next.addResources("fr", "transaction", {
       performedService: "a rendu le service à",
       billedQuantity: "La quantité de temps facturé est de",
-      durationTitle: "Durée du service",
-      durationSubtitle: "En heures et minutes",
+      serviceDuration: "La durée du service est de",
+      nbParticipants: "Le nombre de participants est de",
       pendingTransaction: "En attente de confirmation",
       confirmed: "Merci d'avoir confirmé la transaction",
+      multiplied: "Pour une activité de groupe, la durée du service est multiplié par 2"
     });
     I18n.i18next.addResources("en", "transaction", {
       performedService: "a rendu le service à",
       billedQuantity: "La quantité de temps facturé est de",
-      durationTitle: "Durée du service en heures et minutes",
-      durationSubtitle: "En heures et minutes",
+      serviceDuration: "La durée du service est de",
+      nbParticipants: "Le nombre de participants est de",
       pendingTransaction: "En attente de confirmation",
       confirmed: "Merci d'avoir confirmé la transaction",
+      multiplied: "Pour une activité de groupe, la durée du service est multiplié par 2"
     });
     return {
       hasConfirmed: false,
@@ -146,6 +164,9 @@ export default {
     quantityFormatted: function () {
       return Transaction.quantityToFormatted(this.quantity);
     },
+    serviceDurationFormatted: function () {
+      return Transaction.quantityToFormatted(this.serviceDuration * 2);
+    }
   },
 };
 </script>

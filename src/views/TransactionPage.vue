@@ -8,6 +8,8 @@
       <v-card-text>
         <Transaction
             :quantity="transaction.amount"
+            :serviceDuration="transaction.serviceDuration"
+            :nbParticipants="transaction.nbParticipants"
             :giver="transaction.giver"
             :receiver="transaction.receiver"
             :initiator="transaction.initiator"

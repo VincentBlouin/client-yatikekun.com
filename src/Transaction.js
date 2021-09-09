@@ -8,11 +8,15 @@ const Transaction = {
     },
     quantityToFormatted: function (quantity) {
         const hours = Math.floor(quantity);
-        let minutes = (quantity - hours) * 60;
+        let minutes = Math.round((quantity - hours) * 60);
         if (minutes === 0) {
             minutes = "00";
         }
-        return hours + "h" + minutes;
+        if(hours === 0){
+            return minutes + "m"
+        }else{
+            return hours + "h" + minutes;
+        }
     },
     minutesToDecimal: function (minutes) {
         return minutes / 60;

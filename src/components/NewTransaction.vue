@@ -13,6 +13,22 @@
             <v-icon>close</v-icon>
           </v-btn>
         </v-card-title>
+        <v-card-text v-if="!hasConfirmed">
+          <v-card>
+            <v-card-title class="subtitle-2 grey--text font-weight-regular">
+              {{$t('newTransaction:groupActivity')}}
+            </v-card-title>
+            <v-card-text>
+            <v-text-field v-model="nbParticipants"
+                          :label="$t('newTransaction:nbParticipants')"
+                          :hint="$t('newTransaction:nbParticipantsHint')"
+                          :rules="[Rules.required]"
+                          required
+                          type="number"
+            ></v-text-field>
+            </v-card-text>
+          </v-card>
+        </v-card-text>
         <v-card-text
             class="text-body-1 vh-center"
             v-if="isChooseAnotherUserFlow && !hasConfirmed"
@@ -48,7 +64,7 @@
         </v-card-text>
         <v-card-text v-if="!hasConfirmed">
           <v-text-field v-model="details"
-                        :placeholder="$t('newTransaction:detailsPlaceholder')"
+                        :label="$t('newTransaction:detailsPlaceholder')"
                         :rules="[Rules.required]"
                         required
           ></v-text-field>
@@ -74,7 +90,9 @@
           </v-card>
         </v-card-text>
         <Transaction
-            :quantity="quantity"
+            :quantity="billedQuantity"
+            :nbParticipants="nbParticipants"
+            :serviceDuration="quantity"
             :giver="giver"
             :receiver="receiver"
             :initiator="$store.state.user"
@@ -164,7 +182,10 @@ export default {
       confirmed1: "Un courriel a été envoyé à",
       confirmed2: "pour qu'il/elle confirme la transaction",
       confirmed3: "peut aussi confirmer la transaction en visitant l'offre",
-      detailsPlaceholder: "Détails"
+      detailsPlaceholder: "Détails",
+      groupActivity: "Pour une activité de groupe",
+      nbParticipants: "Nombre de participants total",
+      nbParticipantsHint: ""
     });
     I18n.i18next.addResources("en", "newTransaction", {
       chooseUser: "L'autre usager dans la transaction",
@@ -173,7 +194,10 @@ export default {
       confirmed1: "Un courriel a été envoyé à",
       confirmed2: "pour qu'il/elle confirme la transaction",
       confirmed3: "peut aussi confirmer la transaction en visitant l'offre",
-      detailsPlaceholder: "Details"
+      detailsPlaceholder: "Details",
+      groupActivity: "Pour une activité de groupe",
+      nbParticipants: "Nombre de participants total",
+      nbParticipantsHint: ""
     });
     return {
       Rules: Rules,
@@ -192,6 +216,8 @@ export default {
       selectedOffer: null,
       isGiverFlow: null,
       isSpecificOfferFlow: false,
+      isGroupActivity: false,
+      nbParticipants: 1,
       membersAutocompleteMenuProps: {
         "content-class": "text-left",
       },
@@ -216,6 +242,7 @@ export default {
       })
     },
     enter: async function () {
+      this.nbParticipants = 1;
       this.timePickerQuantity = "00:00";
       this.userOfTransaction = null;
       this.confirmLoading = false;
@@ -249,7 +276,9 @@ export default {
       }
       this.confirmLoading = true;
       await TransactionService.add({
-        amount: this.quantity,
+        amount: this.billedQuantity,
+        serviceDuration: this.quantity,
+        nbParticipants: this.nbParticipants,
         details: this.details,
         InitiatorId: this.$store.state.user.id,
         GiverUuid: this.giver.uuid,
@@ -275,6 +304,10 @@ export default {
   computed: {
     quantity: function () {
       return Transaction.timePickerToQuantity(this.timePickerQuantity);
+    },
+    billedQuantity: function () {
+      const quantity = this.nbParticipants > 1 ? this.quantity * 2 : this.quantity;
+      return (quantity / this.nbParticipants).toFixed(2);
     },
     giver: function () {
       return this.giverInit === null ? this.userOfTransaction : this.giverInit;
