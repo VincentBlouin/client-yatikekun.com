@@ -38,6 +38,21 @@
               :items="members"
               :filter="membersFilter"
               item-text="fullname"
+              v-model="usersOfTransaction"
+              :label="$t('newTransaction:chooseManyUsers')"
+              class="members-autocomplete"
+              :menu-props="membersAutocompleteMenuProps"
+              return-object
+              :no-data-text="$t('noSearchResults')"
+              v-if="canAddManyUsers"
+              chips
+              multiple
+          ></v-autocomplete>
+          <v-autocomplete
+              v-else
+              :items="members"
+              :filter="membersFilter"
+              item-text="fullname"
               v-model="userOfTransaction"
               :label="$t('newTransaction:chooseUser')"
               class="members-autocomplete"
@@ -97,12 +112,14 @@
             :giver="giver"
             :receiver="receiver"
             :initiator="$store.state.user"
+            :canAddManyUsers="canAddManyUsers"
             :preventShowActions="true"
             status="PENDING"
+
         ></Transaction>
         <v-scale-transition>
           <v-alert
-              v-if="showConfirmMessage"
+              v-if="showConfirmMessage && !canAddManyUsers"
               type="success"
               icon="email"
               color="primary"
@@ -114,13 +131,23 @@
             {{ otherUser.firstname }}
             {{ $t("newTransaction:confirmed3") }}.
           </v-alert>
+          <v-alert
+              v-if="showConfirmMessage && canAddManyUsers"
+              type="success"
+              icon="email"
+              color="primary"
+              class="body-1"
+          >
+            {{ $t("newTransaction:emailSentToMany") }}
+          </v-alert>
         </v-scale-transition>
         <v-card-actions>
           <v-btn
               color="primary"
-              @click="addTransaction"
+              @click="confirm"
               :disabled="
-            (isChooseAnotherUserFlow && userOfTransaction === null) ||
+            (isChooseAnotherUserFlow && userOfTransaction === null && !canAddManyUsers) ||
+            (isChooseAnotherUserFlow && usersOfTransaction.length === 0 && canAddManyUsers) ||
             timePickerQuantity === '00:00' ||
             confirmLoading ||
             hasConfirmed
@@ -178,6 +205,7 @@ export default {
   data: function () {
     I18n.i18next.addResources("fr", "newTransaction", {
       chooseUser: "L'autre usager dans la transaction",
+      chooseManyUsers: "Les autres usagers dans la transaction",
       durationTitle: "Durée du service",
       durationSubtitle: "En heures et minutes",
       confirmed1: "Un courriel a été envoyé à",
@@ -186,10 +214,12 @@ export default {
       detailsPlaceholder: "Détails",
       groupActivity: "Pour une activité de groupe",
       nbParticipants: "Nombre de participants total",
-      nbParticipantsHint: ""
+      nbParticipantsHint: "",
+      emailSentToMany: "Un courriel a été envoyé aux participants pour qu'ils puissent confirmer la transaction"
     });
     I18n.i18next.addResources("en", "newTransaction", {
       chooseUser: "L'autre usager dans la transaction",
+      chooseManyUsers: "Les autres usagers dans la transaction",
       durationTitle: "Durée du service",
       durationSubtitle: "En heures et minutes",
       confirmed1: "Un courriel a été envoyé à",
@@ -198,12 +228,14 @@ export default {
       detailsPlaceholder: "Details",
       groupActivity: "Pour une activité de groupe",
       nbParticipants: "Nombre de participants total",
-      nbParticipantsHint: ""
+      nbParticipantsHint: "",
+      emailSentToMany: "Un courriel a été envoyé aux participants pour qu'ils puissent confirmer la transaction"
     });
     return {
       Rules: Rules,
       dialog: false,
       userOfTransaction: null,
+      usersOfTransaction: [],
       confirmLoading: false,
       hasConfirmed: false,
       isChooseAnotherUserFlow: false,
@@ -270,12 +302,24 @@ export default {
       this.isSpecificOfferFlow = this.offerId !== undefined && this.offerId !== null;
       this.dialog = true;
     },
-    addTransaction: async function () {
+    confirm: async function () {
       if (!this.$refs.newTransactionForm.validate()) {
         this.$refs.newTransactionForm.$el.scrollIntoView({behavior: 'smooth'})
         return;
       }
       this.confirmLoading = true;
+      if (this.canAddManyUsers) {
+        await this.addTransactions();
+      } else {
+        await this.addTransaction();
+      }
+      this.confirmLoading = false;
+      this.hasConfirmed = true;
+      await this.$nextTick();
+      this.showConfirmMessage = true;
+      this.$emit('transactionAdded');
+    },
+    addTransaction: async function () {
       await TransactionService.add({
         amount: this.billedQuantity,
         serviceDuration: this.quantity,
@@ -286,11 +330,20 @@ export default {
         ReceiverUuid: this.receiver.uuid,
         OfferId: this.offerId,
       });
-      this.confirmLoading = false;
-      this.hasConfirmed = true;
-      await this.$nextTick();
-      this.showConfirmMessage = true;
-      this.$emit('transactionAdded');
+    },
+    addTransactions: function () {
+      return Promise.all(this.usersOfTransaction.map((userOfTransaction) => {
+        return TransactionService.add({
+          amount: this.billedQuantity,
+          serviceDuration: this.quantity,
+          nbParticipants: this.nbParticipants,
+          details: this.details,
+          InitiatorId: this.$store.state.user.id,
+          GiverUuid: this.$store.state.user.uuid,
+          ReceiverUuid: userOfTransaction.uuid,
+          OfferId: this.offerId,
+        });
+      }));
     },
     membersFilter: function (member, queryText) {
       const firstname = member.firstname.toLowerCase();
@@ -303,6 +356,9 @@ export default {
     },
   },
   computed: {
+    canAddManyUsers: function () {
+      return this.isGiverFlow && this.nbParticipants > 1;
+    },
     quantity: function () {
       return Transaction.timePickerToQuantity(this.timePickerQuantity);
     },

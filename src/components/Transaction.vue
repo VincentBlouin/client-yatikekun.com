@@ -19,7 +19,7 @@
               </span>
             </span>
             {{ $t("transaction:performedService") }}
-            <span class="font-weight-bold">
+            <span class="font-weight-bold" v-if="!canAddManyUsers">
               <span v-if="receiver === null"> ... </span>
               <span v-else>
                 {{ receiver.firstname }}
@@ -122,7 +122,8 @@ export default {
     "transactionId",
     "flatCard",
     "preventShowActions",
-    "status"
+    "status",
+    "canAddManyUsers"
   ],
   async mounted() {
   },
