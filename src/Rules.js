@@ -37,5 +37,11 @@ export default {
             return true;
         }
         return value.indexOf(" ") === -1 || I18n.i18next.t('noSpace');
+    },
+    min1: function(value){
+        if (!value) {
+            return true;
+        }
+        return value > 0 || I18n.i18next.t('min1');
     }
 }

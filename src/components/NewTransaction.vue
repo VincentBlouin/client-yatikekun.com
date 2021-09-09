@@ -16,16 +16,17 @@
         <v-card-text v-if="!hasConfirmed">
           <v-card>
             <v-card-title class="subtitle-2 grey--text font-weight-regular">
-              {{$t('newTransaction:groupActivity')}}
+              {{ $t('newTransaction:groupActivity') }}
             </v-card-title>
             <v-card-text>
-            <v-text-field v-model="nbParticipants"
-                          :label="$t('newTransaction:nbParticipants')"
-                          :hint="$t('newTransaction:nbParticipantsHint')"
-                          :rules="[Rules.required]"
-                          required
-                          type="number"
-            ></v-text-field>
+              <v-text-field v-model="nbParticipants"
+                            :label="$t('newTransaction:nbParticipants')"
+                            :hint="$t('newTransaction:nbParticipantsHint')"
+                            :rules="[Rules.required, Rules.min1]"
+                            required
+                            type="number"
+                            min="1"
+              ></v-text-field>
             </v-card-text>
           </v-card>
         </v-card-text>
