@@ -9,10 +9,11 @@ const Transaction = {
     quantityToFormatted: function (quantity) {
         const hours = Math.floor(quantity);
         let minutes = Math.round((quantity - hours) * 60);
-        if (minutes === 0) {
+        const isZeroMinutes = minutes === 0;
+        if (isZeroMinutes) {
             minutes = "00";
         }
-        if (hours === 0 && minutes.indexOf("00") === -1) {
+        if (hours === 0 && !isZeroMinutes) {
             return minutes + "m"
         } else {
             return hours + "h" + minutes;
