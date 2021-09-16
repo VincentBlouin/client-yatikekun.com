@@ -58,6 +58,12 @@
               {{ $t('app:charter') }}
             </span>
           </v-btn>
+          <v-btn text to="/vie-prive">
+            <v-icon left color="blueTitle">privacy_tip</v-icon>
+            <span class="blue-title">
+              {{ $t('app:privacy') }}
+            </span>
+          </v-btn>
           <v-btn text href="https://www.facebook.com/groups/578440053119292" v-if="$store.state.user !== null">
             <v-icon color="facebook" left>facebook</v-icon>
             <span class="blue-title">
@@ -292,6 +298,18 @@
                 </v-list-item-title>
               </v-list-item-content>
             </v-list-item>
+            <v-list-item to="/vie-prive">
+              <v-list-item-action>
+                <v-icon>privacy_tip</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>
+                  <v-btn text class="black--text">
+                    {{ $t('app:privacy') }}
+                  </v-btn>
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
             <v-list-item to="/partenaires">
               <v-list-item-action>
                 <v-icon>volunteer_activism</v-icon>
@@ -374,6 +392,7 @@ export default {
       login: "Connexion",
       logout: "Déconnecter",
       charter: "Charte",
+      privacy: "Vie privée",
       offers: "Offres",
       yourTransactions: "Transactions",
       members: "Membres",
@@ -389,6 +408,7 @@ export default {
       login: "Connexion",
       logout: "Déconnecter",
       charter: "Charte",
+      privacy: "Vie privée",
       offers: "Offres",
       yourTransactions: "Transactions",
       members: "Membres",

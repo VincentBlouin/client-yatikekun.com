@@ -30,14 +30,14 @@ export default {
       visibility: "Les courriels, adresses, genres, url messenger, téléphones et transactions sont visibles par tous les membres.",
       passwords: "Les mots de passe ne sont jamais partagés.",
       facebook: "Les offres de services sont publiées automatique sur le groupe Facebook privé réservé aux membres",
-      location: "Les données sauvergardées se trouvent dans des serveurs à Paspébiac. Des backups se trouvent également à Bonaventure."
+      location: "Les données sauvergardées se trouvent dans des serveurs à Paspébiac QC Canada. Des backups se trouvent également à Bonaventure QC Canada."
     });
     I18n.i18next.addResources("en", "privacy", {
       title: "Vie privée",
       visibility: "Les courriels, adresses, genres, url messenger, téléphones et transactions sont visibles par tous les membres.",
       passwords: "Les mots de passe ne sont jamais partagés.",
       facebook: "Les offres de services sont publiées automatique sur le groupe Facebook privé réservé aux membres",
-      location: "Les données sauvergardées se trouvent dans des serveurs à Paspébiac. Des backups se trouvent également à Bonaventure."
+      location: "Les données sauvergardées se trouvent dans des serveurs à Paspébiac QC Canada. Des backups se trouvent également à Bonaventure QC Canada."
     });
     return {}
   },

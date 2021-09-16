@@ -16,6 +16,11 @@ const routes = [
         component: () => import('../views/Charter.vue')
     },
     {
+        path: '/vie-prive',
+        name: 'ViePrive',
+        component: () => import('../views/PrivateLife.vue')
+    },
+    {
         path: '/connexion',
         name: 'Login',
         component: () => import('../views/Login.vue')
