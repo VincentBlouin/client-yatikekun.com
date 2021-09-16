@@ -101,7 +101,7 @@
         </v-card-actions>
         <v-card-actions v-if="!preventShowActions && status === 'PENDING'" class="mt-2">
           <v-spacer></v-spacer>
-          <v-btn error class="error" @click="refuseConfirmDialog=true">
+          <v-btn error class="error" @click="refuseConfirmDialog=true" small>
             {{ $t('transaction:cancelTransaction') }}
           </v-btn>
           <v-spacer v-if="$vuetify.breakpoint.smAndDown"></v-spacer>
