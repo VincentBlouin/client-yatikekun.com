@@ -91,7 +91,7 @@
             <td>
               <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-icon v-bind="attrs" v-on="on" color="primary">
+                  <v-icon v-bind="attrs" v-on="on" :color="transaction.statusIconColor">
                     {{ transaction.statusIcon }}
                   </v-icon>
                 </template>
@@ -229,8 +229,13 @@ export default {
             );
             if (transaction.status.toLowerCase() === "confirmed") {
               transaction.statusIcon = "done";
+              transaction.statusIconColor="primary";
             } else if (transaction.status.toLowerCase() === "pending") {
               transaction.statusIcon = "pending";
+              transaction.statusIconColor="primary";
+            } else if (transaction.status.toLowerCase() === "refused") {
+              transaction.statusIcon = "do_not_disturb_on";
+              transaction.statusIconColor="error";
             }
             transaction.balance =
                 transaction.GiverId !== null &&

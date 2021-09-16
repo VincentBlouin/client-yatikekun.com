@@ -91,6 +91,11 @@ const routes = [
         component: () => import('../views/TransactionPage.vue')
     },
     {
+        path: '/transaction/:transactionId/confirm/:token',
+        name: 'TransactionPage',
+        component: () => import('../views/TransactionPage.vue')
+    },
+    {
         path: '/partenaires',
         name: 'Partners',
         component: () => import('../views/Partners.vue')

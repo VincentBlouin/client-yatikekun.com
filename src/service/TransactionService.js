@@ -18,6 +18,11 @@ export default {
             '/transaction/' + transactionId + '/confirm'
         );
     },
+    refuse: function (transactionId) {
+        return Service.api().post(
+            '/transaction/' + transactionId + '/refuse'
+        );
+    },
     confirmWithToken: function (token) {
         return Service.api().post(
             '/transaction/token', {

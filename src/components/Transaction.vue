@@ -67,6 +67,18 @@
           >
             {{ $t("confirm") }}
           </v-btn>
+          <v-btn v-if="status === 'CONFIRMED'" outlined  color="primary" style="cursor: default;" active-class="">
+            <v-icon left>done</v-icon>
+            {{ $t("transaction:confirmed") }}
+          </v-btn>
+<!--          <v-alert v-if="status === 'REFUSED'" dense outlined class="body-1">-->
+<!--            <v-icon left>do_not_disturb_on</v-icon>-->
+<!--              {{ $t("transaction:refused") }}-->
+<!--          </v-alert>-->
+          <v-btn v-if="status === 'REFUSED'" outlined color="error" style="cursor: default;" active-class="">
+            <v-icon left>do_not_disturb_on</v-icon>
+            {{ $t("transaction:refused") }}
+          </v-btn>
           <v-spacer></v-spacer>
           <v-btn
               @click="$emit('close')"
@@ -82,15 +94,22 @@
             v-if="$vuetify.breakpoint.smAndDown && !preventShowActions"
         >
           <v-spacer></v-spacer>
-          <v-btn @click="$emit('close')" right class="mr-4">
+          <v-btn @click="$emit('close')" right class="">
             {{ $t("close") }}
           </v-btn>
           <v-spacer></v-spacer>
         </v-card-actions>
+        <v-card-actions v-if="!preventShowActions && status === 'PENDING'" class="mt-2">
+          <v-spacer></v-spacer>
+          <v-btn error class="error" @click="refuseConfirmDialog=true">
+            {{ $t('transaction:cancelTransaction') }}
+          </v-btn>
+          <v-spacer v-if="$vuetify.breakpoint.smAndDown"></v-spacer>
+        </v-card-actions>
       </v-card>
     </v-card-text>
     <v-snackbar v-model="confirmSuccess" color="primary" dark :timeout="7000">
-      {{ $t("transaction:confirmed") }}
+      {{ $t("transaction:confirmedThanks") }}
       <template v-slot:action="{ attrs }">
         <v-btn
             color="white"
@@ -103,6 +122,26 @@
         </v-btn>
       </template>
     </v-snackbar>
+    <v-dialog v-model="refuseConfirmDialog" max-width="600">
+      <v-card>
+        <v-card-title>
+          {{ $t('transaction:refuseOffer') }}
+          <v-spacer></v-spacer>
+          <v-btn icon @click="refuseConfirmDialog=false">
+            <v-icon>close</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-card-actions>
+          <v-btn color="error" @click="refuseConfirm()">
+            {{ $t('transaction:cancelTransaction') }}
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn @click="refuseConfirmDialog=false">
+            {{ $t('close') }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 <script>
@@ -134,8 +173,12 @@ export default {
       serviceDuration: "La durée du service est de",
       nbParticipants: "Le nombre de participants est de",
       pendingTransaction: "En attente de confirmation",
-      confirmed: "Merci d'avoir confirmé la transaction",
-      multiplied: "Pour une activité de groupe, la durée du service est multiplié par 2"
+      confirmedThanks: "Merci d'avoir confirmé la transaction",
+      confirmed: "Confirmé",
+      multiplied: "Pour une activité de groupe, la durée du service est multiplié par 2",
+      cancelTransaction: "Refuser",
+      refused: "Refusé",
+      refuseOffer: "Refuser la transaction"
     });
     I18n.i18next.addResources("en", "transaction", {
       performedService: "a rendu le service à",
@@ -143,16 +186,29 @@ export default {
       serviceDuration: "La durée du service est de",
       nbParticipants: "Le nombre de participants est de",
       pendingTransaction: "En attente de confirmation",
-      confirmed: "Merci d'avoir confirmé la transaction",
-      multiplied: "Pour une activité de groupe, la durée du service est multiplié par 2"
+      confirmedThanks: "Merci d'avoir confirmé la transaction",
+      confirmed: "Confirmé",
+      multiplied: "Pour une activité de groupe, la durée du service est multiplié par 2",
+      cancelTransaction: "Refuser",
+      refused: "Refusé",
+      refuseOffer: "Refuser la transaction"
     });
     return {
       hasConfirmed: false,
       confirmLoading: false,
       confirmSuccess: false,
+      refuseConfirmDialog: false,
+      refuseLoading: false
     };
   },
   methods: {
+    refuseConfirm: async function () {
+      this.refuseLoading = true;
+      await TransactionService.refuse(this.transactionId);
+      this.refuseLoading = false;
+      this.refuseConfirmDialog = false;
+      this.status = "REFUSED";
+    },
     confirm: async function () {
       this.confirmLoading = true;
       await TransactionService.confirm(this.transactionId);
