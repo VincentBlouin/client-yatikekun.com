@@ -97,6 +97,12 @@
           </li>
         </ol>
       </v-card-text>
+      <v-card-text class="text-h6 font-weight-regular text-left">
+        {{$t('charter:confidentiality')}}
+        <router-link to="/vie-prive">
+          {{$t('charter:confidentiality1')}}
+        </router-link>
+      </v-card-text>
     </v-card>
   </Page>
 </template>
@@ -137,7 +143,9 @@ export default {
       principle5Details: "Le Partag'Heure est, pour l'instant, un espace strictement réservé aux échanges de services, rémunérés en heures, selon le principe de \"1h vaut 1h\". Pour le troc, les échanges de biens, les dons nous vous proposons pour l'instant de publier vos annonces sur le",
       principle51Details: "Groupe d'échange gaspésien sur facebook",
       principle6: "Prise en charge de l’organisme par ses membres",
-      principle6Details: "L’animation de l’échange de services et l’organisation des activités d’échange sont sous la responsabilité individuelle et collective de tous les membres. Un système d'échange de services ne saurait fonctionner sans la participation de ses membres. Vous voudriez faire partie du groupe porteur? Écrivez-nous:"
+      principle6Details: "L’animation de l’échange de services et l’organisation des activités d’échange sont sous la responsabilité individuelle et collective de tous les membres. Un système d'échange de services ne saurait fonctionner sans la participation de ses membres. Vous voudriez faire partie du groupe porteur? Écrivez-nous:",
+      confidentiality: "Enfin, veuillez consulter notre",
+      confidentiality1: "politique de confidentialité"
     });
     I18n.i18next.addResources("en", "charter", {
       title: "Charte de partageheure.com"
