@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-<!--    image src =https://pixabay.com/photos/ant-ants-insect-nature-animal-5849574-->
+    <!--    image src =https://pixabay.com/photos/ant-ants-insect-nature-animal-5849574-->
     <v-parallax
         :src="require('@/assets/ant-5849574_1920-miroir.jpg')"
         height="800"
@@ -18,7 +18,7 @@
             'vision-bigger-font' : $vuetify.breakpoint.mdAndUp
           }">{{ $t('about:vision') }}</h1>
           <h4 class="vision-sub-font">{{ $t('about:vision2') }}</h4>
-<!--          <h4 class="vision-sub-font">{{ $t('about:vision3') }}</h4>-->
+          <!--          <h4 class="vision-sub-font">{{ $t('about:vision3') }}</h4>-->
         </v-col>
       </v-row>
     </v-parallax>
@@ -42,7 +42,7 @@
       <v-col cols="4" v-if="$vuetify.breakpoint.mdAndUp"></v-col>
       <v-col cols="12" class="col-md-8 text-center">
         <v-card-text class="text-h6 font-weight-regular vh-center">
-          <v-list  three-line :class="{
+          <v-list three-line :class="{
             'pl-0 pr-0': $vuetify.breakpoint.smAndDown
           }" color="transparent">
             <v-list-item :class="{
@@ -157,72 +157,91 @@
                       {{ $t('about:member2') }}
                     </span>
                   </v-subheader>
-<!--                  <v-list-item class="ml-8" href="tel:555-555-5555">-->
-<!--                    <v-list-item-avatar>-->
-<!--                      <v-avatar color="primary" dark>-->
-<!--                        <span class="white&#45;&#45;text headline">DO</span>-->
-<!--                      </v-avatar>-->
-<!--                    </v-list-item-avatar>-->
-<!--                    <v-list-item-content>-->
-<!--                      <v-list-item-title class="text-h6 font-weight-regular">-->
-<!--                        Donna Lévesque-->
-<!--                      </v-list-item-title>-->
-<!--                      <v-list-item-subtitle class="text-subtitle-1">-->
-<!--                        555-555-5555-->
-<!--                      </v-list-item-subtitle>-->
-<!--                    </v-list-item-content>-->
-<!--                  </v-list-item>-->
-<!--                  <v-list-item class="ml-8" href="tel:581-886-4000">-->
-<!--                    <v-list-item-avatar>-->
-<!--                      <v-avatar color="primary" dark>-->
-<!--                        <span class="white&#45;&#45;text headline">FA</span>-->
-<!--                      </v-avatar>-->
-<!--                    </v-list-item-avatar>-->
-<!--                    <v-list-item-content>-->
-<!--                      <v-list-item-title class="text-h6 font-weight-regular">-->
-<!--                        Fatou Minot-->
-<!--                      </v-list-item-title>-->
-<!--                      <v-list-item-subtitle class="text-subtitle-1">-->
-<!--                        581-886-4000-->
-<!--                      </v-list-item-subtitle>-->
-<!--                    </v-list-item-content>-->
-<!--                  </v-list-item>-->
-                  <v-list-item class="ml-8" href="tel:418-751-3103">
+                  <v-list-item href="tel:581-886-1691">
                     <v-list-item-avatar>
                       <v-avatar>
                         <img
-                            :src="require('@/assets/gaby-petit-carre.jpg')"
-                            alt="Gabrielle Margineanu"
+                            :src="require('@/assets/arielle-petit-carre.jpg')"
+                            alt="Arielle Paiement"
                         >
                       </v-avatar>
                     </v-list-item-avatar>
                     <v-list-item-content>
                       <v-list-item-title class="text-subtitle-1 text-md-h6 font-weight-regular">
-                        Gabrielle Margineanu
+                        Arielle Paiement
                       </v-list-item-title>
                       <v-list-item-subtitle class="text-subtitle-1 text-md-h6 font-weight-regular">
-                        418-751-3103
+                        581-886-1691
                       </v-list-item-subtitle>
                     </v-list-item-content>
+
                   </v-list-item>
-                  <v-list-item class="ml-8" href="tel:581-233-9481">
-                    <v-list-item-avatar>
-                      <v-avatar>
-                        <img
-                            :src="require('@/assets/chenzo2-petit-carre.jpg')"
-                            alt="Vincent Blouin"
-                        >
-                      </v-avatar>
-                    </v-list-item-avatar>
-                    <v-list-item-content>
-                      <v-list-item-title class="text-h6 font-weight-regular">
-                        Vincent Blouin
-                      </v-list-item-title>
-                      <v-list-item-subtitle class="text-subtitle-1">
-                        581-233-9481
-                      </v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item>
+                  <!--                  <v-list-item class="ml-8" href="tel:555-555-5555">-->
+                  <!--                    <v-list-item-avatar>-->
+                  <!--                      <v-avatar color="primary" dark>-->
+                  <!--                        <span class="white&#45;&#45;text headline">DO</span>-->
+                  <!--                      </v-avatar>-->
+                  <!--                    </v-list-item-avatar>-->
+                  <!--                    <v-list-item-content>-->
+                  <!--                      <v-list-item-title class="text-h6 font-weight-regular">-->
+                  <!--                        Donna Lévesque-->
+                  <!--                      </v-list-item-title>-->
+                  <!--                      <v-list-item-subtitle class="text-subtitle-1">-->
+                  <!--                        555-555-5555-->
+                  <!--                      </v-list-item-subtitle>-->
+                  <!--                    </v-list-item-content>-->
+                  <!--                  </v-list-item>-->
+                  <!--                  <v-list-item class="ml-8" href="tel:581-886-4000">-->
+                  <!--                    <v-list-item-avatar>-->
+                  <!--                      <v-avatar color="primary" dark>-->
+                  <!--                        <span class="white&#45;&#45;text headline">FA</span>-->
+                  <!--                      </v-avatar>-->
+                  <!--                    </v-list-item-avatar>-->
+                  <!--                    <v-list-item-content>-->
+                  <!--                      <v-list-item-title class="text-h6 font-weight-regular">-->
+                  <!--                        Fatou Minot-->
+                  <!--                      </v-list-item-title>-->
+                  <!--                      <v-list-item-subtitle class="text-subtitle-1">-->
+                  <!--                        581-886-4000-->
+                  <!--                      </v-list-item-subtitle>-->
+                  <!--                    </v-list-item-content>-->
+                  <!--                  </v-list-item>-->
+                  <!--                  <v-list-item class="ml-8" href="tel:418-751-3103">-->
+                  <!--                    <v-list-item-avatar>-->
+                  <!--                      <v-avatar>-->
+                  <!--                        <img-->
+                  <!--                            :src="require('@/assets/gaby-petit-carre.jpg')"-->
+                  <!--                            alt="Gabrielle Margineanu"-->
+                  <!--                        >-->
+                  <!--                      </v-avatar>-->
+                  <!--                    </v-list-item-avatar>-->
+                  <!--                    <v-list-item-content>-->
+                  <!--                      <v-list-item-title class="text-subtitle-1 text-md-h6 font-weight-regular">-->
+                  <!--                        Gabrielle Margineanu-->
+                  <!--                      </v-list-item-title>-->
+                  <!--                      <v-list-item-subtitle class="text-subtitle-1 text-md-h6 font-weight-regular">-->
+                  <!--                        418-751-3103-->
+                  <!--                      </v-list-item-subtitle>-->
+                  <!--                    </v-list-item-content>-->
+                  <!--                  </v-list-item>-->
+                  <!--                  <v-list-item class="ml-8" href="tel:581-233-9481">-->
+                  <!--                    <v-list-item-avatar>-->
+                  <!--                      <v-avatar>-->
+                  <!--                        <img-->
+                  <!--                            :src="require('@/assets/chenzo2-petit-carre.jpg')"-->
+                  <!--                            alt="Vincent Blouin"-->
+                  <!--                        >-->
+                  <!--                      </v-avatar>-->
+                  <!--                    </v-list-item-avatar>-->
+                  <!--                    <v-list-item-content>-->
+                  <!--                      <v-list-item-title class="text-h6 font-weight-regular">-->
+                  <!--                        Vincent Blouin-->
+                  <!--                      </v-list-item-title>-->
+                  <!--                      <v-list-item-subtitle class="text-subtitle-1">-->
+                  <!--                        581-233-9481-->
+                  <!--                      </v-list-item-subtitle>-->
+                  <!--                    </v-list-item-content>-->
+                  <!--                  </v-list-item>-->
                   <v-list-item :class="{
             'pl-0 pr-0': $vuetify.breakpoint.smAndDown
           }" to="/charte">
