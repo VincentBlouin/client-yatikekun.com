@@ -40,9 +40,6 @@
             {{ $t('charter:visionObjective4') }}
           </li>
         </ul>
-        <p class="text-h6 font-weight-regular text-left">
-          {{ $t('charter:intention2') }}
-        </p>
       </v-card-text>
     </v-card>
     <v-card flat>
