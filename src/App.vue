@@ -52,13 +52,13 @@
               {{ $t('app:login') }}
             </span>
           </v-btn>
-          <v-btn text to="/charte">
+          <v-btn text to="/charte" v-if="$store.state.user === null">
             <v-icon left color="blueTitle">assignment</v-icon>
             <span class="blue-title">
               {{ $t('app:charter') }}
             </span>
           </v-btn>
-          <v-btn text to="/vie-prive">
+          <v-btn text to="/vie-prive" v-if="$store.state.user === null">
             <v-icon left color="blueTitle">privacy_tip</v-icon>
             <span class="blue-title">
               {{ $t('app:privacy') }}
@@ -111,6 +111,18 @@
                   {{ $t('app:addOffer') }}
                 </v-list-item-title>
               </v-list-item>
+              <v-list-item :to="'/membre/'+ $store.state.user.uuid">
+                <v-list-item-avatar>
+                  <v-avatar color="primary" dark size="35">
+                      <span class="white--text">
+                        {{ initials }}
+                      </span>
+                  </v-avatar>
+                </v-list-item-avatar>
+                <v-list-item-title>
+                  {{ $t('app:informations') }}
+                </v-list-item-title>
+              </v-list-item>
               <v-divider v-if="isAdmin"></v-divider>
               <v-subheader v-if="isAdmin">
                 Administration
@@ -132,18 +144,31 @@
                 </v-list-item-content>
               </v-list-item>
               <v-divider v-if="isAdmin"></v-divider>
-              <v-list-item :to="'/membre/'+ $store.state.user.uuid">
-                <v-list-item-avatar>
-                  <v-avatar color="primary" dark size="35">
-                      <span class="white--text">
-                        {{ initials }}
-                      </span>
-                  </v-avatar>
-                </v-list-item-avatar>
-                <v-list-item-title>
-                  {{ $t('app:informations') }}
-                </v-list-item-title>
+              <v-divider></v-divider>
+              <v-subheader>
+                {{ $t('app:agreements') }}
+              </v-subheader>
+              <v-list-item to="/charte">
+                <v-list-item-action>
+                  <v-icon>assignment</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    {{ $t('app:charter') }}
+                  </v-list-item-title>
+                </v-list-item-content>
               </v-list-item>
+              <v-list-item to="/vie-prive">
+                <v-list-item-action>
+                  <v-icon>privacy_tip</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    {{ $t('app:privacy') }}
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-divider></v-divider>
               <v-list-item to="/partenaires">
                 <v-list-item-action>
                   <v-icon>volunteer_activism</v-icon>
@@ -401,7 +426,8 @@ export default {
       yourOffers: "Vos offres",
       addOffer: "Ajouter offre",
       facebookGroup: "Notre groupe",
-      partners: "Partenaires"
+      partners: "Partenaires",
+      agreements: "Ententes"
     });
     I18n.i18next.addResources("en", "app", {
       becomeMember: "Devenez membre",
@@ -417,7 +443,8 @@ export default {
       yourOffers: "Vos offres",
       addOffer: "Ajouter offre",
       facebookGroup: "Notre groupe",
-      partners: "Partners"
+      partners: "Partners",
+      agreements: "Ententes"
     });
     return {
       drawer: false
