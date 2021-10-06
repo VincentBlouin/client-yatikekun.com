@@ -46,6 +46,12 @@
               prepend-icon="image"
               v-model="logo"
           ></v-file-input>
+          <v-checkbox
+              v-model="organisation.activeForTransactions"
+              :label="$t('organisation:activeForTransactions')"
+              persistent-hint
+              :hint="$t('organisation:activeForTransactionsHint')"
+          ></v-checkbox>
         </v-form>
       </v-card-text>
       <v-card-actions class="text-center vh-center pt-8">
@@ -119,7 +125,9 @@ export default {
       image: "Logo",
       modified: "Organisation modifiée avec succès",
       addOrganisation: "Ajouter l'organisation",
-      seeAll: "Toutes les organisations"
+      seeAll: "Toutes les organisations",
+      activeForTransactions: "Actif pour les transactions",
+      activeForTransactionsHint: "Pourra reçevoir les heures bonus des usagers. Pourra aussi donner des heures à leurs bénévoles"
     });
     I18n.i18next.addResources("en", "organisation", {
       title: "Nouvelle Organisation",
@@ -128,7 +136,9 @@ export default {
       image: "Logo",
       modified: "Organisation modifiée avec succès",
       addOrganisation: "Ajouter l'organisation",
-      seeAll: "Toutes les organisations"
+      seeAll: "Toutes les organisations",
+      activeForTransactions: "Actif pour les transactions",
+      activeForTransactionsHint: "Pourra reçevoir les heures bonus des usagers. Pourra aussi donner des heures à leurs bénévoles"
     });
     return {
       submitLoading: false,
