@@ -103,7 +103,7 @@ export default {
                         Email: "Courriel",
                         Phone: "Téléphone",
                         Messenger: "Messenger",
-                        nones: "Aucunes",
+                        nones: "Aucune",
                         member: "Membre",
                         admin: "Administrateur",
                         disabled: "Désactivé",
