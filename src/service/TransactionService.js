@@ -18,6 +18,16 @@ export default {
             '/transaction/' + transactionId + '/confirm'
         );
     },
+    setGiverOrgId: function (transactionId, orgId) {
+        return Service.api().post(
+            '/transaction/' + transactionId + '/giver-org/' + orgId
+        );
+    },
+    setReceiverOrgId: function (transactionId, orgId) {
+        return Service.api().post(
+            '/transaction/' + transactionId + '/receiver-org/' + orgId
+        );
+    },
     refuse: function (transactionId) {
         return Service.api().post(
             '/transaction/' + transactionId + '/refuse'

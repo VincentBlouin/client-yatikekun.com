@@ -20,10 +20,12 @@
             :quantity="transaction.amount"
             :serviceDuration="transaction.serviceDuration"
             :nbParticipants="transaction.nbParticipants"
-            :giver="transaction.giver"
-            :receiver="transaction.receiver"
+            :giver="giver"
+            :receiver="receiver"
             :initiator="transaction.initiator"
             :transactionId="transaction.id"
+            :giverDonationOrgId="transaction.giverDonationOrgId"
+            :receiverDonationOrgId="transaction.receiverDonationOrgId"
             :flatCard="true"
             @close="$router.push('/transactions')"
             :status="transaction.status"
@@ -68,6 +70,18 @@ export default {
     );
     this.transaction = response.data;
     this.loading = false;
+  },
+  computed: {
+    giver: function () {
+      return this.transaction.giver === null ?
+          this.transaction.giverOrg :
+          this.transaction.giver;
+    },
+    receiver: function () {
+      return this.transaction.receiver === null ?
+          this.transaction.receiverOrg :
+          this.transaction.receiver;
+    }
   }
 }
 </script>

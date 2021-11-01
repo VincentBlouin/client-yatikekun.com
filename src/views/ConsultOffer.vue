@@ -284,6 +284,8 @@
                 :receiver="pendingTransaction[0].receiver"
                 :initiator="pendingTransaction[0].initiator"
                 :transactionId="pendingTransaction[0].id"
+                :giverDonationOrgId="pendingTransaction[0].giverDonationOrgId"
+                :receiverDonationOrgId="pendingTransaction[0].receiverDonationOrgId"
                 :flatCard="true"
                 @close="pendingTransactionSheet = false"
             ></Transaction>

@@ -19,6 +19,26 @@ const Transaction = {
             return hours + "h" + minutes;
         }
     },
+    giverFullname: function (transaction) {
+        if (transaction.giver) {
+            return transaction.giver.firstname + " " + transaction.giver.lastname;
+        }
+        if (transaction.giverOrg) {
+            return transaction.giverOrg.name;
+        }
+        return "";
+    },
+    receiverFullname: function (transaction) {
+        if (transaction.receiver) {
+            return transaction.receiver.firstname +
+                " " +
+                transaction.receiver.lastname;
+        }
+        if (transaction.receiverOrg) {
+            return transaction.receiverOrg.name;
+        }
+        return "";
+    },
     minutesToDecimal: function (minutes) {
         return minutes / 60;
     }

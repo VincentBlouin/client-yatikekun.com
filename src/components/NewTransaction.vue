@@ -114,8 +114,10 @@
             :initiator="$store.state.user"
             :canAddManyUsers="canAddManyUsers"
             :preventShowActions="true"
+            :giverOrganisationId="giverOrganisationId"
+            :receiverDonationOrgId="receiverOrganisationId"
             status="PENDING"
-
+            @selectOrganisation="chooseOrganisation"
         ></Transaction>
         <v-scale-transition>
           <v-alert
@@ -229,7 +231,9 @@ export default {
       groupActivity: "Pour une activité de groupe",
       nbParticipants: "Nombre de participants total",
       nbParticipantsHint: "",
-      emailSentToMany: "Un courriel a été envoyé aux participants pour qu'ils puissent confirmer la transaction"
+      emailSentToMany: "Un courriel a été envoyé aux participants pour qu'ils puissent confirmer la transaction",
+      organisation: "Organisation pour don bonus de 10 min/heure",
+      organisationHint: "Don bonus de 10 min/heure"
     });
     return {
       Rules: Rules,
@@ -247,6 +251,7 @@ export default {
       allowedHours: [0, 1, 2, 3, 4, 5, 6],
       suggestedOffers: [],
       selectedOffer: null,
+      selectedOrganisation: {},
       isGiverFlow: null,
       isSpecificOfferFlow: false,
       isGroupActivity: false,
@@ -254,9 +259,14 @@ export default {
       membersAutocompleteMenuProps: {
         "content-class": "text-left",
       },
+      giverOrganisationId: null,
+      receiverOrganisationId: null
     };
   },
   methods: {
+    chooseOrganisation: function (organisation) {
+      this.selectedOrganisation = organisation;
+    },
     chooseOffer: function (offer) {
       this.details = offer.title_fr;
     },
@@ -316,6 +326,11 @@ export default {
       this.confirmLoading = false;
       this.hasConfirmed = true;
       await this.$nextTick();
+      if (this.isGiverFlow) {
+        this.giverOrganisationId = this.selectedOrganisation.id;
+      } else {
+        this.receiverOrganisationId = this.selectedOrganisation.id;
+      }
       this.showConfirmMessage = true;
       this.$emit('transactionAdded');
     },
@@ -329,6 +344,7 @@ export default {
         GiverUuid: this.giver.uuid,
         ReceiverUuid: this.receiver.uuid,
         OfferId: this.offerId,
+        organisationId: this.selectedOrganisation.id
       });
     },
     addTransactions: function () {
@@ -364,7 +380,8 @@ export default {
     },
     billedQuantity: function () {
       const quantity = this.nbParticipants > 1 ? this.quantity * 2 : this.quantity;
-      return (quantity / this.nbParticipants).toFixed(2);
+      const quantityByParticipant = quantity / this.nbParticipants;
+      return quantityByParticipant === 0 ? 0 : parseFloat(quantityByParticipant.toFixed(2));
     },
     giver: function () {
       return this.giverInit === null ? this.userOfTransaction : this.giverInit;

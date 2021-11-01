@@ -6,6 +6,11 @@ export default {
             "organisation"
         );
     },
+    listActiveForTransactions: function () {
+        return Service.api().get(
+            "organisation/active-for-transactions"
+        );
+    },
     get: function (organisationId) {
         return Service.api().get('/organisation/' + organisationId)
     },

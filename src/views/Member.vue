@@ -35,7 +35,7 @@
               :rules="[rules.required]"
           ></v-text-field>
           <v-card>
-            <v-card-text >
+            <v-card-text>
               <v-text-field
                   v-model="member.email"
                   :label="$t('member:email')"
@@ -187,7 +187,16 @@
               :label="$t('member:organisation')"
               clearable
               v-if="$store.state.user.status === 'admin'"
-          ></v-select>
+          >
+            <template v-slot:item="{item}">
+              <img :src="item.customImageUrl" v-if="item.customImage" width="100" class="mr-6">
+              <v-list-item-content>
+                <v-list-item-title class="text-h6 font-weight-regular">
+                  {{ item.name }}
+                </v-list-item-title>
+              </v-list-item-content>
+            </template>
+          </v-select>
           <v-select
               v-model="member.AdminUserId"
               :items="admins"
@@ -290,6 +299,7 @@ import Genders from "@/Genders";
 import Rules from "@/Rules";
 import OrganisationService from "@/service/OrganisationService";
 import PreferredCommunication from "@/PreferredCommunication";
+import Images from "@/Images";
 
 const communicationModes = ['Messenger', 'Email', 'Phone'];
 export default {
@@ -318,7 +328,10 @@ export default {
     this.reviewPreferredCommunication();
     if (this.$store.state.user.status === 'admin') {
       response = await OrganisationService.list();
-      this.organisations = response.data;
+      this.organisations = response.data.map((organisation) => {
+        organisation.customImageUrl = Images.getCustomBase64Url(organisation.customImage);
+        return organisation;
+      });
       response = await MemberService.list();
       this.admins = response.data.filter((member) => {
         return member.status === 'admin';

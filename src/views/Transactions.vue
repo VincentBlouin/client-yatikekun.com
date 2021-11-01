@@ -87,7 +87,7 @@
             >
               {{ transaction.receiverFullname }}
             </td>
-            <td>{{ transaction.amount }}</td>
+            <td>{{ transaction.amountFormatted }}</td>
             <td>
               <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
@@ -98,7 +98,7 @@
                 <span>{{ transaction.statusName }}</span>
               </v-tooltip>
             </td>
-            <td>{{ transaction.balance }}</td>
+            <td>{{ transaction.balanceFormatted }}</td>
             <td v-if="$store.state.user.status === 'admin' && index !== transactions.length - 1">
               <v-icon @click.stop="removeTransaction(transaction.id)">delete</v-icon>
             </td>
@@ -125,7 +125,7 @@
             {{ $t('confirm') }}
           </v-btn>
           <v-spacer></v-spacer>
-          <v-btn @click="confirmRemoveTransactionDialog = false">{{$t('close')}}</v-btn>
+          <v-btn @click="confirmRemoveTransactionDialog = false">{{ $t('close') }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -136,6 +136,7 @@ import I18n from "@/i18n";
 import TransactionService from "@/service/TransactionService";
 import {format} from 'date-fns'
 import {fr} from 'date-fns/locale'
+import Transaction from "@/Transaction";
 
 export default {
   components: {
@@ -231,31 +232,23 @@ export default {
             );
             if (transaction.status.toLowerCase() === "confirmed") {
               transaction.statusIcon = "done";
-              transaction.statusIconColor="primary";
+              transaction.statusIconColor = "primary";
             } else if (transaction.status.toLowerCase() === "pending") {
               transaction.statusIcon = "pending";
-              transaction.statusIconColor="primary";
+              transaction.statusIconColor = "primary";
             } else if (transaction.status.toLowerCase() === "refused") {
               transaction.statusIcon = "do_not_disturb_on";
-              transaction.statusIconColor="error";
+              transaction.statusIconColor = "error";
             }
             transaction.balance =
                 transaction.GiverId !== null &&
                 transaction.GiverId === this.$store.state.user.id
                     ? transaction.balanceGiver
                     : transaction.balanceReceiver;
-            transaction.giverFullname = "";
-            if (transaction.giver) {
-              transaction.giverFullname =
-                  transaction.giver.firstname + " " + transaction.giver.lastname;
-            }
-            transaction.receiverFullname = "";
-            if (transaction.receiver) {
-              transaction.receiverFullname =
-                  transaction.receiver.firstname +
-                  " " +
-                  transaction.receiver.lastname;
-            }
+            transaction.giverFullname = Transaction.giverFullname(transaction);
+            transaction.receiverFullname = Transaction.receiverFullname(transaction);
+            transaction.amountFormatted = Transaction.quantityToFormatted(transaction.amount);
+            transaction.balanceFormatted = Transaction.quantityToFormatted(transaction.balance);
             return transaction;
           })
           .sort((a, b) => {
