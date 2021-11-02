@@ -98,7 +98,11 @@
                 <span>{{ transaction.statusName }}</span>
               </v-tooltip>
             </td>
-            <td>{{ transaction.balanceFormatted }}</td>
+            <td>
+              <span v-if="transaction.status === 'CONFIRMED'">
+                {{ transaction.balanceFormatted }}
+              </span>
+            </td>
             <td v-if="$store.state.user.status === 'admin' && index !== transactions.length - 1">
               <v-icon @click.stop="removeTransaction(transaction.id)">delete</v-icon>
             </td>
