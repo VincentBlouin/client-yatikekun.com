@@ -157,25 +157,45 @@
                       {{ $t('about:member2') }}
                     </span>
                   </v-subheader>
-                  <v-list-item href="tel:581-886-1691">
-                    <v-list-item-avatar>
-                      <v-avatar>
-                        <img
-                            :src="require('@/assets/arielle-petit-carre.jpg')"
-                            alt="Arielle Paiement"
-                        >
-                      </v-avatar>
-                    </v-list-item-avatar>
-                    <v-list-item-content>
-                      <v-list-item-title class="text-subtitle-1 text-md-h6 font-weight-regular">
-                        Arielle Paiement
-                      </v-list-item-title>
-                      <v-list-item-subtitle class="text-subtitle-1 text-md-h6 font-weight-regular">
+                  <v-list-group
+                      :value="true"
+                  >
+                    <template v-slot:activator>
+                      <v-list-item-avatar>
+                        <v-avatar>
+                          <img
+                              :src="require('@/assets/arielle-petit-carre.jpg')"
+                              alt="Arielle Paiement"
+                          >
+                        </v-avatar>
+                      </v-list-item-avatar>
+                      <v-list-item-content>
+                        <v-list-item-title class="text-subtitle-1 text-md-h6 font-weight-regular">
+                          Arielle Paiement
+                        </v-list-item-title>
+                      </v-list-item-content>
+                    </template>
+                    <v-list-item href="mailto:arielle.paiement@gmail.com" :class="{
+                      'ml-12' : $vuetify.breakpoint.mdAndUp
+                    }">
+                      <v-list-item-icon>
+                        <v-icon>email</v-icon>
+                      </v-list-item-icon>
+                      <v-list-item-content class="text-subtitle-1 text-md-h6 font-weight-regular">
+                        arielle.paiement@gmail.com
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-list-item href="tel:581-886-1691" :class="{
+                      'ml-12' : $vuetify.breakpoint.mdAndUp
+                    }">
+                      <v-list-item-icon>
+                        <v-icon>phone</v-icon>
+                      </v-list-item-icon>
+                      <v-list-item-content class="text-subtitle-1 text-md-h6 font-weight-regular">
                         581-886-1691
-                      </v-list-item-subtitle>
-                    </v-list-item-content>
-
-                  </v-list-item>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </v-list-group>
                   <!--                  <v-list-item class="ml-8" href="tel:555-555-5555">-->
                   <!--                    <v-list-item-avatar>-->
                   <!--                      <v-avatar color="primary" dark>-->
