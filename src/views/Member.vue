@@ -151,18 +151,13 @@
               :hint="$t('member:pronounHint')"
           ></v-text-field>
           <v-select
-              :items="genders"
-              v-model="member.gender"
-              :label="$t('member:gender')"
-              required
-              :item-text="getSelectText"
-              item-value="value"
-              :rules="[rules.required]"
-          >
-            <template v-slot:item="{ item }">
-              {{ $t(item.value) }}
-            </template>
-          </v-select>
+              v-model="member.language"
+              :items="languages"
+              attach
+              chips
+              :label="$t('member:language')"
+              multiple
+          ></v-select>
           <v-text-field
               v-model="member.address"
               :label="$t('member:address')"
@@ -295,7 +290,6 @@
 import I18n from "@/i18n";
 import MemberService from "@/service/MemberService";
 import Regions from "@/Regions";
-import Genders from "@/Genders";
 import Rules from "@/Rules";
 import OrganisationService from "@/service/OrganisationService";
 import PreferredCommunication from "@/PreferredCommunication";
@@ -356,7 +350,6 @@ export default {
       subRegion: "Sous région",
       phone1: "Téléphone 1",
       phone2: "Téléphone 2",
-      gender: "Genre",
       pronoun: "Pronom utilisé",
       pronounHint: "il, elle, iel par exemple",
       address: "Adresse",
@@ -375,7 +368,8 @@ export default {
       contactByMessenger: "Accepter que les membres vous contactent par messenger",
       contactByPhone: "Accepter que les membres vous contactent par téléphone",
       contactByPhoneHint: "Pensez à accepter pour que les membres qui n'ont pas internet puissent vous contacter",
-      communicationPreference: "Moyen de communication préféré"
+      communicationPreference: "Moyen de communication préféré",
+      language: "Langues parlées"
     });
     I18n.i18next.addResources("en", "member", {
       title: "Nouveau membre",
@@ -389,7 +383,6 @@ export default {
       subRegion: "Sous région",
       phone1: "Téléphone 1",
       phone2: "Téléphone 2",
-      gender: "Genre",
       pronoun: "Pronom utilisé",
       pronounHint: "exemple: il, elle, iel",
       address: "Adresse",
@@ -407,7 +400,8 @@ export default {
       contactByEmail: "Accepter que les membres vous contactent par courriel",
       contactByMessenger: "Accepter que les membres vous contactent par messenger",
       contactByPhone: "Accepter que les membres vous contactent par téléphone",
-      communicationPreference: "Moyen de communication préféré"
+      communicationPreference: "Moyen de communication préféré",
+      language: "Langues parlées"
     });
     return {
       submitLoading: false,
@@ -415,7 +409,6 @@ export default {
         region: "BDC",
       },
       subRegions: Regions.get(),
-      genders: Genders.get(),
       isFormValid: false,
       rules: Rules,
       organisations: [],
@@ -437,7 +430,10 @@ export default {
         }
       ],
       communicationIcon: PreferredCommunication.getCommunicationIcons(),
-      preferredCommunication: {}
+      preferredCommunication: {},
+      languages: [
+          "Français", "English"
+      ]
     };
   },
   methods: {

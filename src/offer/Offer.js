@@ -26,6 +26,9 @@ export default {
                 offer.User.facebookUsername = facebookId;
             }
         }
+        if (offer.User && offer.User.language) {
+            offer.User.languageFormatted = offer.User.language.join(", ");
+        }
         const linkifyOptions = {
             target: {
                 url: '_blank'

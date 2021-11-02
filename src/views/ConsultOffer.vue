@@ -225,11 +225,11 @@
             </v-card-text>
             <v-card-text class="body-1 pb-0">
               <strong>
-                {{ $t('consult:gender') }}
+                {{ $t('consult:languages') }}
               </strong>
             </v-card-text>
             <v-card-text class="body-1">
-              {{ $t(offer.User.gender) }}
+              {{ $t(offer.User.languageFormatted) }}
             </v-card-text>
           </v-card>
           <v-card-text class="vh-center">
@@ -404,7 +404,7 @@ export default {
       phone: "Téléphone",
       preferNoContact: "* Préfère ne pas être contacté par ce moyen de communication",
       pronoun: "Utilisez le pronom",
-      gender: "Genre",
+      languages: "Langues parlées",
       preferenceOfCommunication: "Moyen de communiquer en ordre de préférence"
     });
     I18n.i18next.addResources("en", "consult", {
@@ -421,7 +421,7 @@ export default {
       phone: "Téléphone",
       preferNoContact: "* Préfère ne pas être contacté par ce moyen de communication",
       pronoun: "Utilisez le pronom",
-      gender: "Genre",
+      languages: "Langues parlées",
       preferenceOfCommunication: "Moyen de communiquer en ordre de préférence"
     });
     /*
