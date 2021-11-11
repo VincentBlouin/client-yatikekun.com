@@ -281,7 +281,7 @@
                   </v-list-item>
                   <v-list-item :class="{
             'pl-0 pr-0': $vuetify.breakpoint.smAndDown
-          }" href="https://docs.google.com/forms/d/e/1FAIpQLSdQu47n0_bPKPO2kDAlWLdvg4JoJC-pasQWeBVQWVP2OI5tdw/viewform">
+          }" href="https://docs.google.com/forms/d/e/1FAIpQLSf0Z1IH1lYZ8sL-4umROhOXSJ83NIAzIbIAWAlMvGaE7mM7eg/viewform?vc=0&c=0&w=1&flr=0">
                     <v-list-item-icon>
                       <v-badge>
                         <template v-slot:badge>
