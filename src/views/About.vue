@@ -146,10 +146,44 @@
               <v-col cols="2" v-if="$vuetify.breakpoint.mdAndUp"></v-col>
               <v-col cols="12" class="col-md-8">
                 <v-list class="text-left" subheader>
+                  <v-list-item :class="{
+            'pl-0 pr-0': $vuetify.breakpoint.smAndDown
+          }" href="https://docs.google.com/forms/d/e/1FAIpQLSf0Z1IH1lYZ8sL-4umROhOXSJ83NIAzIbIAWAlMvGaE7mM7eg/viewform?vc=0&c=0&w=1&flr=0">
+                    <v-list-item-icon>
+                      <v-badge>
+                        <template v-slot:badge>
+                          1
+                        </template>
+                        <v-icon large>card_membership</v-icon>
+                      </v-badge>
+                    </v-list-item-icon>
+                    <v-list-item-content class="text-left">
+                      <v-list-item-title class="text-h6 text-md-h5 font-weight-regular">
+                        {{ $t('about:member4') }}
+                      </v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item :class="{
+            'pl-0 pr-0': $vuetify.breakpoint.smAndDown
+          }" to="/charte">
+                    <v-list-item-icon>
+                      <v-badge>
+                        <template v-slot:badge>
+                          2
+                        </template>
+                        <v-icon large>assignment</v-icon>
+                      </v-badge>
+                    </v-list-item-icon>
+                    <v-list-item-content class="text-left">
+                      <v-list-item-title class="text-h6 text-md-h5 font-weight-regular">
+                        {{ $t('about:member3') }}
+                      </v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
                   <v-subheader class="text-h6 text-md-h5 font-weight-regular black--text">
                     <v-badge>
                       <template v-slot:badge>
-                        1
+                        3
                       </template>
                       <v-icon large>supervisor_account</v-icon>
                     </v-badge>
@@ -175,14 +209,14 @@
                         </v-list-item-title>
                       </v-list-item-content>
                     </template>
-                    <v-list-item href="mailto:arielle.paiement@gmail.com" :class="{
+                    <v-list-item href="mailto:partageheurebdc@gmail.com" :class="{
                       'ml-12' : $vuetify.breakpoint.mdAndUp
                     }">
                       <v-list-item-icon>
                         <v-icon>email</v-icon>
                       </v-list-item-icon>
                       <v-list-item-content class="text-subtitle-1 text-md-h6 font-weight-regular">
-                        arielle.paiement@gmail.com
+                        partageheurebdc@gmail.com
                       </v-list-item-content>
                     </v-list-item>
                     <v-list-item href="tel:581-886-1691" :class="{
@@ -262,40 +296,6 @@
                   <!--                      </v-list-item-subtitle>-->
                   <!--                    </v-list-item-content>-->
                   <!--                  </v-list-item>-->
-                  <v-list-item :class="{
-            'pl-0 pr-0': $vuetify.breakpoint.smAndDown
-          }" to="/charte">
-                    <v-list-item-icon>
-                      <v-badge>
-                        <template v-slot:badge>
-                          2
-                        </template>
-                        <v-icon large>assignment</v-icon>
-                      </v-badge>
-                    </v-list-item-icon>
-                    <v-list-item-content class="text-left">
-                      <v-list-item-title class="text-h6 text-md-h5 font-weight-regular">
-                        {{ $t('about:member3') }}
-                      </v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item :class="{
-            'pl-0 pr-0': $vuetify.breakpoint.smAndDown
-          }" href="https://docs.google.com/forms/d/e/1FAIpQLSf0Z1IH1lYZ8sL-4umROhOXSJ83NIAzIbIAWAlMvGaE7mM7eg/viewform?vc=0&c=0&w=1&flr=0">
-                    <v-list-item-icon>
-                      <v-badge>
-                        <template v-slot:badge>
-                          3
-                        </template>
-                        <v-icon large>card_membership</v-icon>
-                      </v-badge>
-                    </v-list-item-icon>
-                    <v-list-item-content class="text-left">
-                      <v-list-item-title class="text-h6 text-md-h5 font-weight-regular">
-                        {{ $t('about:member4') }}
-                      </v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
                 </v-list>
               </v-col>
             </v-row>
@@ -370,7 +370,7 @@ export default {
       member1: "Pour devenir membre",
       member2: "Prendre rdv avec un administrateur",
       member3: "Lire et accepter la charte",
-      member4: "Devenir membre de Horizons Gaspésiens",
+      member4: "Adhérez à Horizons Gaspésiens",
       plus1: "Le SEL de mer vous permet de"
     });
     I18n.i18next.addResources("en", "about", {
@@ -387,7 +387,7 @@ export default {
       member1: "Comment devenir membre",
       member2: "Rencontrer un administrateur",
       member3: "Lire et accepter la charte",
-      member4: "Devenir membre de la coopérative de solidarité Horizons Gaspésiens",
+      member4: "Adhérez à Horizons Gaspésiens",
       plus1: "Avantage d'être membre"
     });
     return {
