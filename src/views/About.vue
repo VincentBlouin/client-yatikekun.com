@@ -369,7 +369,7 @@ export default {
       // general6: "avec l'objectif de réduire la pauvreté et d'augmenter l'entraide.",
       member1: "Pour devenir membre",
       member2: "Prendre rdv avec un administrateur",
-      member3: "Lire et accepter la charte",
+      member3: "Lisez et acceptez la charte",
       member4: "Adhérez à Horizons Gaspésiens",
       plus1: "Le SEL de mer vous permet de"
     });
@@ -386,7 +386,7 @@ export default {
       general6: "avec l'objectif de réduire la pauvreté et d'augmenter l'entraide.",
       member1: "Comment devenir membre",
       member2: "Rencontrer un administrateur",
-      member3: "Lire et accepter la charte",
+      member3: "Lisez et acceptez la charte",
       member4: "Adhérez à Horizons Gaspésiens",
       plus1: "Avantage d'être membre"
     });
