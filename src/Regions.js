@@ -1,5 +1,59 @@
 const regions = [
     {
+        value: "valBrillant"
+    },
+    {
+        value: "sayabec"
+    },
+    {
+        value: "saintZenonDuLacHumqui"
+    },
+    {
+        value: "saintVianney"
+    },
+    {
+        value: "saintTharcisius"
+    },
+    {
+        value: "saintNoel"
+    },
+    {
+        value: "saintMoise"
+    },
+    {
+        value: "saintLeonLeGrand"
+    },
+    {
+        value: "sainteMargueriteMarie"
+    },
+    {
+        value: "sainteFlorence"
+    },
+    {
+        value: "sainteIrene"
+    },
+    {
+        value: "saintDamase"
+    },
+    {
+        value: "saintCleoPhas"
+    },
+    {
+        value: "saintAlexandreDesLacs"
+    },
+    {
+        value: "lacAuSaumon"
+    },
+    {
+        value: "causapscal"
+    },
+    {
+        value: "amqui"
+    },
+    {
+        value: "albertville"
+    },
+    {
         value: "pointeALaCroix"
     },
     {
