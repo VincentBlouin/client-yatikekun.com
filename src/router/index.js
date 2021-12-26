@@ -101,7 +101,7 @@ const routes = [
         component: () => import('../views/TransactionPage.vue')
     },
     {
-        path: '/toutes-transactions',
+        path: '/transaction/toutes',
         name: 'AllTransactions',
         component: () => import('../views/AllTransactions.vue')
     },
