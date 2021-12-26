@@ -7,6 +7,9 @@ export default {
     listForOrgId: function (orgId) {
         return Service.api().get('/transaction/org/' + orgId);
     },
+    listAll: function () {
+        return Service.api().get('/transaction/all');
+    },
     getForId: function (transactionId) {
         return Service.api().get('/transaction/' + transactionId);
     },

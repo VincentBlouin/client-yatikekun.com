@@ -171,6 +171,10 @@ export default {
     organisation: {
       type: Object,
       default: null
+    },
+    isAllFlow: {
+      type: Boolean,
+      default: false
     }
   },
   async mounted() {
@@ -243,13 +247,18 @@ export default {
     },
     setupData: async function () {
       this.isLoading = true;
-      let response = this.isOrgFlow ?
-          await TransactionService.listForOrgId(
-              this.organisation.id
-          ) :
-          await TransactionService.listForUserId(
-              this.$store.state.user.id
-          );
+      let response;
+      if (this.isAllFlow) {
+        response = await TransactionService.listAll();
+      } else if (this.isOrgFlow) {
+        response = await TransactionService.listForOrgId(
+            this.organisation.id
+        )
+      } else {
+        response = await TransactionService.listForUserId(
+            this.$store.state.user.id
+        );
+      }
       this.transactions = response.data
           .map((transaction) => {
             if (transaction.details === "initial") {
