@@ -54,7 +54,7 @@
           {{ $t('transactions:serviceReceived3') }}
         </v-btn>
       </v-speed-dial>
-      <v-simple-table>
+      <v-simple-table v-if="transactions.length > 0">
         <template v-slot:default>
           <thead>
           <tr>
@@ -125,6 +125,9 @@
           </tbody>
         </template>
       </v-simple-table>
+      <v-card-title v-else class="text-center font-italic vh-center">
+        {{ $t("transactions:noTransactions") }}
+      </v-card-title>
     </v-card>
     <NewTransaction ref="newTransaction"
                     :giverInit="isGiverFlow ? this.$store.state.user: null"
@@ -194,7 +197,8 @@ export default {
       serviceGiven1: "Vous avez ",
       serviceGiven2: "rendu",
       serviceGiven3: "un service",
-      confirmDelete: "Voulez-vous vraiment supprimer cette transaction ?"
+      confirmDelete: "Voulez-vous vraiment supprimer cette transaction ?",
+      noTransactions: "Pas de transactions"
     });
     I18n.i18next.addResources("en", "transactions", {
       title: "Transactions",
@@ -214,7 +218,8 @@ export default {
       serviceGiven1: "You",
       serviceGiven2: "gave",
       serviceGiven3: "a service",
-      confirmDelete: "Voulez-vous vraiment supprimer cette transaction ?"
+      confirmDelete: "Voulez-vous vraiment supprimer cette transaction ?",
+      noTransactions: "Pas de transactions"
     });
     return {
       transactions: [],
