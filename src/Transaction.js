@@ -41,6 +41,13 @@ const Transaction = {
     },
     minutesToDecimal: function (minutes) {
         return minutes / 60;
+    },
+    balance: function (transaction, entityId, isOrg) {
+        const isGiver = (!isOrg && transaction.GiverId !== null && transaction.GiverId === entityId)
+            || (isOrg && transaction.GiverOrgId !== null && transaction.GiverOrgId === entityId);
+        return isGiver
+            ? transaction.balanceGiver
+            : transaction.balanceReceiver;
     }
 };
 export default Transaction;

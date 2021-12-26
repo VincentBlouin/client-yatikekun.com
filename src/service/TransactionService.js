@@ -4,6 +4,9 @@ export default {
     listForUserId: function (userId) {
         return Service.api().get('/transaction/user/' + userId);
     },
+    listForOrgId: function (orgId) {
+        return Service.api().get('/transaction/org/' + orgId);
+    },
     getForId: function (transactionId) {
         return Service.api().get('/transaction/' + transactionId);
     },

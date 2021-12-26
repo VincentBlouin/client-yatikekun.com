@@ -13,7 +13,7 @@
             <v-icon>close</v-icon>
           </v-btn>
         </v-card-title>
-        <v-card-text v-if="!hasConfirmed">
+        <v-card-text v-if="!hasConfirmed && !hideNbParticipants">
           <v-card>
             <v-card-title class="subtitle-2 grey--text font-weight-regular">
               {{ $t('newTransaction:groupActivity') }}
@@ -182,6 +182,8 @@ import OfferService from "@/offer/OfferService";
 import OfferCard from "@/views/OfferCard";
 import Offer from "@/offer/Offer"
 
+const FACEBOOK_TEST_USER_UUID = "30b2c42a-96b2-48b2-b21c-534ab5e613aa";
+
 export default {
   components: {
     OfferCard,
@@ -197,9 +199,21 @@ export default {
       type: Object,
       default: null
     },
+    receiverOrgInit: {
+      type: Object,
+      default: null
+    },
     giverInit: {
       type: Object,
       default: null
+    },
+    hideNbParticipants: {
+      type: Boolean,
+      default: false
+    },
+    hideBonus: {
+      type: Boolean,
+      default: false
     }
   },
   async mounted() {
@@ -296,7 +310,7 @@ export default {
       if (this.isChooseAnotherUserFlow) {
         const response = await MemberService.list();
         this.members = response.data.filter((member) => {
-          return member.status !== 'disabled' && member.uuid !== "30b2c42a-96b2-48b2-b21c-534ab5e613aa";
+          return member.status !== 'disabled' && member.uuid !== FACEBOOK_TEST_USER_UUID;
         }).map((member) => {
           member.fullname = member.firstname + " " + member.lastname;
           member.disabled = member.uuid === this.$store.state.user.uuid;
@@ -331,8 +345,13 @@ export default {
       } else {
         this.receiverOrganisationId = this.selectedOrganisation.id;
       }
-      this.showConfirmMessage = true;
-      this.$emit('transactionAdded');
+      if (this.receiverOrgInit === null) {
+        this.showConfirmMessage = true;
+      }
+      await this.$emit('transactionAdded');
+      if (this.receiverOrgInit !== null) {
+        this.dialog = false;
+      }
     },
     addTransaction: async function () {
       await TransactionService.add({
@@ -341,8 +360,10 @@ export default {
         nbParticipants: this.nbParticipants,
         details: this.details,
         InitiatorId: this.$store.state.user.id,
+        InitiatorOrgId: this.receiverOrgInit === null ? null : this.receiverOrgInit.id,
         GiverUuid: this.giver.uuid,
-        ReceiverUuid: this.receiver.uuid,
+        ReceiverUuid: this.receiverOrgInit === null ? this.receiver.uuid : null,
+        ReceiverOrgId: this.receiverOrgInit === null ? null : this.receiverOrgInit.id,
         OfferId: this.offerId,
         organisationId: this.selectedOrganisation.id
       });
@@ -387,13 +408,19 @@ export default {
       return this.giverInit === null ? this.userOfTransaction : this.giverInit;
     },
     receiver: function () {
-      return this.receiverInit === null ? this.userOfTransaction : this.receiverInit;
+      if (this.receiverOrgInit === null) {
+        return this.receiverInit === null ? this.userOfTransaction : this.receiverInit;
+      }
+      return this.receiverOrgInit;
     },
     otherUser: function () {
       if (this.giver === null) {
         return this.receiver;
       }
       if (this.receiver === null) {
+        return this.giver;
+      }
+      if (this.receiverOrgInit) {
         return this.giver;
       }
       return this.receiver.uuid === this.$store.state.user.uuid

@@ -66,6 +66,11 @@ const routes = [
         component: () => import('../views/Organisation.vue')
     },
     {
+        path: '/organisation/:organisationId/transactions',
+        name: 'OrganisationTransactions',
+        component: () => import('../views/Organisation.vue')
+    },
+    {
         path: '/membre',
         name: 'MemberNew',
         component: () => import('../views/Member.vue')
@@ -83,7 +88,7 @@ const routes = [
     {
         path: '/transactions',
         name: 'Transactions',
-        component: () => import('../views/Transactions.vue')
+        component: () => import('../views/MemberTransactions.vue')
     },
     {
         path: '/transaction/:transactionId',

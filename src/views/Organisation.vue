@@ -1,6 +1,6 @@
 <template>
   <Page>
-    <v-card flat class="">
+    <v-card>
       <v-card-title>
         <v-icon class="mr-4">business</v-icon>
         Organisation
@@ -9,71 +9,95 @@
           'pa-0': $vuetify.breakpoint.smAndDown
           }">
         <router-link to="/organisations">
-          {{$t('organisation:seeAll')}}
+          {{ $t('organisation:seeAll') }}
         </router-link>
       </v-card-text>
-      <v-card-text class="text-center pb-0" :class="{
+      <v-card-title v-if="organisation && organisation.name">
+        {{organisation.name}}
+      </v-card-title>
+      <v-tabs v-model="tab">
+        <v-tab key="info">
+          {{ $t('organisation:info') }}
+        </v-tab>
+        <v-tab key="transactions">
+          {{ $t('organisation:transactions') }}
+        </v-tab>
+      </v-tabs>
+      <v-tabs-items v-model="tab">
+        <v-tab-item
+            key="info"
+        >
+          <v-card flat class="">
+            <v-card-text class="text-center pb-0" :class="{
           'pa-0': $vuetify.breakpoint.smAndDown
           }">
-        <v-form ref="organisationForm" v-model="isFormValid">
-          <v-text-field
-              v-model="organisation.name"
-              :label="$t('organisation:name')"
-              required
-              :rules="[rules.required]"
-          ></v-text-field>
-          <v-text-field
-              v-model="organisation.url"
-              :label="$t('organisation:url')"
-              required
-              :rules="[rules.required]"
-          ></v-text-field>
-          <v-row>
-            <v-col cols="12" class="text-left">
-              <v-skeleton-loader
-                  width="250"
-                  type="image"
-                  color="transparent"
-                  v-if="isImageLoading"
-              ></v-skeleton-loader>
-              <img :src="organisation.customImageUrl" width="200px"
-                   v-if="!isImageLoading && organisation.customImageUrl"/>
-            </v-col>
-          </v-row>
-          <v-file-input
-              accept="image/*"
-              :label="$t('organisation:image')"
-              prepend-icon="image"
-              v-model="logo"
-          ></v-file-input>
-          <v-checkbox
-              v-model="organisation.activeForTransactions"
-              :label="$t('organisation:activeForTransactions')"
-              persistent-hint
-              :hint="$t('organisation:activeForTransactionsHint')"
-          ></v-checkbox>
-        </v-form>
-      </v-card-text>
-      <v-card-actions class="text-center vh-center pt-8">
-        <v-btn
-            color="primary"
-            @click="addOrganisation"
-            :loading="submitLoading"
-            :disabled="submitLoading"
-            v-if="isCreate"
+              <v-form ref="organisationForm" v-model="isFormValid">
+                <v-text-field
+                    v-model="organisation.name"
+                    :label="$t('organisation:name')"
+                    required
+                    :rules="[rules.required]"
+                ></v-text-field>
+                <v-text-field
+                    v-model="organisation.url"
+                    :label="$t('organisation:url')"
+                    required
+                    :rules="[rules.required]"
+                ></v-text-field>
+                <v-row>
+                  <v-col cols="12" class="text-left">
+                    <v-skeleton-loader
+                        width="250"
+                        type="image"
+                        color="transparent"
+                        v-if="isImageLoading"
+                    ></v-skeleton-loader>
+                    <img :src="organisation.customImageUrl" width="200px"
+                         v-if="!isImageLoading && organisation.customImageUrl"/>
+                  </v-col>
+                </v-row>
+                <v-file-input
+                    accept="image/*"
+                    :label="$t('organisation:image')"
+                    prepend-icon="image"
+                    v-model="logo"
+                ></v-file-input>
+                <v-checkbox
+                    v-model="organisation.activeForTransactions"
+                    :label="$t('organisation:activeForTransactions')"
+                    persistent-hint
+                    :hint="$t('organisation:activeForTransactionsHint')"
+                ></v-checkbox>
+              </v-form>
+            </v-card-text>
+            <v-card-actions class="text-center vh-center pt-8">
+              <v-btn
+                  color="primary"
+                  @click="addOrganisation"
+                  :loading="submitLoading"
+                  :disabled="submitLoading"
+                  v-if="isCreate"
+              >
+                {{ $t("organisation:addOrganisation") }}
+              </v-btn>
+              <v-btn
+                  color="primary"
+                  @click="modifyOrganisation"
+                  :loading="submitLoading"
+                  :disabled="submitLoading"
+                  v-if="!isCreate"
+              >
+                {{ $t("change") }}
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-tab-item>
+        <v-tab-item
+            key="transactions"
         >
-          {{ $t("organisation:addOrganisation") }}
-        </v-btn>
-        <v-btn
-            color="primary"
-            @click="modifyOrganisation"
-            :loading="submitLoading"
-            :disabled="submitLoading"
-            v-if="!isCreate"
-        >
-          {{ $t("change") }}
-        </v-btn>
-      </v-card-actions>
+          <Transactions :organisation="organisation"></Transactions>
+        </v-tab-item>
+      </v-tabs-items>
     </v-card>
     <v-snackbar
         v-model="modifySuccess"
@@ -105,7 +129,8 @@ import Images from "@/Images";
 
 export default {
   components: {
-    Page: () => import('@/components/Page')
+    Page: () => import('@/components/Page'),
+    Transactions: () => import('@/components/Transactions'),
   },
   async mounted() {
     if (this.$route.params.organisationId) {
@@ -127,7 +152,9 @@ export default {
       addOrganisation: "Ajouter l'organisation",
       seeAll: "Toutes les organisations",
       activeForTransactions: "Actif pour les transactions",
-      activeForTransactionsHint: "Pourra reçevoir les heures bonus des usagers. Pourra aussi donner des heures à leurs bénévoles"
+      activeForTransactionsHint: "Pourra reçevoir les heures bonus des usagers. Pourra aussi donner des heures à leurs bénévoles",
+      info: "Info",
+      transactions: "Transactions"
     });
     I18n.i18next.addResources("en", "organisation", {
       title: "Nouvelle Organisation",
@@ -138,7 +165,9 @@ export default {
       addOrganisation: "Ajouter l'organisation",
       seeAll: "Toutes les organisations",
       activeForTransactions: "Actif pour les transactions",
-      activeForTransactionsHint: "Pourra reçevoir les heures bonus des usagers. Pourra aussi donner des heures à leurs bénévoles"
+      activeForTransactionsHint: "Pourra reçevoir les heures bonus des usagers. Pourra aussi donner des heures à leurs bénévoles",
+      info: "Info",
+      transactions: "Transactions"
     });
     return {
       submitLoading: false,
@@ -147,7 +176,8 @@ export default {
       isFormValid: false,
       rules: Rules,
       modifySuccess: false,
-      isImageLoading: false
+      isImageLoading: false,
+      tab: null,
     };
   },
   methods: {

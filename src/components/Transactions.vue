@@ -1,10 +1,25 @@
 <template>
-  <Page>
+  <div>
     <v-card flat class="pt-8">
       <v-card-title class="logo-font text-h4">
         {{ $t("transactions:title") }}
       </v-card-title>
+      <v-btn
+          v-if="isOrgFlow"
+          fixed
+          bottom
+          fab
+          :style="addStyle"
+          color="primary"
+          dark
+          right
+          x-large
+          @click="newTransactionAsReceiver()"
+      >
+        <v-icon>add</v-icon>
+      </v-btn>
       <v-speed-dial
+          v-else
           fixed
           bottom
           :style="addStyle"
@@ -74,7 +89,7 @@
             <td
                 :class="{
                     'font-weight-bold':
-                      transaction.GiverId === $store.state.user.id,
+                      transaction.GiverId === entityId,
                   }"
             >
               {{ transaction.giverFullname }}
@@ -82,7 +97,7 @@
             <td
                 :class="{
                     'font-weight-bold':
-                      transaction.ReceiverId === $store.state.user.id,
+                      transaction.ReceiverId === entityId,
                   }"
             >
               {{ transaction.receiverFullname }}
@@ -114,6 +129,9 @@
     <NewTransaction ref="newTransaction"
                     :giverInit="isGiverFlow ? this.$store.state.user: null"
                     :receiverInit="isGiverFlow ? null : this.$store.state.user"
+                    :receiverOrgInit="isOrgFlow ? organisation : null"
+                    :hideNbParticipants="isOrgFlow"
+                    :hideBonus="isOrgFlow"
                     @transactionAdded="setupData"
     ></NewTransaction>
     <v-dialog v-model="confirmRemoveTransactionDialog" width="650">
@@ -133,7 +151,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </Page>
+  </div>
 </template>
 <script>
 import I18n from "@/i18n";
@@ -144,8 +162,13 @@ import Transaction from "@/Transaction";
 
 export default {
   components: {
-    Page: () => import('@/components/Page'),
     NewTransaction: () => import("@/components/NewTransaction"),
+  },
+  props: {
+    organisation: {
+      type: Object,
+      default: null
+    }
   },
   async mounted() {
     window.scrollTo(0, 0);
@@ -215,9 +238,13 @@ export default {
     },
     setupData: async function () {
       this.isLoading = true;
-      let response = await TransactionService.listForUserId(
-          this.$store.state.user.id
-      );
+      let response = this.isOrgFlow ?
+          await TransactionService.listForOrgId(
+              this.organisation.id
+          ) :
+          await TransactionService.listForUserId(
+              this.$store.state.user.id
+          );
       this.transactions = response.data
           .map((transaction) => {
             if (transaction.details === "initial") {
@@ -244,11 +271,7 @@ export default {
               transaction.statusIcon = "do_not_disturb_on";
               transaction.statusIconColor = "error";
             }
-            transaction.balance =
-                transaction.GiverId !== null &&
-                transaction.GiverId === this.$store.state.user.id
-                    ? transaction.balanceGiver
-                    : transaction.balanceReceiver;
+            transaction.balance = Transaction.balance(transaction, this.entityId, this.isOrgFlow);
             transaction.giverFullname = Transaction.giverFullname(transaction);
             transaction.receiverFullname = Transaction.receiverFullname(transaction);
             transaction.amountFormatted = Transaction.quantityToFormatted(transaction.amount);
@@ -286,6 +309,14 @@ export default {
       await TransactionService.removeTransaction(this.transactionIdToRemove);
       this.confirmRemoveTransactionDialog = false;
       await this.setupData();
+    }
+  },
+  computed: {
+    isOrgFlow: function () {
+      return this.organisation !== null;
+    },
+    entityId: function () {
+      return this.isOrgFlow ? this.organisation.id : this.$store.state.user.id;
     }
   }
 };
