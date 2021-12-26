@@ -121,7 +121,7 @@
           </v-btn>
           <v-spacer></v-spacer>
         </v-card-actions>
-        <v-card-actions v-if="!preventShowActions && status === 'PENDING'" class="mt-2">
+        <v-card-actions v-if="!hasConfirmed && !preventShowActions && status === 'PENDING'" class="mt-2">
           <v-spacer></v-spacer>
           <v-btn error class="error" @click="refuseConfirmDialog=true" small :disabled="isSelectOrgLoading">
             {{ $t('transaction:cancelTransaction') }}

@@ -13,13 +13,13 @@
         </router-link>
       </v-card-text>
       <v-card-title v-if="organisation && organisation.name">
-        {{organisation.name}}
+        {{ organisation.name }}
       </v-card-title>
-      <v-tabs v-model="tab">
-        <v-tab key="info">
+      <v-tabs v-model="tab" grow>
+        <v-tab key="info" @click="setRouteToInfo">
           {{ $t('organisation:info') }}
         </v-tab>
-        <v-tab key="transactions">
+        <v-tab key="transactions" @click="setRouteToTransactions">
           {{ $t('organisation:transactions') }}
         </v-tab>
       </v-tabs>
@@ -139,6 +139,9 @@ export default {
     } else {
       this.organisation = {};
     }
+    if (this.$router.currentRoute.name === 'OrganisationTransactions') {
+      this.tab = 1;
+    }
     this.rebuildImageUrl();
     this.isImageLoading = false;
   },
@@ -181,6 +184,16 @@ export default {
     };
   },
   methods: {
+    setRouteToTransactions: function () {
+      this.$router.push(
+          "/organisation/" + this.organisation.id + "/transactions"
+      );
+    },
+    setRouteToInfo: function () {
+      this.$router.push(
+          "/organisation/" + this.organisation.id
+      );
+    },
     rebuildImageUrl: function () {
       if (this.organisation.customImage === undefined) {
         return;
