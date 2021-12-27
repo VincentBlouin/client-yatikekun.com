@@ -67,4 +67,9 @@ export default {
             '/transaction/nbTransactionsBetweenMembers'
         );
     },
+    getNbMembersInvolvedInTransactions: async function () {
+        return Service.api().get(
+            '/transaction/nbMembersInvolvedInTransactions'
+        );
+    }
 }
