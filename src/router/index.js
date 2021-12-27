@@ -91,6 +91,11 @@ const routes = [
         component: () => import('../views/MemberTransactions.vue')
     },
     {
+        path: '/transaction/toutes',
+        name: 'AllTransactions',
+        component: () => import('../views/AllTransactions.vue')
+    },
+    {
         path: '/transaction/:transactionId',
         name: 'TransactionPage',
         component: () => import('../views/TransactionPage.vue')
@@ -99,11 +104,6 @@ const routes = [
         path: '/transaction/:transactionId/confirm/:token',
         name: 'TransactionPage',
         component: () => import('../views/TransactionPage.vue')
-    },
-    {
-        path: '/transaction/toutes',
-        name: 'AllTransactions',
-        component: () => import('../views/AllTransactions.vue')
     },
     {
         path: '/partenaires',

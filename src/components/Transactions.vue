@@ -136,6 +136,7 @@
                     :hideNbParticipants="isOrgFlow"
                     :hideBonus="isOrgFlow"
                     @transactionAdded="setupData"
+                    v-if="!isAllFlow"
     ></NewTransaction>
     <v-dialog v-model="confirmRemoveTransactionDialog" width="650">
       <v-card>
