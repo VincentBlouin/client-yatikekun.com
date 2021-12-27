@@ -14,5 +14,8 @@ export default {
     },
     update: function (member) {
         return Service.api().put('/member/' + member.uuid, member)
-    }
+    },
+    getNbMembers: function () {
+        return Service.api().get('/member/count')
+    },
 }

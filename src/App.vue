@@ -143,6 +143,14 @@
                   {{ $t('app:organisations') }}
                 </v-list-item-content>
               </v-list-item>
+              <v-list-item to="/stats" v-if="isAdmin">
+                <v-list-item-action>
+                  <v-icon>bar_chart</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                  Statistiques
+                </v-list-item-content>
+              </v-list-item>
               <v-divider v-if="isAdmin"></v-divider>
               <v-divider></v-divider>
               <v-subheader>

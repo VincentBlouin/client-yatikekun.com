@@ -61,5 +61,10 @@ export default {
         return Service.api().delete(
             '/transaction/' + transactionId
         );
-    }
+    },
+    getNbTransactionsBetweenMembers: async function () {
+        return Service.api().get(
+            '/transaction/nbTransactionsBetweenMembers'
+        );
+    },
 }
