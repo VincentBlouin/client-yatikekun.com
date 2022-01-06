@@ -93,6 +93,9 @@ export default {
       this.confirmPublishDialog = false;
       this.loading = true;
       // console.log('facebook publish 1')
+      if (window.FB === undefined) {
+        return this.$emit('errorPublishedToFacebook');
+      }
       window.FB.getLoginStatus(async (response) => {
         // console.log('facebook publish 2')
         // console.log(response.status);
