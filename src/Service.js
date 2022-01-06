@@ -1,7 +1,3 @@
-/*
- * Copyright Vincent Blouin under the GPL License version 3
- */
-
 import axios from 'axios'
 import Store from '@/store'
 import RequestErrors from '@/requestError'

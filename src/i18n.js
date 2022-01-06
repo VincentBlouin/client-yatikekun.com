@@ -1,6 +1,3 @@
-/**
- * Copyright Vincent Blouin GNU General Public License v3.0
- */
 import Vue from 'vue'
 import Store from '@/store'
 import i18next from 'i18next'

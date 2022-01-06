@@ -148,7 +148,7 @@
                   <v-icon>bar_chart</v-icon>
                 </v-list-item-action>
                 <v-list-item-content>
-                  Statistiques
+                  {{ $t('app:statistics') }}
                 </v-list-item-content>
               </v-list-item>
               <v-divider v-if="isAdmin"></v-divider>
@@ -282,6 +282,14 @@
               </v-list-item-action>
               <v-list-item-content>
                 {{ $t('app:organisations') }}
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item to="/stats" v-if="isAdmin">
+              <v-list-item-action>
+                <v-icon>bar_chart</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                {{ $t('app:statistics') }}
               </v-list-item-content>
             </v-list-item>
             <v-divider v-if="isAdmin"></v-divider>
@@ -435,7 +443,8 @@ export default {
       addOffer: "Ajouter offre",
       facebookGroup: "Notre groupe",
       partners: "Partenaires",
-      agreements: "Ententes"
+      agreements: "Ententes",
+      statistics: "Statistiques"
     });
     I18n.i18next.addResources("en", "app", {
       becomeMember: "Devenez membre",
@@ -452,7 +461,8 @@ export default {
       addOffer: "Ajouter offre",
       facebookGroup: "Notre groupe",
       partners: "Partners",
-      agreements: "Ententes"
+      agreements: "Ententes",
+      statistics: "Statistics"
     });
     return {
       drawer: false
