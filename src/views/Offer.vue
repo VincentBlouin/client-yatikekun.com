@@ -182,7 +182,7 @@
           <PublishOfferToFacebook
               :skipConfirmation="true"
               @publishedToFacebook="goToOffers()"
-              @errorPublishedToFacebook="goToOffers()"
+              @errorPublishedToFacebook="errorPublishFacebook = true;"
               :offerDescription="offer.description"
               :userSubRegion="$store.state.user.subRegion"
               :offerId="offer.id"
@@ -220,6 +220,27 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-snackbar
+        v-model="errorPublishFacebook"
+        bottom
+        outlined
+        color="error"
+        :timeout="14000"
+    >
+      <v-icon left color="error">error</v-icon>
+      {{ $t("offer:publishToFacebookError") }}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+            color="black"
+            text
+            icon
+            v-bind="attrs"
+            @click="errorPublishFacebook = false;goToOffers();"
+        >
+          <v-icon>close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-row>
 </template>
 <script>
@@ -267,7 +288,8 @@ export default {
       additionalFees: "Frais additionels",
       additionalFeesHint: "Vous pouvez indiquer que vous chargez des frais de déplacement. Nous suggérons 30 sous du kilomètre. Un autre exemple est de demander de fournir la nourriture pour un cours de cuisine etc",
       removeOffer: "Vraiment effacer cette offre?",
-      success: "Votre offre a été ajoutée, merci !"
+      success: "Votre offre a été ajoutée, merci !",
+      publishToFacebookError: "Il y a eu une erreur dans la publication de votre offre dans le groupe facebook",
     });
     I18n.i18next.addResources("en", "offer", {
       title: "Nouvelle offre",
@@ -286,7 +308,8 @@ export default {
       additionalFees: "Frais additionels",
       additionalFeesHint: "Vous pouvez indiquer que vous chargez des frais de déplacement. Nous suggérons 30 sous du kilomètre. Un autre exemple est de demander de fournir la nourriture pour un cours de cuisine etc",
       removeOffer: "Vraiment effacer cette offre?",
-      success: "Votre offre a été ajoutée, merci !"
+      success: "Votre offre a été ajoutée, merci !",
+      publishToFacebookError: "Il y a eu une erreur dans la publication de votre offre dans le groupe facebook",
     });
     /*
       concat is to avoid re-adding uploadImage
@@ -312,7 +335,8 @@ export default {
       modifiedMessage: false,
       rules: Rules,
       publishToFacebookDialog: false,
-      removeDialog: false
+      removeDialog: false,
+      errorPublishFacebook: false
     }
   },
   methods: {
