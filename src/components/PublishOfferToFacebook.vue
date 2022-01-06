@@ -126,7 +126,7 @@ export default {
       // console.log('facebook publish 6')
     },
     publishToFacebookGroupUsingAccessToken: async function (accessToken) {
-      if (window.FB === undefined) {
+      if (window.FB === undefined || window.FB.API === undefined) {
         return this.$emit('errorPublishedToFacebook');
       }
       return window.FB.api('/v10.0/' + facebookGroupId + '/photos', 'post', {
