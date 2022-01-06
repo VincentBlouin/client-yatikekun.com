@@ -130,6 +130,8 @@ export default {
         caption: this.offerDescription + " (" + this.$t(this.userSubRegion) + ")" + " https://www.partageheure.com/consulter-offre/" + this.offerId,
         url: OfferService.getMediumImageUrl(this.offerImage, this.offerCustomImage),
         accessToken: accessToken
+      }).catch(() => {
+        return this.$emit('errorPublishedToFacebook');
       });
     },
   }
