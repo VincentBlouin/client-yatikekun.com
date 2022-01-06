@@ -126,6 +126,9 @@ export default {
       // console.log('facebook publish 6')
     },
     publishToFacebookGroupUsingAccessToken: async function (accessToken) {
+      if (window.FB === undefined) {
+        return this.$emit('errorPublishedToFacebook');
+      }
       return window.FB.api('/v10.0/' + facebookGroupId + '/photos', 'post', {
         caption: this.offerDescription + " (" + this.$t(this.userSubRegion) + ")" + " https://www.partageheure.com/consulter-offre/" + this.offerId,
         url: OfferService.getMediumImageUrl(this.offerImage, this.offerCustomImage),
