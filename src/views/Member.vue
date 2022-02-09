@@ -193,6 +193,23 @@
             </template>
           </v-select>
           <v-select
+              v-model="member.orgIdGotBonusForSubscription"
+              :items="organisations"
+              item-text="name"
+              item-value="id"
+              :label="$t('member:orgSubscriptionBonus')"
+              :disabled="$store.state.user.status !== 'admin' || isOrgGotBonusReadOnly"
+          >
+            <template v-slot:item="{item}">
+              <img :src="item.customImageUrl" v-if="item.customImage" width="100" class="mr-6">
+              <v-list-item-content>
+                <v-list-item-title class="text-h6 font-weight-regular">
+                  {{ item.name }}
+                </v-list-item-title>
+              </v-list-item-content>
+            </template>
+          </v-select>
+          <v-select
               v-model="member.AdminUserId"
               :items="admins"
               item-text="fullname"
@@ -310,6 +327,9 @@ export default {
       response = await MemberService.get(this.member);
       this.member = response.data;
     }
+    if (this.member.orgIdGotBonusForSubscription) {
+      this.isOrgGotBonusReadOnly = true;
+    }
     if (this.member.contactByEmail === undefined) {
       this.member.contactByEmail = true;
     }
@@ -320,12 +340,12 @@ export default {
       this.member.contactByPhone = true;
     }
     this.reviewPreferredCommunication();
+    response = await OrganisationService.list();
+    this.organisations = response.data.map((organisation) => {
+      organisation.customImageUrl = Images.getCustomBase64Url(organisation.customImage);
+      return organisation;
+    });
     if (this.$store.state.user.status === 'admin') {
-      response = await OrganisationService.list();
-      this.organisations = response.data.map((organisation) => {
-        organisation.customImageUrl = Images.getCustomBase64Url(organisation.customImage);
-        return organisation;
-      });
       response = await MemberService.list();
       this.admins = response.data.filter((member) => {
         return member.status === 'admin';
@@ -369,7 +389,8 @@ export default {
       contactByPhone: "Accepter que les membres vous contactent par téléphone",
       contactByPhoneHint: "Pensez à accepter pour que les membres qui n'ont pas internet puissent vous contacter",
       communicationPreference: "Moyen de communication préféré",
-      language: "Langues parlées"
+      language: "Langues parlées",
+      orgSubscriptionBonus: "Organisation qui a le bonus de une heure pour l'inscription"
     });
     I18n.i18next.addResources("en", "member", {
       title: "Nouveau membre",
@@ -401,7 +422,8 @@ export default {
       contactByMessenger: "Accepter que les membres vous contactent par messenger",
       contactByPhone: "Accepter que les membres vous contactent par téléphone",
       communicationPreference: "Moyen de communication préféré",
-      language: "Langues parlées"
+      language: "Langues parlées",
+      orgSubscriptionBonus: "Organisation qui a le bonus de une heure pour l'inscription"
     });
     return {
       submitLoading: false,
@@ -432,8 +454,9 @@ export default {
       communicationIcon: PreferredCommunication.getCommunicationIcons(),
       preferredCommunication: {},
       languages: [
-          "Français", "English"
-      ]
+        "Français", "English"
+      ],
+      isOrgGotBonusReadOnly: false
     };
   },
   methods: {
