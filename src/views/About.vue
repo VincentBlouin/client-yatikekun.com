@@ -148,7 +148,8 @@
                 <v-list class="text-left" subheader>
                   <v-list-item :class="{
             'pl-0 pr-0': $vuetify.breakpoint.smAndDown
-          }" href="https://docs.google.com/forms/d/e/1FAIpQLSf0Z1IH1lYZ8sL-4umROhOXSJ83NIAzIbIAWAlMvGaE7mM7eg/viewform?vc=0&c=0&w=1&flr=0">
+          }"
+                               href="https://docs.google.com/forms/d/e/1FAIpQLSf0Z1IH1lYZ8sL-4umROhOXSJ83NIAzIbIAWAlMvGaE7mM7eg/viewform?vc=0&c=0&w=1&flr=0">
                     <v-list-item-icon>
                       <v-badge>
                         <template v-slot:badge>
@@ -216,7 +217,7 @@
                         <v-icon>calendar_today</v-icon>
                       </v-list-item-icon>
                       <v-list-item-content class="text-subtitle-1 text-md-h6 font-weight-regular">
-                        Réservez une rencontre sur Calendly
+                        Réservez une rencontre avec Calendly
                       </v-list-item-content>
                     </v-list-item>
                     <v-list-item href="mailto:partageheurebdc@gmail.com" :class="{
@@ -310,6 +311,20 @@
               </v-col>
             </v-row>
           </v-expand-transition>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row align="center" class="vh-center">
+      <v-col cols="12" class="col-md-6 text-center">
+        <v-card flat>
+          <v-card-title class="text-center vh-center font-weight-bold mb-6 mt-6 text-h4">
+            Vidéo de l'intérieur
+          </v-card-title>
+          <v-card-text>
+            <div class='embed-container'>
+              <iframe src='https://www.youtube.com/embed/0mTI3k1JWLo' frameborder='0' allowfullscreen></iframe>
+            </div>
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -436,3 +451,20 @@ export default {
   }
 }
 </script>
+<style>
+.embed-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.embed-container iframe, .embed-container object, .embed-container embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+</style>
