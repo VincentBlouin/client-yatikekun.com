@@ -100,7 +100,7 @@ export default {
         console.log('facebook publish 2')
         console.log(response.status);
         console.log(response.session);
-        alert(response);
+        console.log(JSON.stringify(response));
         if (response.status === 'connected') {
           console.log('facebook publish 3')
           await this.publishToFacebookGroupUsingAccessToken(
@@ -134,7 +134,7 @@ export default {
         url: OfferService.getMediumImageUrl(this.offerImage, this.offerCustomImage),
         accessToken: accessToken
       }).catch((error) => {
-        alert(error)
+        console.log(JSON.stringify(error));
         return this.$emit('errorPublishedToFacebook');
       });
     },
