@@ -60,10 +60,10 @@ export default {
     this.loading = false;
   },
   created: function () {
-    // console.log("created 1")
+    console.log("created 1")
     window.fbAsyncInit = function () {
-      // console.log("created 2")
-      // console.log("facebook app id " + facebookAppId)
+      console.log("created 2")
+      console.log("facebook app id " + facebookAppId)
       window.FB.init({
         appId: facebookAppId,
         autoLogAppEvents: true,
@@ -135,6 +135,7 @@ export default {
         url: OfferService.getMediumImageUrl(this.offerImage, this.offerCustomImage),
         accessToken: accessToken
       }).catch((error) => {
+        alert(error)
         return this.$emit('errorPublishedToFacebook');
       });
     },
