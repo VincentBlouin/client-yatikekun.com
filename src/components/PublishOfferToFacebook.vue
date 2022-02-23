@@ -100,6 +100,7 @@ export default {
         console.log('facebook publish 2')
         console.log(response.status);
         console.log(response.session);
+        alert(response);
         if (response.status === 'connected') {
           console.log('facebook publish 3')
           await this.publishToFacebookGroupUsingAccessToken(
@@ -133,7 +134,7 @@ export default {
         caption: this.offerDescription + " (" + this.$t(this.userSubRegion) + ")" + " https://www.partageheure.com/consulter-offre/" + this.offerId,
         url: OfferService.getMediumImageUrl(this.offerImage, this.offerCustomImage),
         accessToken: accessToken
-      }).catch(() => {
+      }).catch((error) => {
         return this.$emit('errorPublishedToFacebook');
       });
     },
