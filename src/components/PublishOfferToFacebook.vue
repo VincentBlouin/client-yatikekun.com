@@ -116,7 +116,6 @@ export default {
               );
               await this.$emit('publishedToFacebook');
             } else {
-              not auth / cancelled the login!
               console.log("refused to login 2");
               await this.$emit('errorPublishedToFacebook');
             }
