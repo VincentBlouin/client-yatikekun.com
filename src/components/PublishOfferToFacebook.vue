@@ -141,7 +141,7 @@ export default {
         return false;
       }
       console.log("publishToFacebookGroupUsingAccessToken 3")
-      return new Promise(function (resolve) {
+      return new Promise((resolve) => {
         window.FB.api('/v13.0/' + facebookGroupId + '/photos', 'post', {
           caption: this.offerDescription + " (" + this.$t(this.userSubRegion) + ")" + " https://www.partageheure.com/consulter-offre/" + this.offerId,
           url: OfferService.getMediumImageUrl(this.offerImage, this.offerCustomImage),
