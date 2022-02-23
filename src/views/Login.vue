@@ -102,7 +102,7 @@ export default {
         appId: facebookAppId,
         autoLogAppEvents: true,
         xfbml: true,
-        version: 'v10.0'
+        version: 'v13.0'
       });
     };
     (function () {
@@ -111,7 +111,7 @@ export default {
       e.async = true;
       // console.log("created 4")
       e.src = document.location.protocol +
-          '//connect.facebook.net/fr_CA/all.js#xfbml=1&version=v10.0';
+          '//connect.facebook.net/fr_CA/all.js#xfbml=1&version=v13.0';
       document.getElementById('fb-root').appendChild(e);
     }());
   },
