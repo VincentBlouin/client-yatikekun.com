@@ -126,14 +126,18 @@ export default {
       console.log('facebook publish 6')
     },
     publishToFacebookGroupUsingAccessToken: async function (accessToken) {
+      console.log("publishToFacebookGroupUsingAccessToken 1")
       if (window.FB === undefined || window.FB.API === undefined) {
+        console.log("publishToFacebookGroupUsingAccessToken 2")
         return this.$emit('errorPublishedToFacebook');
       }
+      console.log("publishToFacebookGroupUsingAccessToken 3")
       return window.FB.api('/v13.0/' + facebookGroupId + '/photos', 'post', {
         caption: this.offerDescription + " (" + this.$t(this.userSubRegion) + ")" + " https://www.partageheure.com/consulter-offre/" + this.offerId,
         url: OfferService.getMediumImageUrl(this.offerImage, this.offerCustomImage),
         accessToken: accessToken
       }).catch((error) => {
+        console.log("publishToFacebookGroupUsingAccessToken 4")
         console.log(JSON.stringify(error));
         return this.$emit('errorPublishedToFacebook');
       });
