@@ -92,16 +92,16 @@ export default {
     confirmPublishToFacebookGroup: async function () {
       this.confirmPublishDialog = false;
       this.loading = true;
-      // console.log('facebook publish 1')
+      console.log('facebook publish 1')
       if (window.FB === undefined) {
         return this.$emit('errorPublishedToFacebook');
       }
       window.FB.getLoginStatus(async (response) => {
-        // console.log('facebook publish 2')
-        // console.log(response.status);
-        // console.log(response.session);
+        console.log('facebook publish 2')
+        console.log(response.status);
+        console.log(response.session);
         if (response.status === 'connected') {
-          // console.log('facebook publish 3')
+          console.log('facebook publish 3')
           await this.publishToFacebookGroupUsingAccessToken(
               response.authResponse.accessToken
           );
@@ -109,21 +109,21 @@ export default {
         } else {
           window.FB.login(async (response) => {
             if (response.authResponse) {
-              // console.log("facebook login 1");
+              console.log("facebook login 1");
               await this.publishToFacebookGroupUsingAccessToken(
                   response.authResponse.accessToken
               );
               await this.$emit('publishedToFacebook');
             } else {
-              // not auth / cancelled the login!
-              // console.log("refused to login 2");
+              not auth / cancelled the login!
+              console.log("refused to login 2");
               await this.$emit('errorPublishedToFacebook');
             }
           });
         }
         this.loading = false;
       }, {scope: 'publish_actions, user_groups, publish_to_groups'});
-      // console.log('facebook publish 6')
+      console.log('facebook publish 6')
     },
     publishToFacebookGroupUsingAccessToken: async function (accessToken) {
       if (window.FB === undefined || window.FB.API === undefined) {
