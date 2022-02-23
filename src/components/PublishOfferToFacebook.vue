@@ -100,7 +100,8 @@ export default {
         console.log('facebook publish 2')
         console.log(response.status);
         console.log(response.session);
-        console.log(JSON.stringify(response));
+        //careful with this log, security wise, because it includes access token.
+        // console.log(JSON.stringify(response));
         if (response.status === 'connected') {
           console.log('facebook publish 3')
           await this.publishToFacebookGroupUsingAccessToken(
@@ -132,16 +133,19 @@ export default {
         return this.$emit('errorPublishedToFacebook');
       }
       console.log("publishToFacebookGroupUsingAccessToken 3")
-      const response = await window.FB.api('/v13.0/' + facebookGroupId + '/photos', 'post', {
+      window.FB.api('/v13.0/' + facebookGroupId + '/photos', 'post', {
         caption: this.offerDescription + " (" + this.$t(this.userSubRegion) + ")" + " https://www.partageheure.com/consulter-offre/" + this.offerId,
         url: OfferService.getMediumImageUrl(this.offerImage, this.offerCustomImage),
         accessToken: accessToken
+      }, function (response) {
+        console.log("publishToFacebookGroupUsingAccessToken 5")
+        console.log(response);
+        if (response.error) {
+          console.log("publishToFacebookGroupUsingAccessToken 6")
+          return this.$emit('errorPublishedToFacebook');
+        }
       });
-      console.log("publishToFacebookGroupUsingAccessToken 4")
-      console.log(response);
-      if (response.status !== 200) {
-        return this.$emit('errorPublishedToFacebook');
-      }
+      console.log("publishToFacebookGroupUsingAccessToken 7")
     },
   }
 }
