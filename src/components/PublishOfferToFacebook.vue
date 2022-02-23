@@ -132,15 +132,16 @@ export default {
         return this.$emit('errorPublishedToFacebook');
       }
       console.log("publishToFacebookGroupUsingAccessToken 3")
-      return window.FB.api('/v13.0/' + facebookGroupId + '/photos', 'post', {
+      const response = await window.FB.api('/v13.0/' + facebookGroupId + '/photos', 'post', {
         caption: this.offerDescription + " (" + this.$t(this.userSubRegion) + ")" + " https://www.partageheure.com/consulter-offre/" + this.offerId,
         url: OfferService.getMediumImageUrl(this.offerImage, this.offerCustomImage),
         accessToken: accessToken
-      }).catch((error) => {
-        console.log("publishToFacebookGroupUsingAccessToken 4")
-        console.log(JSON.stringify(error));
-        return this.$emit('errorPublishedToFacebook');
       });
+      console.log("publishToFacebookGroupUsingAccessToken 4")
+      console.log(response);
+      if (response.status !== 200) {
+        return this.$emit('errorPublishedToFacebook');
+      }
     },
   }
 }
