@@ -209,6 +209,16 @@
                         </v-list-item-title>
                       </v-list-item-content>
                     </template>
+                    <v-list-item href="https://calendly.com/partageheurebdc/30min" :class="{
+                      'ml-12' : $vuetify.breakpoint.mdAndUp
+                    }" target="_blank">
+                      <v-list-item-icon>
+                        <v-icon>calendar_today</v-icon>
+                      </v-list-item-icon>
+                      <v-list-item-content class="text-subtitle-1 text-md-h6 font-weight-regular">
+                        Réservez une rencontre sur Calendly
+                      </v-list-item-content>
+                    </v-list-item>
                     <v-list-item href="mailto:partageheurebdc@gmail.com" :class="{
                       'ml-12' : $vuetify.breakpoint.mdAndUp
                     }">
