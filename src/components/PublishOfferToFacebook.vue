@@ -104,18 +104,26 @@ export default {
         // console.log(JSON.stringify(response));
         if (response.status === 'connected') {
           console.log('facebook publish 3')
-          await this.publishToFacebookGroupUsingAccessToken(
+          const success = await this.publishToFacebookGroupUsingAccessToken(
               response.authResponse.accessToken
           );
-          await this.$emit('publishedToFacebook');
+          if (success) {
+            await this.$emit('publishedToFacebook');
+          } else {
+            await this.$emit('errorPublishedToFacebook');
+          }
         } else {
           window.FB.login(async (response) => {
             if (response.authResponse) {
               console.log("facebook login 1");
-              await this.publishToFacebookGroupUsingAccessToken(
+              const success = await this.publishToFacebookGroupUsingAccessToken(
                   response.authResponse.accessToken
               );
-              await this.$emit('publishedToFacebook');
+              if (success) {
+                await this.$emit('publishedToFacebook');
+              } else {
+                await this.$emit('errorPublishedToFacebook');
+              }
             } else {
               console.log("refused to login 2");
               await this.$emit('errorPublishedToFacebook');
@@ -130,22 +138,26 @@ export default {
       console.log("publishToFacebookGroupUsingAccessToken 1")
       if (window.FB === undefined || window.FB.api === undefined) {
         console.log("publishToFacebookGroupUsingAccessToken 2")
-        return this.$emit('errorPublishedToFacebook');
+        return false;
       }
       console.log("publishToFacebookGroupUsingAccessToken 3")
-      window.FB.api('/v13.0/' + facebookGroupId + '/photos', 'post', {
-        caption: this.offerDescription + " (" + this.$t(this.userSubRegion) + ")" + " https://www.partageheure.com/consulter-offre/" + this.offerId,
-        url: OfferService.getMediumImageUrl(this.offerImage, this.offerCustomImage),
-        accessToken: accessToken
-      }, function (response) {
-        console.log("publishToFacebookGroupUsingAccessToken 5")
-        console.log(response);
-        if (response.error) {
-          console.log("publishToFacebookGroupUsingAccessToken 6")
-          return this.$emit('errorPublishedToFacebook');
-        }
-      });
-      console.log("publishToFacebookGroupUsingAccessToken 7")
+      return new Promise(function (resolve) {
+        window.FB.api('/v13.0/' + facebookGroupId + '/photos', 'post', {
+          caption: this.offerDescription + " (" + this.$t(this.userSubRegion) + ")" + " https://www.partageheure.com/consulter-offre/" + this.offerId,
+          url: OfferService.getMediumImageUrl(this.offerImage, this.offerCustomImage),
+          accessToken: accessToken
+        }, function (response) {
+          console.log("publishToFacebookGroupUsingAccessToken 5")
+          console.log(response);
+          if (response.error) {
+            console.log("publishToFacebookGroupUsingAccessToken 6")
+            resolve(false);
+          } else {
+            console.log("publishToFacebookGroupUsingAccessToken 7")
+            resolve(true);
+          }
+        });
+      })
     },
   }
 }
