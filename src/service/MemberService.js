@@ -18,4 +18,7 @@ export default {
     getNbMembers: function () {
         return Service.api().get('/member/count')
     },
+    getMembersOfHgNotOfPartageHeure: function(){
+        return Service.api().get('/member/members-of-hg-not-of-partageheure')
+    }
 }

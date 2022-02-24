@@ -129,6 +129,11 @@ const routes = [
         path: '/stats',
         name: 'Stats',
         component: () => import('../views/Stats.vue')
+    },
+    {
+        path: '/97bb2261',
+        name: 'MembersOfHg',
+        component: () => import('../views/MembersOfHg.vue')
     }
 ]
 
