@@ -44,5 +44,10 @@ export default {
     },
     remove: function (offerId) {
         return Service.api().delete('/offer/' + offerId)
+    },
+    search: function (searchText) {
+        return Service.api().post('/offer/search', {
+            searchText: searchText
+        })
     }
 }
