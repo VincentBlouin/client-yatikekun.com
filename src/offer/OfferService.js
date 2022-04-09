@@ -1,9 +1,9 @@
 import Service from '@/Service'
 
 export default {
-    list: function () {
+    list: function (offset) {
         return Service.api().get(
-            "offer"
+            "offer/offset/" + offset
         );
     },
     listForUserUuid: function (userUuid) {

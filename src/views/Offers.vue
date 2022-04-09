@@ -9,7 +9,7 @@
           'pl-0 pr-0': $vuetify.breakpoint.smAndDown
         }">
           <v-text-field v-model="filterInput" :label="$t('offers:searchPlaceHolder')"
-                        prepend-icon="search" @blur="searchOffers" @keydown="searchKeydown"
+                        prepend-icon="search" @keydown="searchKeydown"
                         clearable
                         @click:clear="resetOffers"
           ></v-text-field>
@@ -45,6 +45,16 @@
           </v-col>
         </v-row>
       </v-card>
+      <infinite-loading @infinite="infiniteHandler" v-if="shouldUseInfiniteLoading">
+        <div slot="no-more">
+          <v-divider class="mb-8 mt-2"></v-divider>
+          <span class="text-h6 mt-8 mb-2 grey--text">{{ $t('offers:endOfOffers') }}</span>
+        </div>
+        <div slot="no-results">
+          <v-divider class="mb-8 mt-2"></v-divider>
+          <span class="text-h6 mt-8 mb-2 grey--text">{{ $t('offers:endOfOffers') }}</span>
+        </div>
+      </infinite-loading>
     </Page>
     <v-row>
       <v-fab-transition>
@@ -69,19 +79,26 @@
 import I18n from "@/i18n";
 import OfferService from "@/offer/OfferService";
 import Offer from '@/offer/Offer'
+import InfiniteLoading from "vue-infinite-loading";
 
 const ENTER_KEY_CODE = 13;
 
 export default {
   components: {
     OfferCard: () => import('@/views/OfferCard'),
-    Page: () => import('@/components/Page')
+    Page: () => import('@/components/Page'),
+    InfiniteLoading
   },
   async mounted() {
     window.scrollTo(0, 0)
     this.isLoading = true;
     await this.resetOffers();
     this.isLoading = false;
+    await this.$nextTick();
+    setTimeout(() => {
+      this.shouldUseInfiniteLoading = true;
+    }, 100)
+
   },
   data: function () {
     I18n.i18next.addResources("fr", "offers", {
@@ -89,20 +106,24 @@ export default {
       offer: "Offre",
       member: "Membre",
       searchPlaceHolder: "Titre, région de l'offre ou nom de la personne",
-      noResults: "Pas de résultats"
+      noResults: "Pas de résultats",
+      endOfOffers: "Fin des offres"
     });
     I18n.i18next.addResources("en", "offers", {
       title: "Offers",
       offer: "Offre",
       member: "Membre",
       searchPlaceHolder: "Titre et région de l'offre. Nom de la personne",
-      noResults: "Pas de résultats"
+      noResults: "Pas de résultats",
+      endOfOffers: "Fin des offres"
     });
     return {
       offers: [],
       offersFiltered: [],
+      offersPage: 0,
       isLoading: false,
-      filterInput: ""
+      filterInput: "",
+      shouldUseInfiniteLoading: false
     }
   },
   methods: {
@@ -118,6 +139,8 @@ export default {
         return Offer.format(result._source);
       })
       this.isLoading = false;
+      await this.$nextTick();
+      this.shouldUseInfiniteLoading = false;
     },
     searchKeydown: function (event) {
       if (event.keyCode === ENTER_KEY_CODE) {
@@ -125,10 +148,22 @@ export default {
       }
     },
     resetOffers: async function () {
-      let response = await OfferService.list();
+      let response = await OfferService.list(0);
       this.offers = response.data.map(Offer.format);
+      this.offersPage = 1;
       this.offersFiltered = this.offers;
-    }
+    },
+    infiniteHandler: async function ($state) {
+      const response = await OfferService.list(this.offersPage * 9);
+      const offers = response.data.map(Offer.format);
+      if (offers.length) {
+        this.offersPage += 1;
+        this.offers.push(...offers);
+        $state.loaded();
+      } else {
+        $state.complete();
+      }
+    },
   },
   computed: {
     // offersFiltered: function () {
