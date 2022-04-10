@@ -11,7 +11,8 @@
           <v-text-field v-model="filterInput" :label="$t('offers:searchPlaceHolder')"
                         prepend-icon="search" @keydown="searchKeydown"
                         clearable
-                        @click:clear="resetOffers"
+                        @blur="searchBlur"
+                        @click:clear="clearSearch"
           ></v-text-field>
         </v-card-actions>
         <v-card-actions :class="{
@@ -91,14 +92,7 @@ export default {
   },
   async mounted() {
     window.scrollTo(0, 0)
-    this.isLoading = true;
-    await this.resetOffers();
-    this.isLoading = false;
-    await this.$nextTick();
-    setTimeout(() => {
-      this.shouldUseInfiniteLoading = true;
-    }, 100)
-
+    await this.clearSearch();
   },
   data: function () {
     I18n.i18next.addResources("fr", "offers", {
@@ -127,13 +121,23 @@ export default {
     }
   },
   methods: {
-    searchOffers: async function () {
+    clearSearch: async function () {
       this.isLoading = true;
+      await this.resetOffers();
+      this.isLoading = false;
+      await this.$nextTick();
+      this.shouldUseInfiniteLoading = true;
+    },
+    searchBlur: async function () {
       if (this.filterInput.trim() === "") {
-        await this.resetOffers();
-        this.isLoading = false;
+        await this.clearSearch();
+      }
+    },
+    searchOffers: async function () {
+      if (this.filterInput.trim() === "") {
         return;
       }
+      this.isLoading = true;
       const response = await OfferService.search(this.filterInput);
       this.offersFiltered = response.data.hits.hits.map((result) => {
         return Offer.format(result._source);
