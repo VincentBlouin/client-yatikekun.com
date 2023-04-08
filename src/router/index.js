@@ -128,7 +128,7 @@ const routes = [
     {
         path: '/stats',
         name: 'Stats',
-        component: () => import('../views/Stats.vue')
+        component: () => import('../views/admin/Stats.vue')
     },
     {
         path: '/97bb2261',
