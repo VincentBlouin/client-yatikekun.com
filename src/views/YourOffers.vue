@@ -1,15 +1,20 @@
 <template>
   <div>
-    <Page>
+    <PageWrap>
       <h2 class="text-center logo-font text-h4">
         {{ $t('yourOffer:title') }}
       </h2>
       <v-row class="">
         <v-col cols="12" md="6" lg="4" v-for="offer in offers" :key="offer.id">
-          <OfferCard :offer="offer" :isAvailableSwitch="true" @remove="removeOffer"></OfferCard>
+          <OfferCard
+              :offer="offer"
+              :isAvailableSwitch="true"
+              @remove="removeOffer"
+              @availabilityToggle="toggleAvailability"
+          ></OfferCard>
         </v-col>
       </v-row>
-    </Page>
+    </PageWrap>
     <v-row>
       <v-fab-transition>
         <v-btn
@@ -29,7 +34,6 @@
     </v-row>
   </div>
 </template>
-
 <script>
 import OfferService from "@/offer/OfferService";
 import Offer from "@/offer/Offer";
@@ -39,7 +43,7 @@ export default {
   name: "YourOffers",
   components: {
     OfferCard: () => import('@/views/OfferCard'),
-    Page: () => import('@/components/Page')
+    PageWrap: () => import('@/components/PageWrap')
   },
   data: function () {
     I18n.i18next.addResources("fr", "yourOffer", {
@@ -63,6 +67,11 @@ export default {
     });
   },
   methods: {
+    toggleAvailability: function (offer) {
+      offer.isAvailable = !offer.isAvailable;
+      this.$set(this.offers, this.offers.indexOf(offer), offer);
+      OfferService.update(offer);
+    },
     removeOffer: function (offerId) {
       let l = this.offers.length;
       while (l--) {

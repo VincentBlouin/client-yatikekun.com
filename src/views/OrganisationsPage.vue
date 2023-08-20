@@ -1,5 +1,5 @@
 <template>
-  <Page class="h-center">
+  <PageWrap class="h-center">
     <v-card flat class="pt-8 h-center">
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -32,7 +32,7 @@
         </v-list>
       </v-card-text>
     </v-card>
-  </Page>
+  </PageWrap>
 </template>
 <script>
 import I18n from "@/i18n";
@@ -41,14 +41,16 @@ import Images from "@/Images";
 
 export default {
   components: {
-    Page: () => import('@/components/Page')
+    PageWrap: () => import('@/components/PageWrap')
   },
   async mounted() {
     window.scrollTo(0, 0)
     this.isLoading = true;
     let response = await OrganisationService.list();
     this.organisations = response.data.map((organisation) => {
-      organisation.customImageUrl = Images.getCustomBase64Url(organisation.customImage);
+      if(organisation.customImage){
+        organisation.customImageUrl = Images.getCustomBase64Url(organisation.customImage);
+      }
       return organisation;
     })
     this.isLoading = false;

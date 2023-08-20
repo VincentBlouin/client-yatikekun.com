@@ -1,17 +1,17 @@
 <template>
     <v-card flat class="">
         <v-card-text>
-            <Transactions :isAllFlow="true" :isRelevantOnly="true"></Transactions>
+            <TransactionsComponent :isAllFlow="true" :isRelevantOnly="true"></TransactionsComponent>
         </v-card-text>
     </v-card>
 </template>
 
 <script>
-import Transactions from "@/components/Transactions.vue";
-
 export default {
     name: "RelevantTransactions",
-    components: {Transactions}
+    components: {
+      TransactionsComponent: ()=> import('@/components/TransactionsComponent.vue')
+    }
 }
 </script>
 

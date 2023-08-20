@@ -1,5 +1,5 @@
 <template>
-  <Page>
+  <PageWrap>
     <v-card>
       <v-card-title>
         Membre de Hg mais pas du partageheure
@@ -15,7 +15,7 @@
         </span>
       </v-card-text>
     </v-card>
-  </Page>
+  </PageWrap>
 </template>
 
 <script>
@@ -24,7 +24,7 @@ import MemberService from "@/service/MemberService";
 export default {
   name: "MembersOfHg",
   components: {
-    Page: () => import('@/components/Page')
+    PageWrap: () => import('@/components/PageWrap')
   },
   data: function () {
     return {

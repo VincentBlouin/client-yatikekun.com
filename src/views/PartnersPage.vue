@@ -1,5 +1,5 @@
 <template>
-  <Page>
+  <PageWrap>
     <v-card flat class="mt-8 mb-8">
       <v-card-title class="vh-center primary-color">
         <h3 class="text-center">{{ $t('partner:title') }}</h3>
@@ -40,16 +40,15 @@
         </v-card>
       </v-col>
     </v-row>
-  </Page>
+  </PageWrap>
 </template>
-
 <script>
 import I18n from "@/i18n";
 
 export default {
-  name: "Partners",
+  name: "PartnersPage",
   components: {
-    Page: () => import('@/components/Page')
+    PageWrap: () => import('@/components/PageWrap')
   },
   data: function () {
     I18n.i18next.addResources("fr", "partner", {

@@ -105,7 +105,7 @@
             </v-card-text>
           </v-card>
         </v-card-text>
-        <Transaction
+        <TransactionComponent
             :quantity="billedQuantity"
             :nbParticipants="nbParticipants"
             :serviceDuration="quantity"
@@ -118,7 +118,7 @@
             :receiverDonationOrgId="receiverOrganisationId"
             status="PENDING"
             @selectOrganisation="chooseOrganisation"
-        ></Transaction>
+        ></TransactionComponent>
         <v-scale-transition>
           <v-alert
               v-if="showConfirmMessage && !canAddManyUsers"
@@ -187,7 +187,7 @@ const FACEBOOK_TEST_USER_UUID = "30b2c42a-96b2-48b2-b21c-534ab5e613aa";
 export default {
   components: {
     OfferCard,
-    Transaction: () => import("@/components/Transaction"),
+    TransactionComponent: () => import("@/components/TransactionComponent"),
   },
   props: {
     offerId: Number,

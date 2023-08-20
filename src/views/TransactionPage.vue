@@ -1,5 +1,5 @@
 <template>
-  <Page v-if="transaction !== null">
+  <PageWrap v-if="transaction !== null">
     <v-progress-circular
         :size="50"
         color="primary"
@@ -11,12 +11,12 @@
       {{ $t("confirmTransaction:message") }}
     </v-alert>
     <v-card class="mt-8">
-      <v-card-title class="text-h6 vh-center primary-color-background white--text"
-                    v-html="transaction.details"
-      ></v-card-title>
+      <v-card-title class="text-h6 vh-center primary-color-background white--text">
+        {{ transaction.details }}
+      </v-card-title>
       <v-divider></v-divider>
       <v-card-text>
-        <Transaction
+        <TransactionComponent
             :quantity="transaction.amount"
             :serviceDuration="transaction.serviceDuration"
             :nbParticipants="transaction.nbParticipants"
@@ -29,21 +29,22 @@
             :flatCard="true"
             @close="$router.push('/transactions')"
             :status="transaction.status"
-        ></Transaction>
+            @statusUpdate="updateStatus"
+        ></TransactionComponent>
       </v-card-text>
     </v-card>
-  </Page>
+  </PageWrap>
 </template>
-
 <script>
 import TransactionService from "@/service/TransactionService";
 import I18n from "@/i18n";
+import TransactionComponent from "@/components/TransactionComponent.vue";
 
 export default {
-  name: "TransactionPage",
+  name: "TransactionPageWrap",
   components: {
-    Page: () => import('@/components/Page'),
-    Transaction: () => import("@/components/Transaction")
+    TransactionComponent,
+    PageWrap: () => import('@/components/PageWrap')
   },
   data: function () {
     I18n.i18next.addResources("fr", "confirmTransaction", {
@@ -70,6 +71,11 @@ export default {
     );
     this.transaction = response.data;
     this.loading = false;
+  },
+  methods: {
+    updateStatus: function (status) {
+      this.transaction.status = status;
+    }
   },
   computed: {
     giver: function () {

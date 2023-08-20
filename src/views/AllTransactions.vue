@@ -1,22 +1,22 @@
 <template>
-  <Page>
+  <PageWrap>
     <v-card flat class="">
       <v-card-title>
 
       </v-card-title>
       <v-card-text>
-        <Transactions :isAllFlow="true"></Transactions>
+        <TransactionsComponent :isAllFlow="true"></TransactionsComponent>
       </v-card-text>
     </v-card>
-  </Page>
+  </PageWrap>
 </template>
 
 <script>
 export default {
   name: "AllTransactions",
   components: {
-    Page: () => import('@/components/Page'),
-    Transactions: () => import('@/components/Transactions'),
+    PageWrap: () => import('@/components/PageWrap'),
+    TransactionsComponent: () => import('@/components/TransactionsComponent'),
   },
 }
 </script>

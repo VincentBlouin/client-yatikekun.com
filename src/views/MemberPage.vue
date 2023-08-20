@@ -1,5 +1,5 @@
 <template>
-  <Page>
+  <PageWrap>
     <v-card flat class="">
       <v-card-text class="text-center pb-0" :class="{
           'pa-0': $vuetify.breakpoint.smAndDown
@@ -301,7 +301,7 @@
         </v-btn>
       </template>
     </v-snackbar>
-  </Page>
+  </PageWrap>
 </template>
 <script>
 import I18n from "@/i18n";
@@ -315,7 +315,7 @@ import Images from "@/Images";
 const communicationModes = ['Messenger', 'Email', 'Phone'];
 export default {
   components: {
-    Page: () => import('@/components/Page')
+    PageWrap: () => import('@/components/PageWrap')
   },
   async mounted() {
     this.member.uuid = this.$route.params.memberId;

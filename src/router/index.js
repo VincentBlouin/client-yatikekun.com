@@ -6,14 +6,14 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/',
-        name: 'About',
+        name: 'AboutPage',
         alias: '/a-propos',
-        component: () => import('../views/About.vue')
+        component: () => import('../views/AboutPage.vue')
     },
     {
         path: '/charte',
         name: 'Charte',
-        component: () => import('../views/Charter.vue')
+        component: () => import('../views/CharterPage.vue')
     },
     {
         path: '/vie-prive',
@@ -22,13 +22,13 @@ const routes = [
     },
     {
         path: '/connexion',
-        name: 'Login',
-        component: () => import('../views/Login.vue')
+        name: 'LoginPage',
+        component: () => import('../views/LoginPage.vue')
     },
     {
         path: '/offres',
-        name: 'Offers',
-        component: () => import('../views/Offers.vue')
+        name: 'OffersPage',
+        component: () => import('@/views/OffersPage.vue')
     },
     {
         path: '/vos-offres',
@@ -38,47 +38,47 @@ const routes = [
     {
         path: '/offre',
         name: 'OfferNew',
-        component: () => import('../views/Offer.vue')
+        component: () => import('../views/OfferPage.vue')
     },
     {
         path: '/offre/:offerId',
         name: 'OfferModify',
-        component: () => import('../views/Offer.vue')
+        component: () => import('../views/OfferPage.vue')
     },
     {
         path: '/membres',
-        name: 'Members',
-        component: () => import('../views/Members.vue')
+        name: 'MembersPage',
+        component: () => import('../views/MembersPage.vue')
     },
     {
         path: '/organisations',
         name: 'Organisations',
-        component: () => import('../views/Organisations.vue')
+        component: () => import('../views/OrganisationsPage.vue')
     },
     {
         path: '/organisation',
         name: 'OrganisationNew',
-        component: () => import('../views/Organisation.vue')
+        component: () => import('../views/OrganisationPage.vue')
     },
     {
         path: '/organisation/:organisationId',
         name: 'OrganisationModify',
-        component: () => import('../views/Organisation.vue')
+        component: () => import('../views/OrganisationPage.vue')
     },
     {
         path: '/organisation/:organisationId/transactions',
         name: 'OrganisationTransactions',
-        component: () => import('../views/Organisation.vue')
+        component: () => import('../views/OrganisationPage.vue')
     },
     {
         path: '/membre',
         name: 'MemberNew',
-        component: () => import('../views/Member.vue')
+        component: () => import('../views/MemberPage.vue')
     },
     {
         path: '/membre/:memberId',
         name: 'MemberModify',
-        component: () => import('../views/Member.vue')
+        component: () => import('../views/MemberPage.vue')
     },
     {
         path: '/consulter-offre/:offerId',
@@ -102,13 +102,13 @@ const routes = [
     },
     {
         path: '/transaction/:transactionId/confirm/:token',
-        name: 'TransactionPage',
+        name: 'TransactionPageWithToken',
         component: () => import('../views/TransactionPage.vue')
     },
     {
         path: '/partenaires',
-        name: 'Partners',
-        component: () => import('../views/Partners.vue')
+        name: 'PartnersPage',
+        component: () => import('../views/PartnersPage.vue')
     },
     {
         path: '/confirm-transaction/:token',
@@ -127,8 +127,8 @@ const routes = [
     },
     {
         path: '/stats',
-        name: 'Stats',
-        component: () => import('../views/admin/Stats.vue')
+        name: 'StatsPage',
+        component: () => import('../views/admin/StatsPage.vue')
     },
     {
         path: '/97bb2261',

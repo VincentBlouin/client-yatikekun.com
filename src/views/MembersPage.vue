@@ -1,5 +1,5 @@
 <template>
-  <Page class="h-center">
+  <PageWrap class="h-center">
     <v-card flat class="pt-8 h-center">
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -38,7 +38,7 @@
         </v-list>
       </v-card-text>
     </v-card>
-  </Page>
+  </PageWrap>
 </template>
 <script>
 import I18n from "@/i18n";
@@ -46,7 +46,7 @@ import MemberService from "@/service/MemberService";
 
 export default {
   components: {
-    Page: () => import('@/components/Page')
+    PageWrap: () => import('@/components/PageWrap')
   },
   async mounted() {
     window.scrollTo(0, 0)

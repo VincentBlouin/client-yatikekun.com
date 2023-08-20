@@ -152,7 +152,8 @@
               >
                 {{ $t(offer.User.subRegion) }}
               </v-card-text>
-              <v-card-text class="subtitle-1 text-left pl-0 pr-0 pt-0" v-html="offer.description">
+              <v-card-text class="subtitle-1 text-left pl-0 pr-0 pt-0">
+                {{offer.description}}
               </v-card-text>
             </v-card>
           </v-col>
@@ -170,7 +171,8 @@
               >
                 {{ $t("consult:notMentioned") }}
               </v-card-text>
-              <v-card-text class="text-left subtitle-1" v-else v-html="offer.additionalFees">
+              <v-card-text class="text-left subtitle-1" v-else>
+                {{offer.additionalFees}}
               </v-card-text>
             </v-card>
             <v-card flat min-height="150">
@@ -183,7 +185,8 @@
               >
                 {{ $t("consult:notMentioned") }}
               </v-card-text>
-              <v-card-text class="text-left subtitle-1" v-html="offer.experience">
+              <v-card-text class="text-left subtitle-1">
+                {{offer.experience}}
               </v-card-text>
             </v-card>
           </v-col>
@@ -278,7 +281,7 @@
       >
         <v-sheet class="text-center">
           <div>
-            <Transaction
+            <TransactionComponent
                 :quantity="pendingTransaction[0].amount"
                 :giver="pendingTransaction[0].giver"
                 :receiver="pendingTransaction[0].receiver"
@@ -288,7 +291,7 @@
                 :receiverDonationOrgId="pendingTransaction[0].receiverDonationOrgId"
                 :flatCard="true"
                 @close="pendingTransactionSheet = false"
-            ></Transaction>
+            ></TransactionComponent>
           </div>
         </v-sheet>
       </v-bottom-sheet>
@@ -345,10 +348,11 @@ import Rules from "@/Rules";
 import Offer from "@/offer/Offer";
 import TransactionService from "@/service/TransactionService";
 import PreferredCommunication from "@/PreferredCommunication";
+import TransactionComponent from "@/components/TransactionComponent.vue";
 
 export default {
   components: {
-    Transaction: () => import("@/components/Transaction"),
+    TransactionComponent,
     NewTransaction: () => import("@/components/NewTransaction"),
     PublishOfferToFacebook: () => import('@/components/PublishOfferToFacebook'),
   },

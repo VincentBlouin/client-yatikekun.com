@@ -84,7 +84,8 @@
                         <td>
                             {{ transaction.formattedDate }}
                         </td>
-                        <td v-html="transaction.details">
+                        <td>
+                          {{transaction.details}}
                         </td>
                         <td
                                 :class="{

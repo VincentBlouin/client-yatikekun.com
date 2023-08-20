@@ -1,15 +1,15 @@
 <template>
-  <Page>
-    <Transactions></Transactions>
-  </Page>
+  <PageWrap>
+    <TransactionsComponent></TransactionsComponent>
+  </PageWrap>
 </template>
 
 <script>
 export default {
   name: "MemberTransactions",
   components: {
-    Page: () => import('@/components/Page'),
-    Transactions: () => import('@/components/Transactions'),
+    PageWrap: () => import('@/components/PageWrap'),
+    TransactionsComponent: () => import('@/components/TransactionsComponent'),
   }
 }
 </script>

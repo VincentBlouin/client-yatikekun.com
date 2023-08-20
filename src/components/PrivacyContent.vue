@@ -201,10 +201,12 @@
             Administrés par : Nous
           </p>
           <p>
-            Objectif : Ces Cookies sont essentiels pour Vous fournir les services disponibles sur le Site Internet et pour
+            Objectif : Ces Cookies sont essentiels pour Vous fournir les services disponibles sur le Site Internet et
+            pour
             Vous permettre d'utiliser certaines de ses fonctionnalités. Ils aident à authentifier les utilisateurs et à
             prévenir l'utilisation frauduleuse des comptes d'utilisateurs. Sans ces Cookies, les services que Vous avez
-            demandés ne peuvent pas être fournis, et Nous utilisons ces Cookies uniquement pour Vous fournir ces services.
+            demandés ne peuvent pas être fournis, et Nous utilisons ces Cookies uniquement pour Vous fournir ces
+            services.
           </p>
         </li>
         <li>
@@ -232,7 +234,8 @@
           <p>
             Objectif : Ces cookies nous permettent de nous souvenir des choix que vous faites lorsque vous utilisez le
             site
-            Web, comme la mémorisation de vos données de connexion ou de vos préférences linguistiques. L'objectif de ces
+            Web, comme la mémorisation de vos données de connexion ou de vos préférences linguistiques. L'objectif de
+            ces
             cookies est de vous offrir une expérience plus personnelle et de vous éviter de devoir saisir à nouveau vos
             préférences chaque fois que vous utilisez le site Web.
           </p>
@@ -339,8 +342,11 @@
       </ul>
       <p class="body-1">
         <!-- écrit par Vincent -->
-        Nous utilisons le service d'authentification Facebook et l'API Facebook pour publier vos offres dans notre groupe Facebook privé.
-        Veuillez vous référer aux politiques de confidentialité de Facebook pour savoir quelles données et ce que fait Facebook avec ces données lors de ce genre d'utilisation.
+        Nous utilisons le service d'authentification Facebook et l'API Facebook pour publier vos offres dans notre
+        groupe
+        Facebook privé.
+        Veuillez vous référer aux politiques de confidentialité de Facebook pour savoir quelles données et ce que fait
+        Facebook avec ces données lors de ce genre d'utilisation.
       </p>
       <h4 class="body-1 font-weight-bold mt-2 mb-2">
         Nous récupérons aussi de Facebook certaines données:
@@ -362,7 +368,9 @@
       <p class="body-1">
         <!-- écrit par Vincent -->
         Nous utilisons aussi le service Recaptcha de Google pour valider que vous n'êtes pas un robot.
-        Veuillez vous référer aux politiques de confidentialité de Google pour savoir quelles données et ce que fait Google avec ces données lors de ce genre d'utilisation.
+        Veuillez vous référer aux politiques de confidentialité de Google pour savoir quelles données et ce que fait
+        Google
+        avec ces données lors de ce genre d'utilisation.
       </p>
       <h2 class="primary-color mb-3">
         Conservation de vos données personnelles
@@ -683,20 +691,20 @@
     <!--        <li>By email: horizonsgaspesiens@gmail.com</li>-->
     <!--      </ul>-->
     <!--    </v-card-text>-->
-<!--    <v-card-text>-->
-<!--      <p class="text-h6 font-weight-regular text-left">-->
-<!--        {{ $t('privacy:visibility') }}-->
-<!--      </p>-->
-<!--      <p class="text-h6 font-weight-regular text-left">-->
-<!--        {{ $t('privacy:passwords') }}-->
-<!--      </p>-->
-<!--      <p class="text-h6 font-weight-regular text-left">-->
-<!--        {{ $t('privacy:facebook') }}-->
-<!--      </p>-->
-<!--      <p class="text-h6 font-weight-regular text-left">-->
-<!--        {{ $t('privacy:location') }}-->
-<!--      </p>-->
-<!--    </v-card-text>-->
+    <!--    <v-card-text>-->
+    <!--      <p class="text-h6 font-weight-regular text-left">-->
+    <!--        {{ $t('privacy:visibility') }}-->
+    <!--      </p>-->
+    <!--      <p class="text-h6 font-weight-regular text-left">-->
+    <!--        {{ $t('privacy:passwords') }}-->
+    <!--      </p>-->
+    <!--      <p class="text-h6 font-weight-regular text-left">-->
+    <!--        {{ $t('privacy:facebook') }}-->
+    <!--      </p>-->
+    <!--      <p class="text-h6 font-weight-regular text-left">-->
+    <!--        {{ $t('privacy:location') }}-->
+    <!--      </p>-->
+    <!--    </v-card-text>-->
   </v-card>
 </template>
 <script>
@@ -704,6 +712,7 @@ import I18n from "@/i18n";
 
 export default {
   components: {},
+  name: "PrivacyContent",
   data: function () {
     I18n.i18next.addResources("fr", "privacy", {
       title: "Politique de confidentialité",

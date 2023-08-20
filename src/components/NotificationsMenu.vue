@@ -29,7 +29,8 @@
       <v-list-item v-for="pendingTransaction in pendingTransactions" :key="pendingTransaction.id"
                    :to="'/transaction/' + pendingTransaction.id">
         <v-list-item-content>
-          <v-list-item-title v-html="pendingTransaction.details">
+          <v-list-item-title>
+            {{pendingTransaction.details}}
           </v-list-item-title>
           <v-list-item-subtitle>
             <span v-if="pendingTransaction.GiverId !== $store.state.user.id">

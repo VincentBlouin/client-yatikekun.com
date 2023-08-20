@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Page>
+    <PageWrap>
       <v-card flat class="pt-8" color="transparent">
         <v-card-title class="logo-font text-h4">
           {{ $t('offers:title') }}
@@ -56,7 +56,7 @@
           <span class="text-h6 mt-8 mb-2 grey--text">{{ $t('offers:endOfOffers') }}</span>
         </div>
       </infinite-loading>
-    </Page>
+    </PageWrap>
     <v-row>
       <v-fab-transition>
         <v-btn
@@ -87,10 +87,11 @@ const ENTER_KEY_CODE = 13;
 export default {
   components: {
     OfferCard: () => import('@/views/OfferCard'),
-    Page: () => import('@/components/Page'),
+    PageWrap: () => import('@/components/PageWrap'),
     InfiniteLoading
   },
-  async mounted() {
+  name: "OffersPage",
+  mounted: async function () {
     window.scrollTo(0, 0)
     await this.clearSearch();
   },
@@ -114,7 +115,7 @@ export default {
     return {
       offers: [],
       offersFiltered: [],
-      offersPage: 0,
+      offersPageWrap: 0,
       isLoading: false,
       filterInput: "",
       shouldUseInfiniteLoading: false
@@ -154,14 +155,14 @@ export default {
     resetOffers: async function () {
       let response = await OfferService.list(0);
       this.offers = response.data.map(Offer.format);
-      this.offersPage = 1;
+      this.offersPageWrap = 1;
       this.offersFiltered = this.offers;
     },
     infiniteHandler: async function ($state) {
-      const response = await OfferService.list(this.offersPage * 9);
+      const response = await OfferService.list(this.offersPageWrap * 9);
       const offers = response.data.map(Offer.format);
       if (offers.length) {
-        this.offersPage += 1;
+        this.offersPageWrap += 1;
         this.offers.push(...offers);
         $state.loaded();
       } else {

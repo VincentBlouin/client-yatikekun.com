@@ -1,5 +1,5 @@
 <template>
-  <Page>
+  <PageWrap>
     <v-card flat class="pt-8">
       <v-card-title class="vh-center primary-color">
         <h3 class="text-center">{{ $t('charter:title') }}</h3>
@@ -46,7 +46,8 @@
       <v-card-title class="text-h5 primary-color">
         {{ $t('charter:principle') }}
       </v-card-title>
-      <v-card-subtitle v-html="$t('charter:principleAccorderie')" class="text-left">
+      <v-card-subtitle class="text-left">
+        {{ $t('charter:principleAccorderie') }}
       </v-card-subtitle>
       <v-card-text>
         <ol class="text-h6 font-weight-regular text-left">
@@ -95,20 +96,20 @@
         </ol>
       </v-card-text>
       <v-card-text class="text-h6 font-weight-regular text-left">
-        {{$t('charter:confidentiality')}}
+        {{ $t('charter:confidentiality') }}
         <router-link to="/vie-prive">
-          {{$t('charter:confidentiality1')}}
+          {{ $t('charter:confidentiality1') }}
         </router-link>
       </v-card-text>
     </v-card>
-  </Page>
+  </PageWrap>
 </template>
 <script>
 import I18n from "@/i18n";
 
 export default {
   components: {
-    Page: () => import('@/components/Page')
+    PageWrap: () => import('@/components/PageWrap')
   },
   mounted() {
     window.scrollTo(0, 0)

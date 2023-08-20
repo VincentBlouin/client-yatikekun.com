@@ -90,7 +90,7 @@ const facebookAppId = process.env.VUE_APP_FACEBOOK_APP_ID;
 Vue.use(VueReCaptcha, {siteKey: process.env.VUE_APP_RECAPTCHA_KEY});
 
 export default {
-  name: "LoginForm",
+  name: "LoginPage",
   // components: {
   //   RecaptchaInfo: () => import('@/components/RecaptchaInfo')
   // },
@@ -157,7 +157,7 @@ export default {
       this.$emit('flow-is-done');
       Vue.nextTick(() => {
         this.$router.push({
-          name: 'Offers',
+          name: 'OffersPage',
           params: {
             username: response.data.user_name
           }

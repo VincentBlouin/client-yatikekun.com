@@ -1,5 +1,5 @@
 <template>
-  <Page>
+  <PageWrap>
     <v-card>
       <v-card-title>
         <v-icon class="mr-4">business</v-icon>
@@ -19,7 +19,7 @@
         <v-tab key="info" @click="setRouteToInfo">
           {{ $t('organisation:info') }}
         </v-tab>
-        <v-tab key="transactions" @click="setRouteToTransactions">
+        <v-tab key="transactions" @click="setRouteToTransactions" :disabled="organisation.id === undefined">
           {{ $t('organisation:transactions') }}
         </v-tab>
       </v-tabs>
@@ -95,7 +95,7 @@
         <v-tab-item
             key="transactions"
         >
-          <Transactions :organisation="organisation"></Transactions>
+          <TransactionsComponent :organisation="organisation"></TransactionsComponent>
         </v-tab-item>
       </v-tabs-items>
     </v-card>
@@ -119,7 +119,7 @@
         </v-btn>
       </template>
     </v-snackbar>
-  </Page>
+  </PageWrap>
 </template>
 <script>
 import I18n from "@/i18n";
@@ -129,8 +129,8 @@ import Images from "@/Images";
 
 export default {
   components: {
-    Page: () => import('@/components/Page'),
-    Transactions: () => import('@/components/Transactions'),
+    PageWrap: () => import('@/components/PageWrap'),
+    TransactionsComponent: () => import('@/components/TransactionsComponent'),
   },
   async mounted() {
     if (this.$route.params.organisationId) {
@@ -190,12 +190,15 @@ export default {
       );
     },
     setRouteToInfo: function () {
+      if (this.organisation.id === undefined) {
+        return;
+      }
       this.$router.push(
           "/organisation/" + this.organisation.id
       );
     },
     rebuildImageUrl: function () {
-      if (this.organisation.customImage === undefined) {
+      if (this.organisation.customImage === undefined || this.organisation.customImage === null) {
         return;
       }
       this.organisation.customImageUrl = Images.getCustomBase64Url(this.organisation.customImage);
