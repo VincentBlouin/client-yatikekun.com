@@ -123,7 +123,7 @@ export default {
           this.handleLoginResponse(loginResponse);
           LoadingFlow.leave();
         })
-      }, {scope: 'public_profile,email'}).bind(this);
+      }.bind(this), {scope: 'public_profile,email'});
     },
     login: async function () {
       this.wrongLogin = false;
