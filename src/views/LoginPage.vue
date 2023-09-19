@@ -118,11 +118,12 @@ export default {
   methods: {
     facebookLogin: function () {
       LoadingFlow.enter();
-      window.FB.login(async (response) => {
-        const loginResponse = await AuthenticateService.facebookLogin(response.authResponse);
-        this.handleLoginResponse(loginResponse);
-        LoadingFlow.leave();
-      }, {scope: 'public_profile,email'});
+      window.FB.login(function(response){
+        const loginResponse = AuthenticateService.facebookLogin(response.authResponse).then(()=>{
+          this.handleLoginResponse(loginResponse);
+          LoadingFlow.leave();
+        })
+      }, {scope: 'public_profile,email'}).bind(this);
     },
     login: async function () {
       this.wrongLogin = false;
