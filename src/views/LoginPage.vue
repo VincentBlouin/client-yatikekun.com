@@ -105,15 +105,6 @@ export default {
         version: 'v13.0'
       });
     };
-    (function () {
-      // console.log("created 3")
-      let e = document.createElement('script');
-      e.async = true;
-      // console.log("created 4")
-      e.src = document.location.protocol +
-          '//connect.facebook.net/fr_CA/all.js#xfbml=1&version=v13.0';
-      document.getElementById('fb-root').appendChild(e);
-    }());
   },
   methods: {
     facebookLogin: function () {
