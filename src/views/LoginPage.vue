@@ -85,8 +85,6 @@ import LoadingFlow from '@/LoadingFlow'
 import Vue from 'vue'
 import {VueReCaptcha} from "vue-recaptcha-v3"
 
-const facebookAppId = process.env.VUE_APP_FACEBOOK_APP_ID;
-
 Vue.use(VueReCaptcha, {siteKey: process.env.VUE_APP_RECAPTCHA_KEY});
 
 export default {
@@ -94,18 +92,6 @@ export default {
   // components: {
   //   RecaptchaInfo: () => import('@/components/RecaptchaInfo')
   // },
-  created: function () {
-    window.fbAsyncInit = function () {
-      // console.log("created 2")
-      // console.log("facebook app id " + facebookAppId)
-      window.FB.init({
-        appId: facebookAppId,
-        autoLogAppEvents: true,
-        xfbml: true,
-        version: 'v13.0'
-      });
-    };
-  },
   methods: {
     facebookLogin: function () {
       LoadingFlow.enter();
