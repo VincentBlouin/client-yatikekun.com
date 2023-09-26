@@ -36,7 +36,6 @@
 import I18n from "@/i18n";
 import OfferService from "@/offer/OfferService";
 
-const facebookAppId = process.env.VUE_APP_FACEBOOK_APP_ID;
 const facebookGroupId = process.env.VUE_APP_FACEBOOK_GROUP_ID;
 
 export default {
@@ -61,16 +60,6 @@ export default {
   },
   created: function () {
     console.log("created 1")
-    window.fbAsyncInit = function () {
-      console.log("created 2")
-      console.log("facebook app id " + facebookAppId)
-      window.FB.init({
-        appId: facebookAppId,
-        autoLogAppEvents: true,
-        xfbml: true,
-        version: 'v13.0'
-      });
-    };
   },
   methods: {
     publishToFacebookGroup: function () {
