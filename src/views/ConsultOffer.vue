@@ -86,18 +86,6 @@
           {{ $t("modify") }}
         </v-btn>
       </v-card-actions>
-      <v-card-actions v-if="isOwner" class="vh-center">
-        <PublishOfferToFacebook
-            :skipConfirmation="false"
-            @publishedToFacebook="successPublishFacebook = true;"
-            @errorPublishedToFacebook="errorPublishFacebook = true;"
-            :offerDescription="offer.description"
-            :userSubRegion="$store.state.user.subRegion"
-            :offerId="offer.id"
-            :offerImage="offer.image"
-            :offerCustomImage="offer.customImage"
-        ></PublishOfferToFacebook>
-      </v-card-actions>
       <v-card-text class="">
         <v-row justify="center" class="h-center">
           <v-col cols="12"
@@ -353,8 +341,7 @@ import TransactionComponent from "@/components/TransactionComponent.vue";
 export default {
   components: {
     TransactionComponent,
-    NewTransaction: () => import("@/components/NewTransaction"),
-    PublishOfferToFacebook: () => import('@/components/PublishOfferToFacebook'),
+    NewTransaction: () => import("@/components/NewTransaction")
   },
   async mounted() {
     this.offer.UserId = this.$store.state.user.id;

@@ -179,18 +179,6 @@
           </v-row>
         </v-card-text>
         <v-card-actions class="vh-center">
-          <PublishOfferToFacebook
-              :skipConfirmation="true"
-              @publishedToFacebook="goToOffers()"
-              @errorPublishedToFacebook="errorPublishFacebook = true;"
-              :offerDescription="offer.description"
-              :userSubRegion="$store.state.user.subRegion"
-              :offerId="offer.id"
-              :offerImage="offer.image"
-              :offerCustomImage="offer.customImage"
-          ></PublishOfferToFacebook>
-        </v-card-actions>
-        <v-card-actions class="vh-center">
           <v-btn
               text
               @click="publishToFacebookDialog = false; $router.push('/offres');"
@@ -258,7 +246,6 @@ const STATUS_FAILED_UPLOAD = 3
 
 export default {
   components: {
-    PublishOfferToFacebook: () => import('@/components/PublishOfferToFacebook'),
     OfferCard: () => import('@/views/OfferCard'),
   },
   async mounted() {

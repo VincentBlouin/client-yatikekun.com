@@ -46,35 +46,9 @@
             {{ $t('login:forgotPassword') }}
           </router-link>
         </div>
-        <div class="mt-4">
-          <v-btn @click="facebookLogin()" color="facebook" dark>
-            <v-icon left>facebook</v-icon>
-            {{ $t('login:loginWithFacebook') }}
-          </v-btn>
-        </div>
       </v-form>
       <!--      <RecaptchaInfo></RecaptchaInfo>-->
     </v-col>
-    <v-snackbar
-        v-model="facebookLoginButNoAccount"
-        top
-        :timeout="-1"
-    >
-        <span class="body-1">
-          {{ $t('login:facebookLoginButNoAccount') }}
-        </span>
-      <template v-slot:action="{ attrs }">
-
-        <v-btn
-            color="white"
-            text
-            v-bind="attrs"
-            @click="facebookLoginButNoAccount = false"
-        >
-          {{ $t('close') }}
-        </v-btn>
-      </template>
-    </v-snackbar>
   </v-row>
 </template>
 <script>
@@ -93,15 +67,6 @@ export default {
   //   RecaptchaInfo: () => import('@/components/RecaptchaInfo')
   // },
   methods: {
-    facebookLogin: function () {
-      LoadingFlow.enter();
-      window.FB.login(function(response){
-        const loginResponse = AuthenticateService.facebookLogin(response.authResponse).then(()=>{
-          this.handleLoginResponse(loginResponse);
-          LoadingFlow.leave();
-        })
-      }.bind(this), {scope: 'public_profile,email'});
-    },
     login: async function () {
       this.wrongLogin = false;
       this.userDisabledMessage = false;
@@ -126,10 +91,6 @@ export default {
       });
     },
     handleLoginResponse: function (response) {
-      if (response.data.success === false) {
-        this.facebookLoginButNoAccount = true;
-        return;
-      }
       this.$store.dispatch('setToken', response.data.token)
       this.$store.dispatch('setUser', response.data.user);
       this.$emit('flow-is-done');
@@ -161,8 +122,6 @@ export default {
       wrongLogin: "Pas le bon courriel ou mot de passe, essayez de nouveau. Il se peut aussi que votre compte soit désactivé",
       userDisabled: "Votre compte est désactivé",
       forgotPassword: "Forgot password",
-      loginWithFacebook: "Login with Facebook",
-      facebookLoginButNoAccount: "Before you can connect with Facebook account, you must first become a member of PartageHeure."
     });
     I18n.i18next.addResources("fr", "login", {
       email: 'Courriel',
@@ -171,11 +130,8 @@ export default {
       wrongLogin: "Pas le bon courriel ou mot de passe, essayez de nouveau. Il se peut aussi que votre compte soit désactivé",
       userDisabled: "Votre compte est désactivé",
       forgotPassword: "Mot de passe oublié",
-      loginWithFacebook: "Se connecter avec Facebook",
-      facebookLoginButNoAccount: "Avant de pouvoir vous connecter avec votre compte Facebook, vous devez d'abord être membre du PartageHeure."
     });
     return {
-      facebookLoginButNoAccount: false,
       valid: true,
       user: {
         email: "",
@@ -190,7 +146,6 @@ export default {
   },
   mounted: function () {
     window.scrollTo(0, 0);
-    this.facebookLoginButNoAccount = false;
     this.hideRecaptchaBadge();
   }
 }

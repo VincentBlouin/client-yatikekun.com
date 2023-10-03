@@ -113,7 +113,7 @@ export default {
                         to: "à",
                         finish: "Terminer",
                         close: 'Fermer',
-                        ignore: "Ignorer et continuer",
+                        ignore: "Continuer",
                         login: 'Connexion',
                         register: "S'inscrire",
                         search: 'Chercher',
