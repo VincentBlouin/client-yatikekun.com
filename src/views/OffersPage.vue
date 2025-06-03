@@ -5,7 +5,7 @@
         <v-card-title class="logo-font text-h4">
           {{ $t('offers:title') }}
         </v-card-title>
-        <v-card-actions :class="{
+        <!-- <v-card-actions :class="{
           'pl-0 pr-0': $vuetify.breakpoint.smAndDown
         }">
           <v-text-field v-model="filterInput" :label="$t('offers:searchPlaceHolder')"
@@ -24,7 +24,7 @@
             <v-icon left>search</v-icon>
             {{ $t('search') }}
           </v-btn>
-        </v-card-actions>
+        </v-card-actions> -->
         <v-row v-if="isLoading">
           <v-col cols="12" md="4" class="text-center vh-center" v-for="n in 20" :key="n">
             <v-skeleton-loader
