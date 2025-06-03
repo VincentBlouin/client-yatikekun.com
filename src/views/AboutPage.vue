@@ -145,32 +145,14 @@
             <v-row align="center" v-if="isShowHowToBecomeMember">
               <v-col cols="2" v-if="$vuetify.breakpoint.mdAndUp"></v-col>
               <v-col cols="12" class="col-md-8">
-                <v-list class="text-left" subheader>
-                  <v-list-item :class="{
-            'pl-0 pr-0': $vuetify.breakpoint.smAndDown
-          }"
-                               href="https://docs.google.com/forms/d/e/1FAIpQLSf0Z1IH1lYZ8sL-4umROhOXSJ83NIAzIbIAWAlMvGaE7mM7eg/viewform?vc=0&c=0&w=1&flr=0">
-                    <v-list-item-icon>
-                      <v-badge>
-                        <template v-slot:badge>
-                          1
-                        </template>
-                        <v-icon large>card_membership</v-icon>
-                      </v-badge>
-                    </v-list-item-icon>
-                    <v-list-item-content class="text-left">
-                      <v-list-item-title class="text-h6 text-md-h5 font-weight-regular">
-                        {{ $t('about:member4') }}
-                      </v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
+                <v-list class="text-left" subheader>               
                   <v-list-item :class="{
             'pl-0 pr-0': $vuetify.breakpoint.smAndDown
           }" to="/charte">
                     <v-list-item-icon>
                       <v-badge>
                         <template v-slot:badge>
-                          2
+                          1
                         </template>
                         <v-icon large>assignment</v-icon>
                       </v-badge>
@@ -184,7 +166,7 @@
                   <v-subheader class="text-h6 text-md-h5 font-weight-regular black--text">
                     <v-badge>
                       <template v-slot:badge>
-                        3
+                        2
                       </template>
                       <v-icon large>supervisor_account</v-icon>
                     </v-badge>
@@ -193,6 +175,49 @@
                     </span>
                   </v-subheader>
                   <v-list-group
+                      :value="true"
+                  >
+                    <template v-slot:activator>
+                      <v-list-item-avatar>
+                        <v-avatar>
+<!--                          <img-->
+<!--                              :src="require('@/assets/arielle-petit-carre.jpg')"-->
+<!--                              alt="Arielle Paiement"-->
+<!--                          >-->
+                          <img
+                              :src="require('@/assets/martin-2018-petit-carre.jpg')"
+                              alt="Martin Zibeau"
+                          >
+                        </v-avatar>
+                      </v-list-item-avatar>
+                      <v-list-item-content>
+                        <v-list-item-title class="text-subtitle-1 text-md-h6 font-weight-regular">
+                          Martin Zibeau
+                        </v-list-item-title>
+                      </v-list-item-content>
+                    </template>
+                    <v-list-item href="mailto:martinzibeau@gmail.com" :class="{
+                      'ml-12' : $vuetify.breakpoint.mdAndUp
+                    }">
+                      <v-list-item-icon>
+                        <v-icon>email</v-icon>
+                      </v-list-item-icon>
+                      <v-list-item-content class="text-subtitle-1 text-md-h6 font-weight-regular">
+                        martinzibeau@gmail.com
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-list-item href="tel:581-233-9481" :class="{
+                      'ml-12' : $vuetify.breakpoint.mdAndUp
+                    }">
+                      <v-list-item-icon>
+                        <v-icon>phone</v-icon>
+                      </v-list-item-icon>
+                      <v-list-item-content class="text-subtitle-1 text-md-h6 font-weight-regular">
+                        418-534-4799
+                      </v-list-item-content>
+                    </v-list-item>
+                  </v-list-group>
+                    <v-list-group
                       :value="true"
                   >
                     <template v-slot:activator>
