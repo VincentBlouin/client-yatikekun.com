@@ -47,7 +47,9 @@
         {{ $t('charter:principle') }}
       </v-card-title>
       <v-card-subtitle class="text-left">
-        {{ $t('charter:principleAccorderie') }}
+        <a href="https://www.accorderie.ca/un-acces-a-des-services-que-plusieurs-ne-pourraient-soffrir-autrement">
+          {{ $t('charter:principleAccorderie') }}
+        </a>
       </v-card-subtitle>
       <v-card-text>
         <ol class="text-h6 font-weight-regular text-left">
@@ -128,7 +130,7 @@ export default {
       visionObjective4: "Favoriser la résilience personnelle et collective",
       visionValues: "Le projet du PartageHeure est guidée par les valeurs de confiance, d'autonomie, de respect, de reconnaissance, d'égalité, de partage.",
       principle: "Principe",
-      principleAccorderie: "(inspiré des principes de l'<a href=\"https://www.accorderie.ca/un-acces-a-des-services-que-plusieurs-ne-pourraient-soffrir-autrement\">accorderie</a>)",
+      principleAccorderie: "(inspiré des principes de l'accorderie)",
       principle1: "Une heure de service rendu vaut une heure de service reçu",
       principle1Details: "Le principe de fonctionnement de base d’un système d'échange de service est qu’une heure de service rendu vaut une heure de service reçu, quels que soient la nature, la complexité ou l’effort reliés au service échangé. De l’aide pour faire le ménage vaut autant que du dépannage informatique, de la correction de textes, de la couture ou des conseils en décoration. L’échange de services repose sur un rapport égalitaire.",
       principle2: "L’échange repose sur le temps et non l’argent",
